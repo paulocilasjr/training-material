@@ -1,7 +1,7 @@
 ---
 layout: tutorial_hands_on
 level: Intermediate
-title: Building the LORIS LLR6 PanCancer Model Using PyCaret
+title: Galaxy Tabular Learner - Building a Logistic Regression Model using clinical data
 zenodo_link: https://zenodo.org/records/13885908
 questions:
 - How can the LORIS LLR6 model published by Chang et al., 2024 be reproduced?
@@ -11,12 +11,12 @@ objectives:
 - Use a large dataset of immune checkpoint blockade (ICB)-treated and non-ICB-treated
   patients across 18 solid tumor types, encompassing a wide range of clinical, pathologic
   and genomic features to build a Machine Learning Model.
-- Build a Machine Learning model using PyCaret in Galaxy.
+- Build a Machine Learning model using Tabular Learner in Galaxy.
 - Evaluate the model for robustness by comparing it with the original LORIS LLR6 model
   published by Chang et al., 2024.
 time_estimation: 1H
 key_points:
-- Use Galaxy tools to build a model based on LORIS Score model published (Chang et
+- Use Galaxy tools (Tabular learner) to build a model based on LORIS Score model published (Chang et
   al., 2024).
 - Confirm the robustness of the model by comparing its metrics with the model published
   by Chang et al., 2024.
@@ -27,7 +27,7 @@ contributors:
 tags:
 - LORIS Score Model
 - Machine Learning
-- PyCaret
+- Tabular Learner
 recordings:
 - youtube_id: DKM19WIDNzk
   length: 24M
