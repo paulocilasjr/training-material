@@ -41,19 +41,20 @@ recordings:
 ---
 
 
-> <comment-title>PyCaret Model Comparison Tool</comment-title>
+> <comment-title>Tabular Learner Tool</comment-title>
 >
-> The PyCaret Model Comparison tool described in this tutorial is currently available only on: 
-> [Cancer-Galaxy](https://cancer.usegalaxy.org)
+> The Tabular Learner tool described in this tutorial is currently available only on: 
+> [Cancer-Galaxy](https://cancer.usegalaxy.org) >
+> Galaxy-ML tools > Tabular Learner
 >
-> Galaxy-ML tools > PyCaret Model Comparison 
+> and [Galaxy US Server](https://usegalaxy.org)
+> Statistics and Visualization > Machine Lerning > Tabular Learner
 >
-> This tutorial will be updated as soon as the tool is incorporated into the main Galaxy project.
 {:  .comment}
 
 In this tutorial, we will use a comprehensive dataset of patients treated with immune checkpoint blockade (ICB) and non-ICB-treated patients across 18 solid tumor types to develop LORIS (Logistic Regression-based Immunotherapy-Response Score). The goal is to accurately predict patient responses to the treatment.
 
-To achieve this, we will follow three essential steps: (i) upload the patient data training file to Galaxy, (ii) set up and run the PyCaret Model Comparison Tool to train the best model, and (iii) evaluate the model’s predictive performance by comparing it to the published LORIS model ({% cite Chang2024 %}).
+To achieve this, we will follow three essential steps: (i) upload the patient data training file to Galaxy, (ii) set up and run the Tabular Learner Tool to train the best model, and (iii) evaluate the model’s predictive performance by comparing it to the published LORIS model ({% cite Chang2024 %}).
 
 ![schema of the whole process of training model and test.](../../images/loris_tutorial/tutorial_schema.png "Overview of the process steps to obtain the model from the LORIS dataset.")
 
@@ -115,9 +116,9 @@ The Response feature is a categorical target variable indicating whether patient
 
 In the article ({% cite Chang2024 %}), the model was trained using different architectures, including Decision Tree, Random Forest, Logistic Regression, and XGBoost, using the scikit-learn framework (full code is available here: [Chang et al., github repo](https://github.com/rootchang/LORIS/tree/main/code). In the end, the best model architecture was a Logistic LASSO (Least Absolute Shrinkage and Selection Operator) Regression model, fitting the six features discussed above. This model was named LLR6.
 
-It is important to note that PyCaret has the capability of training different model architectures, just as was done by Chang et al., 2024, but automatically. At the end of the run, a tabular list ranked by decreasing model performance is output.
+It is important to note that Tabular Learner has the capability of training different model architectures, just as was done by Chang et al., 2024, but automatically. At the end of the run, a tabular list ranked by decreasing model performance is output.
 
-When setting up the PyCaret Model Comparison tool, one option, `Only Select Classification Models if you don't want to compare all models,` can be used to select specific architectures to be tested during training. Since the purpose of this tutorial is to replicate what was done, this option won't be used, and therefore, all possible models will be trained. Thus, we expect to obtain the same results as Chang et al., where the Logistic Regression Model has the best performance among all other models.
+When setting up the Tabular Learner tool, one option, `Only Select Classification Models if you don't want to compare all models,` can be used to select specific architectures to be tested during training. Since the purpose of this tutorial is to replicate what was done, this option won't be used, and therefore, all possible models will be trained. Thus, we expect to obtain the same results as Chang et al., where the Logistic Regression Model has the best performance among all other models.
 
 # Prepare environment and get the data 
 > <comment-title>Preprocessing the raw data</comment-title>
@@ -166,10 +167,10 @@ When setting up the PyCaret Model Comparison tool, one option, `Only Select Clas
 >
 {: .hands_on}
 
-# Using PyCaret Model Comparison Tool
+# Using Tabular Learner Tool
 > <hands-on-title> Task description </hands-on-title>
 >
-> 1. {% tool [PyCaret Model Comparison](toolshed.g2.bx.psu.edu/repos/paulo_lyra_jr/pycaret_model_comparison/PyCaret_Model_Comparison/2024.3.3.2+0) %} with the following parameters:
+> 1. {% tool [Tabular Learner](toolshed.g2.bx.psu.edu/repos/paulo_lyra_jr/pycaret_model_comparison/PyCaret_Model_Comparison/2024.3.3.2+0) %} with the following parameters:
 >    - {% icon param-file %} *"Input Dataset (CSV or TSV)"*: `Chowell_train_Response.tsv`
 >    - {% icon param-file %} *"Test Dataset (CSV or TSV)"*: `Chowell_test_Response.tsv`
 >    - {% icon param-file %} *"Select the target column"*: `C22: Response`
@@ -180,20 +181,20 @@ When setting up the PyCaret Model Comparison tool, one option, `Only Select Clas
 # Tool output files
 After training and testing your model, you should see two new files in your history list:
 
-- PyCaret Model Comparison Best Model: The PyCaret model pickle file. This file allows the model to be reused without requiring retraining, ensuring consistent predictions.
+- Tabular Learner Best Model: The Tabular Learner model pickle file. This file allows the model to be reused without requiring retraining, ensuring consistent predictions.
 
-- PyCaret Model Report: This file contains all the plots for the models trained, along with the best model selected.
+- Tabular Learner Model Report: This file contains all the plots for the models trained, along with the best model selected.
 
-For this tutorial, we will focus on the PyCaret Model Report.
+For this tutorial, we will focus on the Tabular Learner Model Report.
 
-# PyCaret Model Report 
-The PyCaret HTML report provides a comprehensive and interactive overview of the trained model’s performance in an accessible, browser-ready format. This report documents key aspects of the model’s training and evaluation process, offering insights into how well the model performed on both the training and test datasets. The report consists of four tabs: Setup & Best Model, Best Model Plots, Feature Importance, and Explainer.
-![report tabs](../../images/loris_tutorial/report_tabs.png "Tabs in the PyCaret Model Comparison Report")
+# Tabular Learner Model Report 
+The Tabular Learner HTML report provides a comprehensive and interactive overview of the trained model’s performance in an accessible, browser-ready format. This report documents key aspects of the model’s training and evaluation process, offering insights into how well the model performed on both the training and test datasets. The report consists of four tabs: Setup & Best Model, Best Model Plots, Feature Importance, and Explainer.
+![report tabs](../../images/loris_tutorial/report_tabs.png "Tabs in the Tabular Learner Report")
 
 Below is a brief explanation of the content in each tab of the report.
 
 > <tip-title>Setup & Best Model Tab</tip-title>
->- Setup Parameters: Documents the initial configurations used in the PyCaret Model Comparison Tool.
+>- Setup Parameters: Documents the initial configurations used in the Tabular Learner Tool.
 >- Best Model Class and Hyperparameters: Specifies the model selected as the best performer from the comparison, along with the model’s hyperparameters as determined through tuning.
 >- Performance Metrics: Summarizes key evaluation metrics, including Accuracy, ROC-AUC, Recall, Precision, F1-Score, Cohen’s Kappa, Matthews Correlation Coefficient (MCC), and Training Time (in seconds).
 >
@@ -228,7 +229,7 @@ Below is a brief explanation of the content in each tab of the report.
 
 # LORIS PanCancer LLR6 Model Robustness:
 
-Understanding the objective of this analysis is essential. Since we aim to build a model comparable to the one published by {% cite Chang2024 %}, and we indeed obtained the same Logistic Regression model architecture, this allows us to use the metrics from that paper as a benchmark to assess the performance of the model we develop through Galaxy-PyCaret.
+Understanding the objective of this analysis is essential. Since we aim to build a model comparable to the one published by {% cite Chang2024 %}, and we indeed obtained the same Logistic Regression model architecture, this allows us to use the metrics from that paper as a benchmark to assess the performance of the model we develop through Galaxy-Tabular Learner.
 
 > <tip-title>Robustness definition </tip-title>
 >
@@ -240,7 +241,7 @@ Understanding the objective of this analysis is essential. Since we aim to build
 {: .tip}
 
 ## Classification Algorithms
-A key feature of PyCaret is its capability to train and compare multiple models with minimal code. By default, PyCaret evaluates a diverse range of algorithms, including linear models, tree-based models, and ensemble methods, ranking these models based on their performance. The primary metric used to determine the best-performing model is the accuracy. 
+A key feature of Tabular Learner is its capability to train and compare multiple models with minimal code. By default, Tabular Learner evaluates a diverse range of algorithms, including linear models, tree-based models, and ensemble methods, ranking these models based on their performance. The primary metric used to determine the best-performing model is the accuracy. 
 ![Comparison results on the cross-validation set](../../images/loris_tutorial/model_comparison.png "Comparison of Model Performance Metrics Across Algorithms")
 
 In this case, the best-performing algorithm for this dataset matches the findings reported in the article: the Logistic Regression model.
@@ -248,7 +249,7 @@ In this case, the best-performing algorithm for this dataset matches the finding
 ## Hyperparameters
 The model from {% cite Chang2024 %} for the Pan-Cancer LLR6 model has the following hyperparameters set: C = 0.1, Class Weight = Balanced, L1 ratio = 1, max iter = 100, Penalty = Elasticnet, Solver = Saga.
 
-The hyperparameter search performed by Galaxy-PyCaret resulted in slightly different settings for the model: C = 1.0, Class Weight = None, L1 ratio = None, max iter = 1000, Penalty = L2, Solver = LBFGS.
+The hyperparameter search performed by Galaxy-Tabular Learner resulted in slightly different settings for the model: C = 1.0, Class Weight = None, L1 ratio = None, max iter = 1000, Penalty = L2, Solver = LBFGS.
 
 ![Model hyperparameters table](../../images/loris_tutorial/hyperparameters.png "Table showing the hyperparameters set for the selected model")
 
@@ -292,11 +293,11 @@ The comparison between the PyCaret and Scikit-learn models demonstrates consiste
 The results suggest that small variations in the analytical approach do not significantly impact the model's ability to distinguish between classes, thereby providing confidence in the robustness of the LORIS Score for future applications.
 
 # Conclusion
-In this tutorial, we demonstrated how to use the Galaxy-PyCaret Comparison Tool to build a machine learning model for ICB treatment patient selection using clinical data. We followed a structured approach consisting of:
+In this tutorial, we demonstrated how to use the Galaxy-Tabular Learner Tool to build a machine learning model for ICB treatment patient selection using clinical data. We followed a structured approach consisting of:
 - Uploading datasets (.tsv)
-- Running the PyCaret Comparison
+- Running the Tabular Learner
 - Evaluating the model's performance using the metrics published by {% cite Chang2024 %} as the gold standard.
 
-Throughout the process, we showcased how PyCaret simplifies the complexities of machine learning workflows, making them more accessible and efficient for users. Additionally, we explored the robustness of the LORIS Score by building a Logistic Regression model with different hyperparameters.
+Throughout the process, we showcased how Tabular Learner simplifies the complexities of machine learning workflows, making them more accessible and efficient for users. Additionally, we explored the robustness of the LORIS Score by building a Logistic Regression model with different hyperparameters.
 
 By the end of this tutorial, you should have a solid understanding of how to deploy a traditional machine learning model using tabular data and effectively interpret its results.
