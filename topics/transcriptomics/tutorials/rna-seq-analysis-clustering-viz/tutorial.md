@@ -1,7 +1,7 @@
 ---
 layout: tutorial_hands_on
 
-title: "RNA-Seq data analysis,clustering and visualisation tutorial"
+title: "RNA-Seq data analysis, clustering and visualisation tutorial"
 subtopic: introduction
 draft: true
 tags:
@@ -22,19 +22,22 @@ objectives:
     - To learn the principles of the analysis and visualisation of a multidimensional data analysis. We will use RNA-seq data as an example of a multidimensional -omics dataset.
 time_estimation: 6h
 key_points:
-    - A spliced mapping tool should be used on eukaryotic RNA-Seq data
-    - Numerous factors should be taken into account when running a differential gene expression analysis
+    - You have learned to use DESeq2 to identify differentially expressed mRNAs
+    - You have used PCA to identify the most important sources of variation
+    - You have compared different clustering methods to group samples and genes
 contributions:
   authorship:
     - pacthoen
     - casper937
     - charlotteradboud
+  editing:
+    - shiltemann
 ---
 
 
 In this computer assignment, we will analyze the results of an RNA-seq dataset. This is one type of high-dimensional -omics data that biomedical scientists frequently use. The raw RNA-seq data are sequence reads, but we will use the processed data from an RNA-seq experiment, often referred to as a count matrix. A count matrix contains for every sample (in the columns of the matrix) and every gene or transcript (in the rows of the matrix) the number of sequencing reads representing that gene or transcript (an integer, i.e., 0, 1, 2, 3, ...). The expression level of that gene is derived from the read count by correcting (normalization) for the total number of sequencing reads in a particular sample.
 
-RNA-seq is often used to explore the function of a gene or the effect of a genetic variant. Since RNA-seq can survey the expression levels of all genes, it is well suited to obtain a global idea of the effect on the physiology of a cell and the biological processes affected. In this computer assignment, we will explore a dataset from mouse B-cells from TP53-/- knockout and wild-type mice. It is a two-factor experiment, because cells of both genotypes have been analyzed with or without being exposed to ionizing radiation (IR); thus, genotype and exposure to IR represent different factors in the experiment. The research paper describing this dataset is {% cite Tonelli2015 %}. The TP53 gene coding for the p53 protein is a well-known tumor suppressor gene. p53 is involved in the induction of apoptosis, senescence, cell cycle arrest and metabolic reprogramming. p53 is activated by double strand DNA breaks and routes cells to apoptosis when the DNA damage cannot be repaired anymore. TP53 mutation is one the most common driver of mutations in cancer, because TP53-deficient cells continue to proliferate, even after significant DNA damage. IR induces double strand DNA breaks and cell death (apoptosis) and is a well-known activator of p53. The authors used TP53-/- cells and wild-type cells to explore which part of the response of B-cells to IR is dependent on p53.
+RNA-seq is often used to explore the function of a gene or the effect of a genetic variant. Since RNA-seq can survey the expression levels of all genes, it is well suited to obtain a global idea of the effect on the physiology of a cell and the biological processes affected. In this computer assignment, we will explore a dataset from mouse B-cells from TP53-/- knockout and wild-type mice. It is a two-factor experiment, because cells of both genotypes have been analyzed with or without being exposed to ionizing radiation (IR); thus, genotype and exposure to IR represent different factors in the experiment. The research paper describing this dataset is {% cite Tonelli2015 %} ([direct link](http://dx.doi.org/10.18632/oncotarget.5232)). The TP53 gene coding for the p53 protein is a well-known tumor suppressor gene. p53 is involved in the induction of apoptosis, senescence, cell cycle arrest and metabolic reprogramming. p53 is activated by double strand DNA breaks and routes cells to apoptosis when the DNA damage cannot be repaired anymore. TP53 mutation is one the most common driver of mutations in cancer, because TP53-deficient cells continue to proliferate, even after significant DNA damage. IR induces double strand DNA breaks and cell death (apoptosis) and is a well-known activator of p53. The authors used TP53-/- cells and wild-type cells to explore which part of the response of B-cells to IR is dependent on p53.
 
 > <comment-title>Full data</comment-title>
 >
@@ -178,7 +181,7 @@ We can now run **DESeq2**:
 {: .hands_on}
 
 
-**DESeq2** generated 4 outputs:
+**DESeq2** {% icon tool %} generated 4 outputs:
 
 - A table with the normalized counts for each gene (rows) in the samples (columns)
 - A graphical summary of the results, useful to evaluate the quality of the experiment:
@@ -227,7 +230,7 @@ For more information about **DESeq2** and its outputs, you can have a look at th
 - An output file with Normalized counts
 - An output file with VST-Normalized counts (VST stands for Variance Stabilization and Transformation; this is the preferred normalization method in DESeq2 and we will use these counts later on for PCA and clustering
 
-Use the **filter** tool on the DESeq2 result file to identify the genes with absolute fold-change greater than 2. Use the condition: abs(c3)>2. Number of header lines to skip: 1. See this [Screenshot](https://github.com/pacthoen/BMW2_RNA_clust_vis/blob/main/screenshots/Screenshot%202025-05-22%20130228.png). And use the **sort** tool to identify the genes with the largest fold-change (most upregulated). See this [Screenshot](https://github.com/pacthoen/BMW2_RNA_clust_vis/blob/main/screenshots/Screenshot%202025-05-22%20132050.png)
+Use the **filter** {% icon tool %} tool on the DESeq2 result file to identify the genes with absolute fold-change greater than 2. Use the condition: abs(c3)>2. Number of header lines to skip: 1. See this [Screenshot](https://github.com/pacthoen/BMW2_RNA_clust_vis/blob/main/screenshots/Screenshot%202025-05-22%20130228.png). And use the **sort** tool to identify the genes with the largest fold-change (most upregulated). See this [Screenshot](https://github.com/pacthoen/BMW2_RNA_clust_vis/blob/main/screenshots/Screenshot%202025-05-22%20132050.png)
 
 > <question-title></question-title>
 >
@@ -282,7 +285,7 @@ The generated output is an extension of the previous file:
 > > <solution-title></solution-title>
 > >
 > > 1. ENSMUSG00000000308 (the top-ranked gene with the highest positive log2FC value)
-> > 2. It is located on the reverse strand of chromosome X, between 10,778,953 bp and 10,786,907 bp.
+> > 2. It is located on the reverse strand of chromosome 2, between 121183449 bp and 121189473 bp.
 > {: .solution}
 {: .question}
 
@@ -423,8 +426,6 @@ We have now the two required input files for goseq.
 
     > <question-title></question-title>
     >
-    > ![Top over-represented GO terms](../../images/ref-based/top_over-represented_go_terms.png)
-    >
     > What is the x-axis? How is it computed?
     >
     > > <solution-title></solution-title>
@@ -455,7 +456,7 @@ For filtering the most variable genes, we will compute the coefficient of variat
 >    - *"Input data has"*: `Column names on the first row` and `Row names on the first column`
 >    - *"Type of table operation "*: `Compute expression across rows or columns`
 >       - *"Calculate"*: `Custom`
->       - *"Custom function on vec"*: `vec.std`
+>       - *"Custom function on vec"*: `vec.std()`
 >       - *"For each"*: `row`
 >       - *"Output formatting options"*: keep everything checked. Output should have column and row headers
 >    - See this [Screenshot](https://github.com/pacthoen/BMW2_RNA_clust_vis/blob/main/screenshots/Screenshot%202025-05-23%20085500.png)
@@ -464,7 +465,7 @@ For filtering the most variable genes, we will compute the coefficient of variat
 >    - *"Input data has"*: `Column names on the first row` and `Row names on the first column`
 >    - *"Type of table operation "*: `Compute expression across rows or columns`
 >       - *"Calculate"*: `Custom`
->       - *"Custom function on vec"*: `vec.mean`
+>       - *"Custom function on vec"*: `vec.mean()`
 >       - *"For each"*: `row`
 >       - *"Output formatting options"*: keep everything checked. Output should have column and row headers
 > 3. Use the **Join two files** tool to merge the normalised count data with the standard deviation and mean datasets (two steps)
@@ -496,7 +497,7 @@ The tool needs a featureMetadata file with the names (and optional characteristi
 >
 > 1. Create the featureMetadata file using the **cut** tool on the `Input data for PCA and clustering` object
 >    - *"Cut columns"*: c1
-> 2. Import the count files from our [github repository](https://github.com/pacthoen/BMW2_RNA_clust_vis) using the Data Upload menu (top left) and the button _Paste/Fetch Data_.
+> 2. Import the metadata files from our [github repository](https://github.com/pacthoen/BMW2_RNA_clust_vis) using the Data Upload menu (top left) and the button _Paste/Fetch Data_.
 >
 >    ```text
 >    https://raw.githubusercontent.com/pacthoen/BMW2_RNA_clust_vis/refs/heads/main/data/GSE71176_sample_metadata.txt
@@ -521,6 +522,11 @@ The tool needs a featureMetadata file with the names (and optional characteristi
 >    - *"Advanced computational parameters"*: `Use default`
 >
 {: .hands_on}
+
+> <tip-title>What if I get an error?</tip-title>
+>
+> If the multivariate analysis tool gives an error, it may have to do with the fact that the column headers do not exactly match with the metadata or that there is another problem with the input files. You may solve this by first running the _*Check_format*_ tool and run the analysis again with the output files from that tool.
+{: .tip}
 
 Among the four output files generated by the tool, the one we are interested in is the *Multivariate_figure.pdf* file.
 The PCA scores plot representing the projection of samples on the two first components is located at the bottom left corner. The PCA loadings plot is located at the bottom right corner.

@@ -144,6 +144,12 @@ FAIR2Adapt:
     url: https://eosc.eu/eu-project/fair2adapt/
     avatar: "/training-material/shared/images/logos/FAIR2Adapt.png"
 
+fiesta:
+    short_name: OSCARS-FIESTA
+    name: FAIR Image Analysis across Sciences
+    url: https://oscars-project.eu/projects/fair-image-analysis-across-sciences
+    avatar: "/training-material/shared/images/logos/logo-FIESTA.png"
+    
 find:
     short_name: FIND
     name: The Foundation for Innovative New Diagnostics
@@ -229,6 +235,11 @@ madland:
     url: https://madland.science
     avatar: "/training-material/shared/images/logo-madland.jpg"
 
+melbournebioinformatics:
+    name: Melbourne Bioinformatics
+    url: https://mdhs.unimelb.edu.au/melbournebioinformatics
+    avatar: "/training-material/shared/images/Melbourne-Bioinformatics-logo.png"
+    
 moffitt:
     name: Moffitt Cancer Center
     url: https://www.moffitt.org/
@@ -420,6 +431,11 @@ uni-freiburg:
     avatar: https://raw.githubusercontent.com/bgruening/presentations/a2e38e4b007994af798320db3a0131c4bb891c0e/shared/resources/img/logo_freiburg.jpg
     github: false
     ror: "0245cg223"
+
+unimelb:
+    name: The University of Melbourne
+    url: https://www.unimelb.edu.au
+    avatar: "/training-material/shared/images/unimelb_Logo_RGB.png"    
 
 UTas:
     short_name: UTas
