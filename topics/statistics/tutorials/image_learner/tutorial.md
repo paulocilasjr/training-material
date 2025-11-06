@@ -58,9 +58,7 @@ To achieve this, we will follow three essential steps: (i) upload the HAM10000 i
 
 > <comment-title>Background</comment-title>
 >
-> The [HAM10000 dataset](https://zenodo.org/records/17114688) contains 10,015 dermoscopic images collected from multiple sources and standardized for visual contrast and color. The dataset includes metadata with patient age, sex, lesion site, and diagnostic type for each image.
->
-> The dataset covers seven types of pigmented skin lesions:
+> The [HAM10000 dataset](https://zenodo.org/records/17114688) is a preprocessed subset of the original HAM10000 collection, following the methodology described by {% cite Shetty2022 %}. The dataset covers seven types of pigmented skin lesions:
 > 1. Melanoma (mel)
 > 2. Melanocytic nevus (nv)
 > 3. Basal cell carcinoma (bcc)
@@ -69,59 +67,70 @@ To achieve this, we will follow three essential steps: (i) upload the HAM10000 i
 > 6. Dermatofibroma (df)
 > 7. Vascular lesion (vasc)
 >
-> The dataset is highly imbalanced, with melanocytic nevi representing more than 60% of the data. To mitigate this imbalance during training, we employ data augmentation techniques.
+> To address class imbalance in the original dataset, we applied preprocessing steps including image resizing to 96×96 pixels, selecting 100 images per class, and applying horizontal flip augmentation to generate 200 balanced images per class (1,400 total images).
 >
 {:  .comment}
 
-# Dataset Composition and Class Imbalance
+# Dataset Preprocessing and Composition
 
-Before we begin the hands-on session, here's a brief explanation of the dataset and the challenges associated with its use. The HAM10000 dataset is a benchmark dataset in dermoscopy and skin cancer research, providing standardized images for model development and validation.
+The dataset used in this tutorial has been preprocessed following the methodology from {% cite Shetty2022 %} to create a balanced training set suitable for deep learning.
 
-## Dataset Overview
+## Preprocessing Steps
 
-The HAM10000 dataset comprises:
-- **Total Images**: 10,015 dermoscopic images
-- **Image Size**: 96x96 pixels (in this version)
-- **Image Format**: PNG
-- **Lesion Types**: 7 categories
-- **Metadata**: Patient age, sex, lesion location, and diagnostic information
+Starting from the original HAM10000 dataset (10,015 images with severe class imbalance), we applied the following preprocessing:
 
-## Class Imbalance Challenge
+**Step 1: Image Selection**
+- Selected 100 images per class from the original dataset
+- Ensured balanced representation across all 7 lesion types
 
-The dataset exhibits significant class imbalance, which is a common challenge in medical imaging:
+**Step 2: Image Resizing**
+- Resized all images to 96×96 pixels
+- Standardized format as PNG for consistent processing
 
-| Lesion Type | Count | Percentage |
+**Step 3: Data Augmentation**
+- Applied horizontal flip augmentation to each image
+- Generated 200 images per class (100 original + 100 flipped)
+- **Total dataset: 1,400 images** (200 × 7 classes)
+
+This preprocessing addresses the severe class imbalance in the original HAM10000 dataset where melanocytic nevi represented 67% of images while dermatofibroma represented only 1.1%.
+
+## Balanced Dataset Composition
+
+The preprocessed dataset provides balanced representation:
+
+| Lesion Type | Images | Percentage |
 |---|---|---|
-| Melanocytic nevus (nv) | 6,705 | 67.0% |
-| Melanoma (mel) | 1,113 | 11.1% |
-| Basal cell carcinoma (bcc) | 514 | 5.1% |
-| Actinic keratosis (akiec) | 327 | 3.3% |
-| Benign keratosis (bkl) | 1,099 | 11.0% |
-| Dermatofibroma (df) | 115 | 1.1% |
-| Vascular lesion (vasc) | 142 | 1.4% |
+| Melanocytic nevus (nv) | 200 | 14.3% |
+| Melanoma (mel) | 200 | 14.3% |
+| Basal cell carcinoma (bcc) | 200 | 14.3% |
+| Actinic keratosis (akiec) | 200 | 14.3% |
+| Benign keratosis (bkl) | 200 | 14.3% |
+| Dermatofibroma (df) | 200 | 14.3% |
+| Vascular lesion (vasc) | 200 | 14.3% |
+| **Total** | **1,400** | **100%** |
 
-This imbalance can cause machine learning models to perform poorly on minority classes. The Image Learner tool provides built-in mechanisms to address this through data augmentation and class weighting strategies.
+This balanced dataset allows the Image Learner model to learn effectively from all lesion types without bias toward the majority class.
 
-# Data Augmentation
+# Data Augmentation Applied
 
-To mitigate class imbalance and improve model generalization, **horizontal flip augmentation** was applied to the training dataset. This transformation:
+As part of the preprocessing pipeline described by {% cite Shetty2022 %}, **horizontal flip augmentation** was applied during dataset creation. This transformation:
 
-- Creates additional training samples by horizontally flipping existing images
+- Creates additional training samples by horizontally flipping each original image
 - Helps the model learn invariant features that are robust to orientation changes
-- Is particularly useful for dermoscopic images where lesion orientation is not clinically significant
-- Increases effective dataset size without requiring new data collection
+- Is particularly effective for dermoscopic images where lesion orientation is not clinically significant
+- Doubled our training set from 100 to 200 images per class
 
 ![Example of horizontal flip augmentation applied to a skin lesion image.](../../images/skin_tutorial/Horizontal\ Flip\ augmentation.png "Example of horizontal flip augmentation. Adapted from {% cite Shetty2022 %}.")
 
-> <tip-title>Data Augmentation Rationale</tip-title>
+> <tip-title>Why Horizontal Flip Augmentation?</tip-title>
 >
-> Horizontal flip augmentation is a standard technique in computer vision that:
+> Horizontal flip augmentation is a standard technique in medical image analysis that:
 > - Increases model robustness to variations in lesion orientation
-> - Effectively doubles the training set size
-> - Helps mitigate the effects of class imbalance by providing more training examples
-> - Is applied only to the training set, not validation or test sets, to ensure unbiased evaluation
+> - Effectively doubles the training set size without additional data collection
+> - Helps create balanced representation across all classes
+> - Preserves diagnostic features while increasing data diversity
 >
-> As demonstrated by {% cite Shetty2022 %}, data augmentation techniques including horizontal flips significantly improve classification accuracy for skin lesion detection in the HAM10000 dataset.
+> As demonstrated by {% cite Shetty2022 %}, this preprocessing approach with horizontal flip augmentation significantly improves classification accuracy for skin lesion detection, achieving 95.18% accuracy on the HAM10000 dataset.
 >
 {: .tip}
 
@@ -146,15 +155,16 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 
 # Prepare Environment and Get the Data
 
-> <comment-title>Preprocessing the raw data</comment-title>
+> <comment-title>Dataset Preprocessing</comment-title>
 >
-> The raw HAM10000 dataset from the source has been preprocessed and made available on Zenodo to facilitate this tutorial:
-> - Images have been resized to 96x96 pixels for computational efficiency
-> - Images have been organized into class folders
-> - Metadata has been compiled into CSV format for easy reference
+> The dataset available on Zenodo has been preprocessed following {% cite Shetty2022 %} methodology:
+> 1. **Selected** 100 images per class from the original HAM10000 dataset (10,015 images)
+> 2. **Resized** all images to 96×96 pixels for computational efficiency
+> 3. **Applied** horizontal flip augmentation to generate 200 images per class
+> 4. **Created** a balanced dataset of 1,400 total images (200 × 7 classes)
+> 5. **Compiled** metadata in CSV format with class labels
 >
-> A preprocessing workflow including image resizing and metadata compilation can be found at: 
-> [HAM10000 Preprocessing](https://zenodo.org/records/17114688)
+> This preprocessing addresses the severe class imbalance in the original dataset and creates a balanced training set suitable for deep learning. The preprocessed dataset is available at: [HAM10000 Preprocessed Dataset](https://zenodo.org/records/17114688)
 >
 {:  .comment}
 

@@ -4,11 +4,11 @@ A Galaxy tutorial for building and evaluating a deep learning image classifier u
 
 ## Overview
 
-This tutorial demonstrates how to use the Galaxy Image Learner tool to build a deep learning classifier for skin lesion classification. The HAM10000 dataset contains 10,015 dermoscopic images across 7 types of pigmented skin lesions. Using Galaxy's Image Learner, we train a transfer learning model, evaluate its performance, and interpret the results.
+This tutorial demonstrates how to use the Galaxy Image Learner tool to build a deep learning classifier for skin lesion classification. The dataset is a preprocessed, balanced subset of the HAM10000 collection, following the methodology from Shetty et al. (2022). Using Galaxy's Image Learner, we train a transfer learning model, evaluate its performance, and interpret the results.
 
 ## Key Features
 
-- **Dataset**: HAM10000 - 10,015 dermoscopic images of skin lesions
+- **Dataset**: Preprocessed HAM10000 - 1,400 balanced dermoscopic images
 - **Task**: Multi-class image classification (7 lesion types)
 - **Model**: Deep learning with transfer learning (caformer_s18_384)
 - **Metrics**: Accuracy, ROC-AUC, F1-score, Cohen's Kappa
@@ -16,10 +16,11 @@ This tutorial demonstrates how to use the Galaxy Image Learner tool to build a d
 
 ## Dataset Information
 
-- **Total Images**: 10,015
-- **Image Resolution**: 96x96 pixels
+- **Total Images**: 1,400 (preprocessed and balanced)
+- **Per Class**: 200 images each (14.3% per class)
+- **Image Resolution**: 96×96 pixels
 - **Lesion Classes**: 7 types (melanoma, nevus, basal cell carcinoma, etc.)
-- **Metadata**: Patient age, sex, lesion location, diagnostic information
+- **Preprocessing**: Selected 100 per class, applied horizontal flip augmentation
 - **Source**: [Zenodo](https://zenodo.org/records/17114688)
 
 ## Model Performance

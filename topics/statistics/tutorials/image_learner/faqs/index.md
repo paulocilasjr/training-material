@@ -4,19 +4,19 @@ layout: faq-page
 
 ## What is the HAM10000 dataset?
 
-The HAM10000 ("Human Against Machine with 10,000 training images") dataset is a large collection of 10,015 dermoscopic images of skin lesions. It includes seven types of pigmented skin lesions: melanoma, melanocytic nevus, basal cell carcinoma, actinic keratosis, benign keratosis, dermatofibroma, and vascular lesions. Each image has associated metadata including patient age, sex, and lesion location.
+The dataset used in this tutorial is a preprocessed, balanced subset of the original HAM10000 collection. It contains 1,400 dermoscopic images (200 per class) covering seven types of pigmented skin lesions: melanoma, melanocytic nevus, basal cell carcinoma, actinic keratosis, benign keratosis, dermatofibroma, and vascular lesions. The preprocessing followed the methodology from Shetty et al. (2022), including image selection, resizing to 96×96 pixels, and horizontal flip augmentation to create a balanced dataset suitable for deep learning.
 
 ## What is class imbalance and why does it matter?
 
-Class imbalance occurs when the training dataset has a significantly different number of samples for different classes. In the HAM10000 dataset, melanocytic nevi represent over 67% of the samples, while dermatofibroma and vascular lesions represent less than 2% each. This imbalance can cause machine learning models to perform poorly on minority classes. The Image Learner tool addresses this through data augmentation and class weighting.
+Class imbalance occurs when the training dataset has a significantly different number of samples for different classes. In the original HAM10000 dataset, melanocytic nevi represented 67% of samples while dermatofibroma and vascular lesions represented less than 2% each. This imbalance can cause machine learning models to perform poorly on minority classes. To address this, our dataset was preprocessed to create a balanced set with 200 images per class (14.3% each), using horizontal flip augmentation on a selected subset of 100 images per class.
 
 ## Why use data augmentation?
 
-Data augmentation artificially increases the size and diversity of the training dataset by applying transformations to existing images. In this tutorial, we use horizontal flip augmentation because:
-- Lesion orientation is not clinically significant
-- It helps the model learn robust features
-- It's particularly effective for addressing class imbalance
-- It improves model generalization to new data
+Data augmentation artificially increases the size and diversity of the training dataset by applying transformations to existing images. In this tutorial, horizontal flip augmentation was applied during preprocessing (following Shetty et al. 2022) because:
+- Lesion orientation is not clinically significant for diagnosis
+- It doubled our dataset from 100 to 200 images per class
+- It helps create a balanced dataset addressing class imbalance
+- It improves model generalization without requiring additional data collection
 
 ## What is transfer learning?
 
