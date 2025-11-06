@@ -331,6 +331,26 @@ The confusion matrix reveals performance patterns for each lesion type:
 - **Challenge areas**: Certain morphologically similar lesions may show higher misclassification rates
 - **Clinical implications**: Classes with lower performance may require additional expert review in clinical settings
 
+# Comparison with Shetty et al. (2022)
+
+To contextualize our results, we compare against the CNN results reported by Shetty et al. (2022) on HAM10000 {% cite Shetty2022 %}. Note that their work used k-fold cross-validation on a selected subset with augmentation, while our Image Learner experiment evaluates a train/validation/test split on a balanced, preprocessed subset (1,400 images, 200 per class).
+
+| Metric | Shetty et al., 2022 (CNN) | Image Learner (this tutorial) |
+|---|---:|---:|
+| Accuracy | 0.86 (86%) | 0.9036 (90.36%) |
+| Precision | 0.88 (88%) | 0.9102 (91.02%) |
+| Recall | 0.85 (85%) | 0.9036 (90.36%) |
+| F1-Score | 0.86 (86%) | 0.9063 (90.63%) |
+| ROC-AUC | Not reported | 0.9880 (98.80%) |
+| Cohen's Kappa | Not reported | 0.8875 |
+
+**Key takeaways:**
+- **Image Learner outperforms the reference CNN** across all comparable metrics (accuracy, precision, recall, F1-score).
+- Our model achieves 90.36% accuracy vs. 86% in the paper, and 91.02% precision vs. 88%.
+- The ROC-AUC of 0.9880 demonstrates excellent discrimination ability not reported in the original paper.
+- Differences may reflect our use of transfer learning with a modern transformer-based architecture (caformer_s18_384) vs. traditional CNN, as well as evaluation methodology.
+- Image Learner provides publication-ready metrics and visualizations with full reproducibility through Galaxy.
+
 # Conclusion
 
 In this tutorial, we demonstrated how to use the Galaxy Image Learner tool to build a deep learning model for skin lesion classification using the HAM10000 dataset. We followed a structured approach consisting of:
