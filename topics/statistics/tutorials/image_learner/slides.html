@@ -1,0 +1,262 @@
+---
+layout: tutorial_slides
+logo: GTN
+title: "Building Deep Learning Image Classifiers with GLEAM: A Case Study on Skin Lesion Classification"
+zenodo_link: "https://zenodo.org/records/17114688"
+
+questions:
+  - "How can Image Learner be used in Galaxy to build and evaluate deep learning models?"
+  - "What are the key features of GLEAM Image Learner that simplify image classification workflows?"
+
+objectives:
+  - "Understand the capabilities of GLEAM Image Learner for automating deep learning workflows."
+  - "Learn how to use Image Learner in Galaxy to build and evaluate image classification models."
+  - "Apply Image Learner to the HAM10000 dataset to develop a skin lesion classifier."
+
+contributors:
+  - dang-khai
+  - paulocilasjr
+  - qchiujunhao
+  - jgoecks
+---
+
+# Introduction to GLEAM Image Learner and Galaxy
+
+- **Galaxy**: A web-based platform for data-intensive biomedical research, enabling users to run tools and workflows without coding.
+- **GLEAM Image Learner**: A no-code deep learning tool for image classification in Galaxy that automates model training and evaluation.
+- **Integration**: Image Learner is available as a tool in Galaxy, allowing users to perform deep learning tasks directly from the Galaxy interface.
+
+???
+
+GLEAM Image Learner simplifies deep learning by automating tasks like data preprocessing, model training with transfer learning, and comprehensive evaluation. In this tutorial, we will explore how Image Learner can be used within Galaxy to build reliable image classifiers, using the HAM10000 skin lesion dataset as a case study.
+
+---
+
+# Use Case: Skin Lesion Classification with HAM10000
+
+- **HAM10000 Dataset**: 10,015 dermoscopic images of pigmented skin lesions across 7 diagnostic categories.
+- **Challenge**: Class imbalance (melanocytic nevi represent 67% of samples).
+- **Objective**: Demonstrate how Image Learner can be used to build a robust deep learning classifier for skin lesion diagnosis.
+
+![Workflow overview for HAM10000 classification](./../../images/skin_tutorial/"IMAGE LEARNER" workflow diagram.png)
+
+---
+
+# Dataset: HAM10000
+
+- **Description**: A large collection of dermoscopic images from multiple sources, standardized for contrast and color.
+- **Total Images**: 10,015 (96x96 pixels)
+- **Lesion Classes**:
+  - Melanoma (mel)
+  - Melanocytic nevus (nv) - 67% of dataset
+  - Basal cell carcinoma (bcc)
+  - Actinic keratosis (akiec)
+  - Benign keratosis (bkl)
+  - Dermatofibroma (df)
+  - Vascular lesion (vasc)
+- **Metadata**: Patient age, sex, lesion location, diagnostic information
+- **Galaxy's Role**: Facilitates easy data upload and management.
+
+---
+
+# Challenge: Class Imbalance
+
+| Lesion Type | Count | Percentage |
+|---|---|---|
+| Melanocytic nevus (nv) | 6,705 | 67.0% |
+| Melanoma (mel) | 1,113 | 11.1% |
+| Benign keratosis (bkl) | 1,099 | 11.0% |
+| Basal cell carcinoma (bcc) | 514 | 5.1% |
+| Actinic keratosis (akiec) | 327 | 3.3% |
+| Vascular lesion (vasc) | 142 | 1.4% |
+| Dermatofibroma (df) | 115 | 1.1% |
+
+**Solution**: Data augmentation and transfer learning
+
+---
+
+# Data Augmentation Strategy
+
+- **Horizontal Flip Augmentation**:
+  - Creates additional training samples by flipping images
+  - Helps model learn orientation-invariant features
+  - Effectively doubles training set size
+  - Applied only to training set, not validation/test
+
+![Example of horizontal flip augmentation](./../../images/skin_tutorial/Horizontal Flip augmentation.png)
+
+*Adapted from Shetty et al., 2022 ([Scientific Reports 12, 18134](https://www.nature.com/articles/s41598-022-22644-9))*
+
+---
+
+# Transfer Learning with Image Learner
+
+- **Pre-trained Models**: Leverage models trained on ImageNet
+- **Fine-tuning**: Adapt pre-trained features to skin lesion classification
+- **Benefits**:
+  - Requires fewer training samples
+  - Trains faster than from scratch
+  - Achieves better performance
+  - Especially effective for medical imaging
+
+---
+
+# Image Learner in Galaxy
+
+- **GLEAM Image Learner Tool**:
+  - Available on Galaxy: https://usegalaxy.org/ and https://cancer.usegalaxy.org
+  - Automates training and evaluation of deep learning models
+  - Outputs trained model and comprehensive performance report
+- **Key Features**:
+  - Automatic image preprocessing (resizing, normalization)
+  - Transfer learning with multiple model architectures
+  - Data augmentation options
+  - Detailed evaluation metrics and visualizations
+
+---
+
+# Model Configuration
+
+| Parameter | Value | Rationale |
+|---|---|---|
+| Model | caformer_s18_384 | Efficient transformer-based architecture |
+| Epochs | 30 | Sufficient for convergence |
+| Batch Size | 32 | Balances memory and stability |
+| Fine-tune | Enabled | Leverage pre-trained features |
+| Learning Rate | 0.001 | Conservative for fine-tuning |
+| Random Seed | 42 | Reproducible results |
+| Data Split | 70/10/20 | Train/validation/test |
+| Augmentation | Horizontal flip | Address class imbalance |
+
+---
+
+# Running Image Learner
+
+1. **Upload Data**:
+   - images_96.zip (10,015 images) from Zenodo
+   - image_metadata.csv (class labels and metadata)
+   - [Zenodo link](https://zenodo.org/records/17114688)
+
+2. **Run Image Learner**:
+   - Input images: images_96.zip
+   - Input metadata: image_metadata.csv
+   - Task: Classification
+   - Model: caformer_s18_384
+   - Configure parameters as shown
+
+3. **Evaluate Model**:
+   - Use Image Learner's report to assess performance
+   - Analyze ROC-AUC curves and confusion matrix
+
+---
+
+# Image Learner Model Report
+
+- **Interactive HTML Report**:
+  - **Model Summary**: Architecture, parameters, dataset splits
+  - **Training Performance**: Loss and accuracy curves over epochs
+  - **Test Evaluation**: Comprehensive metrics and visualizations
+  - **Confusion Matrix**: Class-by-class performance breakdown
+  - **ROC-AUC Curves**: Discrimination ability for each class
+
+![Model and training summary](./../../images/skin_tutorial/Image Classification Results – Model and Training Summary.png)
+
+---
+
+# Training Performance
+
+![Test performance summary showing training progression](./../../images/skin_tutorial/Test Performance Summary.png)
+
+- Monitor training and validation metrics
+- Identify potential overfitting
+- Assess convergence
+
+---
+
+# Model Evaluation Metrics
+
+**Achieved Performance**:
+- **Accuracy**: 90.36% - High overall correctness
+- **ROC-AUC**: 0.9880 - Excellent discrimination
+- **Macro F1**: 0.9063 - Balanced across classes
+- **Cohen's Kappa**: 0.8875 - Very good agreement
+
+**Interpretation**: The model demonstrates excellent performance across all metrics, with particularly strong discrimination ability (ROC-AUC near 1.0).
+
+---
+
+# ROC-AUC Curves
+
+![ROC-AUC curves for all seven lesion classes](./../../images/skin_tutorial/ROC-AUC Curves.png)
+
+- **AUC > 0.9**: Excellent discrimination
+- Each curve represents one lesion type
+- Area under curve summarizes classification performance
+
+---
+
+# Confusion Matrix
+
+![Confusion matrix showing classification results](./../../images/skin_tutorial/Confusion Matrix.png)
+
+- **Diagonal**: Correct predictions
+- **Off-diagonal**: Misclassifications
+- Identifies which classes are confused with each other
+- Useful for understanding model limitations
+
+---
+
+# Key Results
+
+- **Overall Accuracy**: 90.36%
+  - Successfully classifies 9 out of 10 skin lesions correctly
+
+- **ROC-AUC**: 0.9880
+  - Near-perfect discrimination between lesion types
+
+- **Balanced Performance**: Macro F1 = 0.9063
+  - Good performance across all classes despite imbalance
+
+- **Clinical Relevance**: High accuracy for melanoma detection
+  - Critical for early cancer diagnosis
+
+---
+
+# Conclusion
+
+- **Key Takeaways**:
+  - Image Learner simplifies deep learning workflows for image classification
+  - Successfully built and evaluated a skin lesion classifier using HAM10000
+  - Demonstrated Image Learner's ability to handle class imbalance through augmentation
+  - Achieved 90% accuracy and 0.988 ROC-AUC through transfer learning
+
+- **Why Image Learner?**
+  - No coding required - accessible to all researchers
+  - Automates preprocessing, training, and evaluation
+  - Produces publication-ready results and visualizations
+  - Enables rapid experimentation with different models
+
+---
+
+# Applications Beyond Skin Lesions
+
+Image Learner can be applied to:
+- **Medical Imaging**: X-rays, CT scans, histopathology
+- **Biological Images**: Cell classification, microscopy
+- **Agricultural**: Plant disease detection
+- **Environmental**: Species identification
+- **Quality Control**: Defect detection
+
+The same workflow applies across domains!
+
+---
+
+# Galaxy Training Resources
+
+- Galaxy Training Materials: [training.galaxyproject.org](https://training.galaxyproject.org)
+- Help Forum: [help.galaxyproject.org](https://help.galaxyproject.org)
+- Gitter Chat: [gitter.im/galaxyproject/Lobby](https://gitter.im/galaxyproject/Lobby)
+- Events: [galaxyproject.org/events](https://galaxyproject.org/events)
+
+![GTN stats]({{site.baseurl}}/topics/introduction/images/gtn_stats.png)
+
