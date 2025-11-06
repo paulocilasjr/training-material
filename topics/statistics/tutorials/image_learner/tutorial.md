@@ -178,7 +178,7 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >
 >    ```
 >    https://zenodo.org/records/17114688/files/images_96.zip
->    https://zenodo.org/records/17114688/files/image_metadata.csv
+>    https://zenodo.org/records/17114688/files/image_metadata_new.csv
 >    ```
 >
 >    {% snippet faqs/galaxy/datasets_import_via_link.md %}
@@ -199,7 +199,7 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >
 > 4. Add tags to the datasets for better organization:
 >    - Add tag `HAM10000 images` to the images_96.zip file
->    - Add tag `HAM10000 metadata` to the image_metadata.csv file
+>    - Add tag `HAM10000 metadata` to the image_metadata_new.csv file
 >
 >    {% snippet faqs/galaxy/datasets_add_tag.md %}
 >
@@ -211,7 +211,7 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >
 > 1. {% tool [Image Learner](https://toolshed.g2.bx.psu.edu/view/goeckslab/image_learner/c5150cceab47) %} with the following parameters:
 >    - {% icon param-file %} *"Input image collection (ZIP)"*: `images_96.zip`
->    - {% icon param-file %} *"Image metadata (CSV)"*: `image_metadata.csv`
+>    - {% icon param-file %} *"Image metadata (CSV)"*: `image_metadata_new.csv`
 >    - {% icon param-select %} *"Task"*: `Classification`
 >    - {% icon param-select %} *"Model"*: `caformer_s18_384`
 >    - {% icon param-text %} *"Number of epochs"*: `30`

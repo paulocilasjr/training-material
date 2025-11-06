@@ -5,7 +5,7 @@
       class: File
       filetype: .zip
     'image_metadata':
-      location: https://zenodo.org/api/records/17114688/files/image_metadata.csv/content
+      location: https://zenodo.org/api/records/17114688/files/image_metadata_new.csv/content
       class: File
       filetype: .csv
   outputs:

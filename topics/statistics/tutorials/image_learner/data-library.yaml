@@ -17,7 +17,7 @@ items:
         src: url
         ext: ''
         info: https://zenodo.org/records/17114688
-      - url: https://zenodo.org/api/records/17114688/files/image_metadata.csv/content
+      - url: https://zenodo.org/api/records/17114688/files/image_metadata_new.csv/content
         src: url
         ext: ''
         info: https://zenodo.org/records/17114688

@@ -28,7 +28,7 @@
    "name":"HAM10000 - Image Classification Model",
    "steps": {
         "0": {
-            "annotation": "HAM10000 dermoscopic images - 96x96 pixels - 10,015 images",
+            "annotation": "HAM10000 dermoscopic images - 96x96 pixels - 1,400 images (200 per class)",
             "content_id": null,
             "errors": null,
             "id": 0,
@@ -66,7 +66,7 @@
             ]
         },
         "1": {
-            "annotation": "HAM10000 image metadata - 10,015 samples with class labels",
+            "annotation": "HAM10000 image metadata - 1,400 samples with class labels (preprocessed and balanced)",
             "content_id": null,
             "errors": null,
             "id": 1,
@@ -74,7 +74,7 @@
             "inputs": [
                 {
                     "description": "",
-                    "name": "image_metadata.csv"
+                    "name": "image_metadata_new.csv"
                 }
             ],
             "label": "HAM10000 Image Metadata",
