@@ -333,7 +333,7 @@ The confusion matrix reveals performance patterns for each lesion type:
 
 # Comparison with Shetty et al. (2022)
 
-To contextualize our results, we compare against the CNN results reported by Shetty et al. (2022) on HAM10000 {% cite Shetty2022 %}. Note that their work used k-fold cross-validation on a selected subset with augmentation, while our Image Learner experiment evaluates a train/validation/test split on a balanced, preprocessed subset (1,400 images, 200 per class).
+To contextualize our results, we compare against the CNN results reported by Shetty et al. (2022) on HAM10000 {% cite Shetty2022 %}.
 
 | Metric | Shetty et al., 2022 (CNN) | Image Learner (this tutorial) |
 |---|---:|---:|
