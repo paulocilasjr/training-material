@@ -219,7 +219,6 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >    - {% icon param-select %} *"Fine tune pretrained model"*: `Yes`
 >    - {% icon param-text %} *"Learning rate"*: `0.001`
 >    - {% icon param-text %} *"Random seed"*: `42`
->    - {% icon param-text %} *"Data augmentation"*: `horizontal_flip`
 >    - {% icon param-select %} *"Data split (train/validation/test)"*: `70/10/20`
 >
 > 2. Run the tool
