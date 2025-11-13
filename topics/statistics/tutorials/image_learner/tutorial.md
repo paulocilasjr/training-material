@@ -45,7 +45,7 @@ In this tutorial, we will use the HAM10000 ("Human Against Machine with 10,000 t
 
 To achieve this, we will follow three essential steps: (i) upload the HAM10000 images and metadata to Galaxy, (ii) set up and run the Image Learner tool to train a deep learning model, and (iii) evaluate the model's predictive performance by analyzing key performance metrics such as accuracy, ROC-AUC, and confusion matrices.
 
-![Workflow overview for HAM10000 classification in GLEAM Image Learner](../../images/skin_tutorial/"IMAGE\ LEARNER"\ workflow\ diagram.png "Workflow overview for HAM10000 classification in GLEAM Image Learner")
+![Workflow overview for HAM10000 classification in GLEAM Image Learner](../../images/skin_tutorial/image_learner_workflow_diagram.png "Workflow overview for HAM10000 classification in GLEAM Image Learner")
 
 > <agenda-title></agenda-title>
 >
@@ -79,15 +79,15 @@ The dataset used in this tutorial has been preprocessed following the methodolog
 
 Starting from the original HAM10000 dataset (10,015 images with severe class imbalance), we applied the following preprocessing:
 
-**Step 1: Image Selection**
+### Step 1: Image Selection
 - Selected 100 images per class from the original dataset
 - Ensured balanced representation across all 7 lesion types
 
-**Step 2: Image Resizing**
+### Step 2: Image Resizing
 - Resized all images to 96×96 pixels
 - Standardized format as PNG for consistent processing
 
-**Step 3: Data Augmentation**
+### Step 3: Data Augmentation
 - Applied horizontal flip augmentation to each image
 - Generated 200 images per class (100 original + 100 flipped)
 - **Total dataset: 1,400 images** (200 × 7 classes)
@@ -120,7 +120,7 @@ As part of the preprocessing pipeline described by {% cite Shetty2022 %}, **hori
 - Is particularly effective for dermoscopic images where lesion orientation is not clinically significant
 - Doubled our training set from 100 to 200 images per class
 
-![Example of horizontal flip augmentation applied to a skin lesion image.](../../images/skin_tutorial/Horizontal\ Flip\ augmentation.png "Example of horizontal flip augmentation. Adapted from {% cite Shetty2022 %}.")
+![Example of horizontal flip augmentation applied to a skin lesion image.](../../images/skin_tutorial/horizontal_flip_augmentation.png "Example of horizontal flip augmentation. Adapted from {% cite Shetty2022 %}.")
 
 > <tip-title>Why Horizontal Flip Augmentation?</tip-title>
 >
@@ -151,7 +151,7 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 | Data Split | 70/10/20 | Standard split for training/validation/test |
 | Data Augmentation | Horizontal Flip | Address class imbalance and improve generalization |
 
-![Model and training summary interface in GLEAM Image Learner.](../../images/skin_tutorial/Image\ Classification\ Results\ –\ Model\ and\ Training\ Summary.png "Model and training summary interface")
+![Model and training summary interface in GLEAM Image Learner.](../../images/skin_tutorial/image_classification_results_summary.png "Model and training summary interface")
 
 # Prepare Environment and Get the Data
 
@@ -209,7 +209,7 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 
 > <hands-on-title> Task description </hands-on-title>
 >
-> 1. {% tool [Image Learner](https://toolshed.g2.bx.psu.edu/view/goeckslab/image_learner/c5150cceab47) %} with the following parameters:
+> 1. {% tool [Image Learner](toolshed.g2.bx.psu.edu/repos/goeckslab/image_learner/c5150cceab47) %} with the following parameters:
 >    - {% icon param-file %} *"Input image collection (ZIP)"*: `images_96.zip`
 >    - {% icon param-file %} *"Image metadata (CSV)"*: `image_metadata_new.csv`
 >    - {% icon param-select %} *"Task"*: `Classification`
@@ -260,7 +260,7 @@ The report typically contains the following sections:
 ### Test Set Evaluation
 The test set evaluation provides comprehensive metrics for assessing final model performance:
 
-![Test Performance Summary - Accuracy and Loss Progression](../../images/skin_tutorial/Test\ Performance\ Summary.png "Test Performance Summary")
+![Test Performance Summary - Accuracy and Loss Progression](../../images/skin_tutorial/test_performance_summary.png "Test Performance Summary")
 
 ### Classification Metrics
 
@@ -279,7 +279,7 @@ After training, the tool generates detailed evaluation metrics:
 
 The Receiver Operating Characteristic (ROC) curve plots the true positive rate against the false positive rate at different classification thresholds. The Area Under the Curve (AUC) metric summarizes this performance in a single value between 0 and 1, where 1.0 represents perfect classification.
 
-![ROC-AUC curves for all seven lesion classes](../../images/skin_tutorial/ROC-AUC\ Curves.png "ROC-AUC Curves for all lesion classes")
+![ROC-AUC curves for all seven lesion classes](../../images/skin_tutorial/roc_auc_curves.png "ROC-AUC Curves for all lesion classes")
 
 > <tip-title>Interpreting ROC-AUC</tip-title>
 >
@@ -297,7 +297,7 @@ The Receiver Operating Characteristic (ROC) curve plots the true positive rate a
 
 The confusion matrix provides a detailed breakdown of correct and incorrect predictions for each class, showing where the model makes errors.
 
-![Confusion matrix showing classification results for all lesion classes](../../images/skin_tutorial/Confusion\ Matrix.png "Confusion matrix of model predictions")
+![Confusion matrix showing classification results for all lesion classes](../../images/skin_tutorial/confusion_matrix.png "Confusion matrix of model predictions")
 
 > <tip-title>Interpreting the Confusion Matrix</tip-title>
 >
@@ -343,7 +343,7 @@ To contextualize our results, we compare against the CNN results reported by She
 | ROC-AUC | Not reported | 0.9880 (98.80%) |
 | Cohen's Kappa | Not reported | 0.8875 |
 
-**Key takeaways:**
+### Key takeaways
 - **Image Learner outperforms the reference CNN** across all comparable metrics (accuracy, precision, recall, F1-score).
 - Our model achieves 90.36% accuracy vs. 86% in the paper, and 91.02% precision vs. 88%.
 - The ROC-AUC of 0.9880 demonstrates excellent discrimination ability not reported in the original paper.

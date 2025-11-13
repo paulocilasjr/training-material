@@ -14,7 +14,7 @@ objectives:
   - "Apply Image Learner to the HAM10000 dataset to develop a skin lesion classifier."
 
 contributors:
-  - dang-khai
+  - dangkhai
   - paulocilasjr
   - qchiujunhao
   - jgoecks
@@ -38,7 +38,7 @@ GLEAM Image Learner simplifies deep learning by automating tasks like data prepr
 - **Challenge**: Class imbalance (melanocytic nevi represent 67% of samples).
 - **Objective**: Demonstrate how Image Learner can be used to build a robust deep learning classifier for skin lesion diagnosis.
 
-![Workflow overview for HAM10000 classification](./../../images/skin_tutorial/"IMAGE LEARNER" workflow diagram.png)
+![Workflow overview for HAM10000 classification](./../../images/skin_tutorial/image_learner_workflow_diagram.png)
 
 ---
 
@@ -83,7 +83,7 @@ GLEAM Image Learner simplifies deep learning by automating tasks like data prepr
   - Effectively doubles training set size
   - Applied only to training set, not validation/test
 
-![Example of horizontal flip augmentation](./../../images/skin_tutorial/Horizontal Flip augmentation.png)
+![Example of horizontal flip augmentation](./../../images/skin_tutorial/horizontal_flip_augmentation.png)
 
 *Adapted from Shetty et al., 2022 ([Scientific Reports 12, 18134](https://www.nature.com/articles/s41598-022-22644-9))*
 
@@ -159,13 +159,13 @@ GLEAM Image Learner simplifies deep learning by automating tasks like data prepr
   - **Confusion Matrix**: Class-by-class performance breakdown
   - **ROC-AUC Curves**: Discrimination ability for each class
 
-![Model and training summary](./../../images/skin_tutorial/Image Classification Results – Model and Training Summary.png)
+![Model and training summary](./../../images/skin_tutorial/image_classification_results_summary.png)
 
 ---
 
 # Training Performance
 
-![Test performance summary showing training progression](./../../images/skin_tutorial/Test Performance Summary.png)
+![Test performance summary showing training progression](./../../images/skin_tutorial/test_performance_summary.png)
 
 - Monitor training and validation metrics
 - Identify potential overfitting
@@ -187,7 +187,7 @@ GLEAM Image Learner simplifies deep learning by automating tasks like data prepr
 
 # ROC-AUC Curves
 
-![ROC-AUC curves for all seven lesion classes](./../../images/skin_tutorial/ROC-AUC Curves.png)
+![ROC-AUC curves for all seven lesion classes](./../../images/skin_tutorial/roc_auc_curves.png)
 
 - **AUC > 0.9**: Excellent discrimination
 - Each curve represents one lesion type
@@ -197,7 +197,7 @@ GLEAM Image Learner simplifies deep learning by automating tasks like data prepr
 
 # Confusion Matrix
 
-![Confusion matrix showing classification results](./../../images/skin_tutorial/Confusion Matrix.png)
+![Confusion matrix showing classification results](./../../images/skin_tutorial/confusion_matrix.png)
 
 - **Diagonal**: Correct predictions
 - **Off-diagonal**: Misclassifications
