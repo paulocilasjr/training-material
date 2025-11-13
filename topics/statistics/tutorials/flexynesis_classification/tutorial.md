@@ -118,10 +118,10 @@ Flexynesis automatically handles key preprocessing steps such as:
 
 * Distinguish numerical and categorical variables in the clinical data file. For categorical variables, create a numerical encoding of the labels for training data. Use the same encoders to map the test samples to the same numerical encodings.
 
->    > <comment-title> No manual preprocessing is required </comment-title>
->    >
->    > Flexynesis performs all data cleaning internally as part of its pipeline.
->    {: .comment}
+> <comment-title> No manual preprocessing is required </comment-title>
+>
+> Flexynesis performs all data cleaning internally as part of its pipeline.
+{: .comment}
 
 Now it's time to train model using Flexynesis:
 * We choose whether we want to concatenate the data matrices (early integration) or not (intermediate integration) before running them through the neural networks.
