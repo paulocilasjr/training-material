@@ -185,39 +185,19 @@ convention, so that our tools will know which files belong together. We do this 
 
 > <hands-on-title>Organizing our data into a paired collection</hands-on-title>
 >
-> 1. Click on the **checkmark icon** {% icon param-check %} at top of your history.
+> 1. Create a paired collection named `Mouse samples`,
 >
-> 2. Select all the FASTQ files (40 in total)
->    - **Tip:** type `fastq` in the search bar at the top of your history to filter only the FASTQ files; you can now use the `All` button at the top instead of having to individually select all 40 input files.
->    - Click on **All 40 selected**
->    - Select **Build List of Dataset Pairs** from the dropdown menu
+>    {% snippet faqs/galaxy/collections_build_list_paired.md %}
 >
->    In the next dialog window you can create the list of pairs. By default Galaxy will look for pairs
->    of files that differ only by a `_1` and `_2` part in their names. In our case however, these
->    should be `_R1` and `_R2`.
->
-> 3. Click on "Choose Filters" and select `Forward: _R1, Reverse: _R2` (note that you can also enter Filters manually in the text fields on the top)
->
->    You should now see a list of pairs suggested by Galaxy:
->    ![List of suggested paired datasets](../../images/create_collection.png)
->
-> 4. Click on **Auto-pair** to create the suggested pairs.
->   - Or click on "Pair these datasets" manually for every pair that looks correct.
->
-> 5. **Name the pairs**
->    - The middle segment is the name for each pair.
->    - These names will be used as sample names in the downstream analysis, so always make sure they are informative!
->    - Make sure that {% icon param-check %} `Remove file extensions` is checked
->    - **Check** that the pairs are named `F3D0`-`F3D9`, `F3D141`-`F3D150` and `Mock`.
->      - Note: The names should **not** have the .fastq extension
->      - If needed, the names can be edited manually by clicking on them
->
->    ![The result of pairing](../../images/create_collection2.png)
->
-> 6. **Name your collection** at the bottom right of the screen
->   - You can pick whatever name makes sense to you
-> 7. Click the **Create Collection** button.
->    - A new dataset collection item will now appear in your history
+> > <comment-title></comment-title>
+> >
+> > - Make sure that {% icon param-check %} `Remove file extensions` is checked
+> > - **Check** that the pairs are named `F3D0`-`F3D9`, `F3D141`-`F3D150` and `Mock`.
+> >   - Note: The names should **not** have the .fastq extension
+> >   - If needed, the names can be edited manually by clicking on them
+> >   
+> {: .comment}
+>    
 {: .hands_on}
 
 
