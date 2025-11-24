@@ -20,6 +20,16 @@ contributors:
   - shiltemann
   - bebatut
   - tnabtaf
+editing:
+    - tflowers15
+    - mthang
+    - AnnaSyme
+    - igormakunin2
+#  testing: []
+  funding:
+    - AustralianBioCommons
+    - unimelb
+    - melbournebioinformatics
 subtopic: metabarcoding
 tags:
   - metabarcoding
