@@ -618,7 +618,7 @@ the **Unique.seqs** tool:
 > >  How many duplicate sequences did our filter step produce?
 > >
 > > > <solution-title></solution-title>
-> > > 3: The number of unique sequences was reduced from 16298 to 16295
+> > > 3: The number of unique sequences was reduced from 16,298 to 16,295
 > > {: .solution }
 > {: .question}
 {: .hands_on}
@@ -641,7 +641,7 @@ our contigs are ~250 bp long, we will set the threshold to 2 mismatches.
 > >
 > >  How many unique sequences are we left with after this clustering of highly similar sequences?
 > > > <solution-title></solution-title>
-> > > 5731: This is the number of lines in the fasta output
+> > > 5,731: This is the number of lines in the fasta output
 > > {: .solution }
 > {: .question}
 {: .hands_on}
