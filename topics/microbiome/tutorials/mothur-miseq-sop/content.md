@@ -1366,8 +1366,8 @@ off so we are confident we cover a large part of our sample diversity:
 
 {% unless include.short %}
 
-Finally, let's use the **Summary.single** tool to generate a summary report.  The following step
-will randomly subsample down to 2389 sequences, repeat this process 1000 times, and report several metrics:
+Finally, let's use the **Summary.single** tool to generate a summary report. The following step
+will randomly subsample down to 2400 sequences, repeat this process 1000 times, and report several metrics:
 
 > <hands-on-title>Summary.single</hands-on-title>
 >
