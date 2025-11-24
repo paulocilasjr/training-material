@@ -122,8 +122,8 @@ All data required for this tutorial has been made available from Zenodo [![DOI](
 >      > https://zenodo.org/record/800651/files/F3D145_R2.fastq
 >      > https://zenodo.org/record/800651/files/F3D146_R1.fastq
 >      > https://zenodo.org/record/800651/files/F3D146_R2.fastq
->      > https://zenodo.org/record//files/F3D147_R1.fastq
->      > https://zenodo.org/record//files/F3D147_R2.fastq
+>      > https://zenodo.org/record/800651/files/F3D147_R1.fastq
+>      > https://zenodo.org/record/800651/files/F3D147_R2.fastq
 >      > https://zenodo.org/record/800651/files/F3D148_R1.fastq
 >      > https://zenodo.org/record/800651/files/F3D148_R2.fastq
 >      > https://zenodo.org/record/800651/files/F3D149_R1.fastq
