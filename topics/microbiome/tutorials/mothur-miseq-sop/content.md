@@ -122,8 +122,8 @@ All data required for this tutorial has been made available from Zenodo [![DOI](
 >      > https://zenodo.org/record/800651/files/F3D145_R2.fastq
 >      > https://zenodo.org/record/800651/files/F3D146_R1.fastq
 >      > https://zenodo.org/record/800651/files/F3D146_R2.fastq
->      > https://zenodo.org/record/800651/files/F3D147_R1.fastq
->      > https://zenodo.org/record/800651/files/F3D147_R2.fastq
+>      > https://zenodo.org/record//files/F3D147_R1.fastq
+>      > https://zenodo.org/record//files/F3D147_R2.fastq
 >      > https://zenodo.org/record/800651/files/F3D148_R1.fastq
 >      > https://zenodo.org/record/800651/files/F3D148_R2.fastq
 >      > https://zenodo.org/record/800651/files/F3D149_R1.fastq
@@ -641,7 +641,7 @@ our contigs are ~250 bp long, we will set the threshold to 2 mismatches.
 > >
 > >  How many unique sequences are we left with after this clustering of highly similar sequences?
 > > > <solution-title></solution-title>
-> > > 5720: This is the number of lines in the fasta output
+> > > 5731: This is the number of lines in the fasta output
 > > {: .solution }
 > {: .question}
 {: .hands_on}
@@ -686,11 +686,11 @@ this chimera removal using the `VSEARCH` algorithm {% cite Rognes2016 %} that is
 > >
 > > > <solution-title></solution-title>
 > > >
-> > > 1. There were **3,439 representative sequences** flagged as chimeric. These represent a total of **10,564 total sequences**
+> > > 1. There were **3,467 representative sequences** flagged as chimeric. These represent a total of **10,827 total sequences**
 > > >
-> > >    This can be determined by looking at the number of sequences in the `vsearch.accnos` file (3439). To determine how many total sequences these represent, compare the Summary.seqs log output files before and after the chimera filtering step (128,655-118,091=10,564).
+> > >    This can be determined by looking at the number of sequences in the `vsearch.accnos` file (3,467). To determine how many total sequences these represent, compare the Summary.seqs log output files before and after the chimera filtering step (128,872-118,045=10,827).
 > > >
-> > > 2. There are 2,281 remaining sequences after filtering, clustering of highly similar sequences, and chimera removal.
+> > > 2. There are 2,264 remaining sequences after filtering, clustering of highly similar sequences, and chimera removal.
 > > >
 > > >    This can be determined by looking at the number of sequences in the fasta output of **Remove.seqs** {% icon tool %}
 > > {: .solution }
@@ -736,8 +736,8 @@ way of doing this is to use the abundant sequences as our reference.
 > >  How many sequences were flagged as chimeric? what is the percentage? (Hint: summary.seqs)
 > >
 > > > <solution-title></solution-title>
-> > > Looking at the chimera.vsearch `accnos` output, we see that **3,439 representative sequences** were flagged as chimeric. If we run summary.seqs on the resulting fasta file and count table, we see that we went from 128,655
-> > > sequences down to 118,091 total sequences in this step, for a reduction of **10,564 total sequences**, or 8.2%. This is a reasonable number of
+> > > Looking at the chimera.vsearch `accnos` output, we see that **3,467 representative sequences** were flagged as chimeric. If we run summary.seqs on the resulting fasta file and count table, we see that we went from 128,872
+> > > sequences down to 118,045 total sequences in this step, for a reduction of **10,827 total sequences**, or 8.4%. This is a reasonable number of
 > > > sequences to be flagged as chimeric.
 > > {: .solution }
 > {: .question}
@@ -824,12 +824,12 @@ and want to remove them from our dataset.
 > >
 > > > <solution-title></solution-title>
 > > > 1. 20 representative sequences were removed.
-> > >    The fasta file output from Remove.seqs had 2281 sequences while the fasta output from Remove.lineages
-> > >    contained 2261 sequences.
+> > >    The fasta file output from Remove.seqs had 2,264 sequences while the fasta output from Remove.lineages
+> > >    contained 2,244 sequences.
 > > >
 > > > 2. 162 total sequences were removed.
-> > >    If you run summary.seqs with the count table, you will see that we now have 2261 unique sequences
-> > >    representing a total of 117,929 total sequences (down from 118,091 before). This means 162 of our
+> > >    If you run summary.seqs with the count table, you will see that we now have 2,244 unique sequences
+> > >    representing a total of 117,883 total sequences (down from 118,045 before). This means 162 of our
 > > >    sequences were in represented by these 20 representative sequences.
 > > {: .solution }
 > {: .question}
@@ -1203,20 +1203,20 @@ dataset by subsampling.
 >    > <question-title></question-title>
 >    > How many sequences did the smallest sample consist of?
 >    > > <solution-title></solution-title>
->    > > The smallest sample is `F3D143`, and consists of 2389 sequences. This is a reasonable number, so we will now subsample all the other samples down to this level.
+>    > > The smallest sample is `F3D143`, and consists of 2,400 sequences. This is a reasonable number, so we will now subsample all the other samples down to this level.
 >    > {: .solution}
 >    {: .question}
 >
 > 2. {% tool [Sub.sample](toolshed.g2.bx.psu.edu/repos/iuc/mothur_sub_sample/mothur_sub_sample/1.39.5.0) %} with the following parameters
 >   - *"Select type of data to subsample"*: `OTU Shared`
 >   - {% icon param-file %} *"shared"*: the `shared` file from **Make.shared** {% icon tool %}
->   - *"size"*: `2389`
+>   - *"size"*: `2400`
 >
 >    > <question-title></question-title>
 >    >
 >    >  What would you expect the result of `count.groups` on this new shared output collection to be? Check if you are correct.
 >    > > <solution-title></solution-title>
->    > > all groups (samples) should now have 2389 sequences. Run count.groups again on the shared output collection by the sub.sample
+>    > > all groups (samples) should now have 2,400 sequences. Run count.groups again on the shared output collection by the sub.sample
 >    > > tool to confirm that this is indeed what happened.
 >    > {: .solution }
 >    {: .question}
@@ -1374,7 +1374,7 @@ will randomly subsample down to 2389 sequences, repeat this process 1000 times, 
 > - {% tool [Summary.single](toolshed.g2.bx.psu.edu/repos/iuc/mothur_summary_single/mothur_summary_single/1.39.5.2) %} with the following parameters
 >   - {% icon param-file %} *"share"*: the `shared` file from **Make.shared** {% icon tool %}
 >   - *"calc"*: `nseqs,coverage,sobs,invsimpson`
->   - *"size"*: `2389`
+>   - *"size"*: `2400`
 {: .hands_on}
 
 {% endunless %}
@@ -1458,7 +1458,7 @@ We calculate this with the **Dist.shared** tool, which will rarefy our data.
 > 1. {% tool [Dist.shared](toolshed.g2.bx.psu.edu/repos/iuc/mothur_dist_shared/mothur_dist_shared/1.39.5.0) %} with the following parameters
 >   - {% icon param-file %} *"shared"*: to the `shared` file from **Make.shared** {% icon tool %}
 >   - *"calc"*: `thetayc,jclass`
->   - *"subsample"*: `2389`
+>   - *"subsample"*: `2400`
 >
 >    Let's visualize our data in a Heatmap:
 >
