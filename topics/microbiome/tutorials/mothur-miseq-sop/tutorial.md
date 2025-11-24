@@ -21,15 +21,14 @@ contributors:
   - bebatut
   - tnabtaf
 editing:
-    - tflowers15
-    - mthang
-    - AnnaSyme
-    - igormakunin2
-#  testing: []
-  funding:
-    - AustralianBioCommons
-    - unimelb
-    - melbournebioinformatics
+  - tflowers15
+  - mthang
+  - AnnaSyme
+  - igormakunin2
+funding:
+  - AustralianBioCommons
+  - unimelb
+  - melbournebioinformatics
 subtopic: metabarcoding
 tags:
   - metabarcoding
