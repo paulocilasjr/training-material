@@ -8,7 +8,7 @@ contributors: [hexylena]
 
 The yearly Galaxy Admin Training follows a specific ordering of tutorials. Use this timeline to help keep track of where you are in Galaxy Admin Training.
 
-{% assign tutorials = "admin/ansible admin/ansible-galaxy admin/connect-to-compute-cluster admin/job-destinations admin/tus admin/celery admin/pulsar admin/apptainer admin/cvmfs admin/reference-genomes admin/object-store admin/gxadmin admin/sentry admin/backup-cleanup admin/tool-management admin/interactive-tools" | split: " " %}
+{% assign tutorials = "admin/ansible-galaxy admin/backup-cleanup admin/customization admin/tus admin/cvmfs admin/apptainer admin/tool-management admin/reference-genomes admin/data-library dev/bioblend-api admin/connect-to-compute-cluster admin/job-destinations admin/pulsar admin/celery admin/gxadmin admin/reports admin/monitoring admin/tiaas admin/sentry admin/ftp admin/beacon" | split: " " %}
 
 
 {% assign seen_tuto = 0 %}

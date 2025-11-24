@@ -517,7 +517,7 @@ Now all we need to do is tell Galaxy how to find it! This tutorial assumes that 
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -75,6 +75,8 @@ galaxy_config:
+>    @@ -76,6 +76,8 @@ galaxy_config:
 >         # TUS
 >         galaxy_infrastructure_url: "https://{{ inventory_hostname }}"
 >         tus_upload_store: "{{ galaxy_tus_upload_store }}"

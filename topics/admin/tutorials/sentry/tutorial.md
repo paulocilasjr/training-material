@@ -255,7 +255,7 @@ First we need to add our new Ansible role to `requirements.yml`:
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -221,6 +221,7 @@ nginx_servers:
+>    @@ -222,6 +222,7 @@ nginx_servers:
 >       - redirect-ssl
 >     nginx_ssl_servers:
 >       - galaxy
@@ -300,7 +300,7 @@ First we need to add our new Ansible role to `requirements.yml`:
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -121,6 +121,8 @@ galaxy_config:
+>    @@ -122,6 +122,8 @@ galaxy_config:
 >         # Monitoring
 >         statsd_host: localhost
 >         statsd_influxdb: true
@@ -434,7 +434,7 @@ In addition to sending logging errors to Sentry you can also collect failing too
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -123,6 +123,7 @@ galaxy_config:
+>    @@ -124,6 +124,7 @@ galaxy_config:
 >         statsd_influxdb: true
 >         sentry_dsn: "{{ vault_galaxy_sentry_dsn }}"
 >         sentry_traces_sample_rate: 0.5
@@ -442,21 +442,21 @@ In addition to sending logging errors to Sentry you can also collect failing too
 >       gravity:
 >         process_manager: systemd
 >         galaxy_root: "{{ galaxy_root }}/server"
->    @@ -175,6 +176,8 @@ galaxy_config_files:
+>    @@ -176,6 +177,8 @@ galaxy_config_files:
 >         dest: "{{ galaxy_config.galaxy.themes_config_file }}"
 >       - src: files/galaxy/config/tpv_rules_local.yml
 >         dest: "{{ tpv_mutable_dir }}/tpv_rules_local.yml"
 >    +  - src: files/galaxy/config/error_reports.yml
 >    +    dest: "{{ galaxy_config.galaxy.error_report_file }}"
->     
+>
 >     galaxy_config_templates:
 >       - src: templates/galaxy/config/container_resolvers_conf.yml.j2
->    @@ -196,6 +199,7 @@ tpv_privsep: true
->     
+>    @@ -197,6 +200,7 @@ tpv_privsep: true
+>
 >     galaxy_local_tools:
 >     - testing.xml
 >    +- job_properties.xml
->     
+>
 >     # Certbot
 >     certbot_auto_renew_hour: "{{ 23 |random(seed=inventory_hostname)  }}"
 >    {% endraw %}
@@ -509,7 +509,7 @@ It is also possible to report errors from the Pulsar server. You can either use 
 >             auto_init: true
 >             auto_install: true
 >    +  sentry_dsn: "{{ vault_pulsar_sentry_dsn }}"
->     
+>
 >     # Pulsar should use the same job metrics plugins as Galaxy. This will automatically set `job_metrics_config_file` in
 >     # `pulsar_yaml_config` and create `{{ pulsar_config_dir }}/job_metrics_conf.yml`.
 >    {% endraw %}

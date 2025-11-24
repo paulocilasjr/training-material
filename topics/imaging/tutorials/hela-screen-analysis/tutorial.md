@@ -41,7 +41,11 @@ contributions:
   funding:
     - elixir-europe
 tags:
-  - HeLa
+  - Image segmentation
+  - Object feature extraction
+  - Image thresholding
+  - High-throughput screening
+  - Fluorescence microscopy
 
 ---
 

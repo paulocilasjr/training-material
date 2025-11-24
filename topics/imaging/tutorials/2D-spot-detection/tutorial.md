@@ -29,9 +29,10 @@ contributions:
   reviewing:
     - kostrykin
 tags:
-  - RNA
-  - smFISH
-  - bioimaging
+  - IDR dataset
+  - Spot detection
+  - Rasterisation
+  - Overlay
 ---
 
 

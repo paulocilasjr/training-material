@@ -32,7 +32,10 @@ contributions:
   funding:
     - elixir-europe
 tags:
-  - HeLa
+  - Image segmentation
+  - Conversion
+  - Object counting
+  - Overlay
 
 ---
 

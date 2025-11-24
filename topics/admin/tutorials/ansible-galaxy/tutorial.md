@@ -951,11 +951,12 @@ The configuration is quite simple thanks to the many sensible defaults that are 
 >    ```diff
 >    --- /dev/null
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -0,0 +1,14 @@
+>    @@ -0,0 +1,15 @@
 >    +# Galaxy
 >    +galaxy_create_user: true # False by default, as e.g. you might have a 'galaxy' user provided by LDAP or AD.
 >    +galaxy_separate_privileges: true # Best practices for security, configuration is owned by 'root' (or a different user) than the processes
 >    +galaxy_manage_paths: true # False by default as your administrator might e.g. have root_squash enabled on NFS. Here we can create the directories so it's fine.
+>    +galaxy_manage_systemd: true
 >    +galaxy_layout: root-dir
 >    +galaxy_root: /srv/galaxy
 >    +galaxy_user: {name: "{{ galaxy_user_name }}", shell: /bin/bash}
@@ -995,7 +996,7 @@ The configuration is quite simple thanks to the many sensible defaults that are 
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -12,3 +12,17 @@ miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
+>    @@ -13,3 +13,17 @@ miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 >     miniconda_version: 25.3
 >     miniconda_distribution: miniconda
 >     miniconda_channels: ['conda-forge']
@@ -1062,7 +1063,7 @@ The configuration is quite simple thanks to the many sensible defaults that are 
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -23,6 +23,32 @@ galaxy_config:
+>    @@ -24,6 +24,32 @@ galaxy_config:
 >         job_working_directory: /data/jobs
 >         object_store_store_by: uuid
 >         id_secret: "{{ vault_id_secret }}"
@@ -1092,7 +1093,7 @@ The configuration is quite simple thanks to the many sensible defaults that are 
 >    +        pools:
 >    +          - job-handlers
 >    +          - workflow-schedulers
->     
+>
 >     galaxy_extra_dirs:
 >       - /data
 >    {% endraw %}
@@ -1126,7 +1127,7 @@ The configuration is quite simple thanks to the many sensible defaults that are 
 >     # Use the stdout_callback when running ad-hoc commands.
 >     bin_ansible_callbacks = True
 >    +vault_password_file = .vault-password.txt
->     
+>
 >     # Show diffs of changes
 >     [diff]
 >    {% endraw %}
@@ -1894,8 +1895,8 @@ For this, we will use NGINX (pronounced "engine X" /ˌɛndʒɪnˈɛks/ EN-jin-EK
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -52,3 +52,55 @@ galaxy_config:
->     
+>    @@ -53,3 +53,55 @@ galaxy_config:
+>
 >     galaxy_extra_dirs:
 >       - /data
 >    +
@@ -2280,10 +2281,10 @@ Finally, we have explicitly mapped the `local` class of tools to run in the `loc
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -13,6 +13,24 @@ miniconda_version: 25.3
+>    @@ -14,6 +14,24 @@ miniconda_version: 25.3
 >     miniconda_distribution: miniconda
 >     miniconda_channels: ['conda-forge']
->     
+>
 >    +# Galaxy Job Configuration
 >    +galaxy_job_config:
 >    +  runners:
@@ -2305,7 +2306,7 @@ Finally, we have explicitly mapped the `local` class of tools to run in the `loc
 >     galaxy_config:
 >       galaxy:
 >         # Main Configuration
->    @@ -23,6 +41,7 @@ galaxy_config:
+>    @@ -24,6 +42,7 @@ galaxy_config:
 >         job_working_directory: /data/jobs
 >         object_store_store_by: uuid
 >         id_secret: "{{ vault_id_secret }}"
@@ -2360,7 +2361,7 @@ This is a fantastic base Galaxy installation but there are numerous additional o
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -42,6 +42,28 @@ galaxy_config:
+>    @@ -43,6 +43,28 @@ galaxy_config:
 >         object_store_store_by: uuid
 >         id_secret: "{{ vault_id_secret }}"
 >         job_config: "{{ galaxy_job_config }}" # Use the variable we defined above

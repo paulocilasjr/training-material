@@ -24,6 +24,10 @@ contributions:
     - dfg
     - deNBI
     - uni-freiburg
+tags:
+  - Data management
+  - Data handling
+  - Data sharing
 ---
 The efficient and accurate treatment of microscopy metadata is of great importance, as it 
 provides insights that are essential for effective image management, search, organisation, 
