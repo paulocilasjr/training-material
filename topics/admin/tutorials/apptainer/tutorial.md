@@ -17,6 +17,8 @@ contributions:
   - bernt-matthias
   - hexylena
   - mira-miracoli
+  editing:
+  - lldelisle
   funding:
   - eurosciencegateway
 subtopic: jobs
@@ -108,7 +110,7 @@ First, we will install Apptainer using Ansible. Since there is a package availab
 >    @@ -19,3 +19,6 @@
 >     # CVMFS Support
 >     - src: galaxyproject.cvmfs
->       version: 0.3.1
+>       version: 0.3.3
 >    +# Singularity/Apptainer
 >    +- src: usegalaxy_eu.apptainer
 >    +  version: 0.0.3
@@ -279,7 +281,7 @@ Now, we will configure Galaxy to run tools using Apptainer containers, which wil
 >    ```diff
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
->    @@ -24,11 +24,24 @@ galaxy_job_config:
+>    @@ -24,11 +24,26 @@ galaxy_job_config:
 >       handling:
 >         assign: ['db-skip-locked']
 >       execution:
@@ -292,6 +294,8 @@ Now, we will configure Galaxy to run tools using Apptainer containers, which wil
 >    +      singularity:
 >    +        runner: local_runner
 >    +        singularity_enabled: true
+>    +        # Enabling access to the reference data on CVMFS in the container
+>    +        singularity_volumes: $defaults,/cvmfs/data.galaxyproject.org:ro
 >    +        env:
 >    +        # Ensuring a consistent collation environment is good for reproducibility.
 >    +        - name: LC_ALL

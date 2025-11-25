@@ -80,7 +80,7 @@ tutorial]({% link topics/admin/tutorials/gxadmin/tutorial.md %}).
 >    @@ -11,3 +11,6 @@
 >       version: 0.3.4
 >     - src: usegalaxy_eu.certbot
->       version: 0.1.11
+>       version: 0.1.13
 >    +# gxadmin (used in cleanup, and later monitoring.)
 >    +- src: galaxyproject.gxadmin
 >    +  version: 0.0.14

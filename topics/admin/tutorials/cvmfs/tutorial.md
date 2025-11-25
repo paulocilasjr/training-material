@@ -199,7 +199,7 @@ If the terms "Ansible", "role" and "playbook" mean nothing to you, please checko
 >       version: 0.0.1
 >    +# CVMFS Support
 >    +- src: galaxyproject.cvmfs
->    +  version: 0.3.1
+>    +  version: 0.3.3
 >    {% endraw %}
 >    ```
 >    {: data-commit="Add requirement" data-ref="add-req"}

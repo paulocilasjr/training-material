@@ -312,7 +312,7 @@ We have codified all of the dependencies you will need into a YAML file that `an
 >    @@ -0,0 +1,13 @@
 >    +# Galaxy, Postgres, Nginx
 >    +- src: galaxyproject.galaxy
->    +  version: 0.12.0
+>    +  version: 0.12.1
 >    +- src: galaxyproject.nginx
 >    +  version: 0.7.1
 >    +- src: galaxyproject.postgresql
@@ -322,7 +322,7 @@ We have codified all of the dependencies you will need into a YAML file that `an
 >    +- src: galaxyproject.miniconda
 >    +  version: 0.3.4
 >    +- src: usegalaxy_eu.certbot
->    +  version: 0.1.11
+>    +  version: 0.1.13
 >    {% endraw %}
 >    ```
 >    {: data-commit="Add requirements"}
