@@ -1216,7 +1216,7 @@ dataset by subsampling.
 >    >
 >    >  What would you expect the result of `count.groups` on this new shared output collection to be? Check if you are correct.
 >    > > <solution-title></solution-title>
->    > > all groups (samples) should now have 2,400 sequences. Run count.groups again on the shared output collection by the sub.sample
+>    > > all groups (samples) should now have 2,400 sequences. Run count.groups again on the shared (hidden) output collection (named 0.03) by the sub.sample
 >    > > tool to confirm that this is indeed what happened.
 >    > {: .solution }
 >    {: .question}
