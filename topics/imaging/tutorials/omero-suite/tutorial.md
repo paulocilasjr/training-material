@@ -2,6 +2,7 @@
 layout: tutorial_hands_on
 title: Overview of the Galaxy OMERO-suite - Upload images and metadata in OMERO using Galaxy
 level: Intermediate
+subtopic: introduction
 zenodo_link: https://zenodo.org/records/14205500
 questions:
 - How can I use Galaxy to upload images and metadata into OMERO?

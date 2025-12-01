@@ -3,6 +3,7 @@ layout: tutorial_hands_on
 
 title: Using BioImage.IO models for image analysis in Galaxy
 level: Intermediate
+subtopic: analyses
 zenodo_link: 'https://zenodo.org/record/6647674'
 questions:
 - How can I apply a pre-trained deep learning model to an image?

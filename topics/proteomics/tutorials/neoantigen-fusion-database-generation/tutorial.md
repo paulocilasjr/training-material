@@ -346,6 +346,7 @@ Using regex (regular expressions) for find and replace is a powerful technique f
 >    {% snippet faqs/galaxy/analysis_regular_expressions.md %}
 >
 > 2. Rename the output FASTA as `Arriba-Fusion-Database.fasta`
+> 
 {: .hands_on}
 
 
@@ -360,8 +361,7 @@ To rerun this entire analysis at once, you can use our workflow. Below, we show 
 > <hands-on-title>Running the Workflow</hands-on-title>
 >
 > 1. **Import the workflow** into Galaxy:
->
->    {% snippet faqs/galaxy/workflows_run_trs.md path="topics/proteomics/tutorials/neoantigen-fusion-database-generation/workflows/main_workflow.ga" title="Neoantigen Fusion Database Generation" %}
+>    - (Neoantigen Fusion Database Generation)[https://tinyurl.com/ipepgen-gene-fusion-wf]
 >
 >
 > 2. Run **Workflow** {% icon workflow %} using the following parameters:
@@ -372,6 +372,12 @@ To rerun this entire analysis at once, you can use our workflow. Below, we show 
 >    - {% icon param-file %} *"Human Reference Genome"*: `human_reference_genome.fasta`
 >
 >    {% snippet faqs/galaxy/workflows_run.md %}
+>
+> <comment-title>DISCLAIMER</comment-title>
+>
+> - If any step in this workflow fails, please ensure that the input files have been correctly generated and formatted by the preceding tools. Workflow failures often result from improperly called or incomplete input data rather than errors in the workflow itself. Users are responsible for verifying their input before troubleshooting workflow issues.
+>
+> {: .comment}
 >
 {: .hands_on}
 

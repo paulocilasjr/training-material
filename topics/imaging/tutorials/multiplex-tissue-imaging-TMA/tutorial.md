@@ -3,6 +3,7 @@ layout: tutorial_hands_on
 
 title: End-to-End Tissue Microarray Image Analysis with Galaxy-ME
 level: Intermediate
+subtopic: analyses
 zenodo_link: https://doi.org/10.5281/zenodo.7622545
 questions:
 - What tools are available for pre-processing multiplex tissue images in Galaxy?

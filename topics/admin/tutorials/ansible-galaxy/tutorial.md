@@ -936,7 +936,7 @@ The configuration is quite simple thanks to the many sensible defaults that are 
 >    `galaxy_client_use_prebuilt`         | `true`                                                              | We are going to use a prebuilt client to save some time during this tutorial, if you want you can set it to false later and see how galaxy starts building the client itself.
 >    `miniconda_prefix`              | {% raw %}`"{{ galaxy_tool_dependency_dir }}/_conda"`{% endraw %}          | We will manually install conda as well. Normally Galaxy will attempt to auto-install this, but since we will set up a production-ready instance with multiple handlers, there is the chance that they can become deadlocked.
 >    `miniconda_version`             | `25.3`                                                                    | Install a specific miniconda version, the latest one at the time of writing that was tested and working.
->    `miniconda_distribution`             | `miniconda`                                                                    | Install a specific distribution of miniconda, such as `miniforge` (default), `micromamba`, `miniconda` or `anaconda`. This determines the default value for the `miniconda_executable` (`mamba` for `miniforge`)
+>    `miniconda_distribution`             | `miniforge`                                                                    | Install a specific distribution of conda, see https://github.com/galaxyproject/ansible-miniconda for alternatives. This determines the default value for the `miniconda_executable` (`conda` for `miniforge`)
 >    `miniconda_channels`          ` | `['conda-forge']`                                             | Use the free and community-maintained `conda-forge` channel.
 >
 >    > <tip-title>Different Galaxy Releases!</tip-title>
@@ -965,11 +965,11 @@ The configuration is quite simple thanks to the many sensible defaults that are 
 >    +galaxy_force_checkout: true
 >    +miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 >    +miniconda_version: 25.3
->    +miniconda_distribution: miniconda
+>    +miniconda_distribution: miniforge
 >    +miniconda_channels: ['conda-forge']
 >    {% endraw %}
 >    ```
->    {: data-commit="Configure miniconda and galaxy"}
+>    {: data-commit="Configure miniforge and galaxy"}
 >
 >    > <tip-title>Following this training outside of a GAT course?</tip-title>
 >    > Consider updating the Galaxy Commit ID to the latest version of Galaxy available, this will probably give better results (given that dependencies are always updating) than using a potentially outdated version.
@@ -998,7 +998,7 @@ The configuration is quite simple thanks to the many sensible defaults that are 
 >    +++ b/group_vars/galaxyservers.yml
 >    @@ -13,3 +13,17 @@ miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 >     miniconda_version: 25.3
->     miniconda_distribution: miniconda
+>     miniconda_distribution: miniforge
 >     miniconda_channels: ['conda-forge']
 >    +
 >    +galaxy_config:
@@ -2282,7 +2282,7 @@ Finally, we have explicitly mapped the `local` class of tools to run in the `loc
 >    --- a/group_vars/galaxyservers.yml
 >    +++ b/group_vars/galaxyservers.yml
 >    @@ -14,6 +14,24 @@ miniconda_version: 25.3
->     miniconda_distribution: miniconda
+>     miniconda_distribution: miniforge
 >     miniconda_channels: ['conda-forge']
 >
 >    +# Galaxy Job Configuration

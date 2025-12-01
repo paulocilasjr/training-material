@@ -3,6 +3,7 @@ layout: tutorial_hands_on
 
 title: Quantification of electrophoresis gel bands using QuPath and Galaxy imaging tools
 level: Intermediate
+subtopic: analyses
 questions:
 - How can specific bands on an electrophoresis gel image be selected using QuPath?
 - How is a region of interest (ROI) GeoJSON file prepared?
