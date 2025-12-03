@@ -1121,6 +1121,19 @@ module Gtn
       # Select out materials with the correct subtopic
       resource_pages = resource_pages.select { |x| x['subtopic'] == subtopic_id }
 
+      # add crosstopic tutorials defined for a subtopic
+      crosstopic_tutorials = site.data[topic_name]["subtopics"].select{|x| x['id'] == subtopic_id}[0]["crosstopic_tutorials"]
+      if crosstopic_tutorials
+        materials = process_pages(site, site.pages)
+        crosstopic_tutorials.each do |tuto|
+          addtutorial = materials.select { |x| x['topic_name'] == tuto["topic"] && x['tutorial_name'] == tuto["tutorial"] }
+          if tuto["priority"]
+            addtutorial[0]['priority'] = tuto["priority"]
+          end
+          resource_pages += addtutorial
+        end
+      end
+
       if resource_pages.empty?
         Jekyll.logger.error "Error? Could not find any relevant pages for #{topic_name} / #{subtopic_id}"
       end
