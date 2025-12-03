@@ -40,10 +40,14 @@ contributions:
   - bazante1
   - shiltemann
   - miaomiaozhou88
+  - tflowers15
   funding:
   - avans-atgm
   - abromics
   - elixir-europe
+  - unimelb
+  - melbournebioinformatics
+  - AustralianBioCommons
 follow_up_training:
 - type: internal
   topic_name: visualisation
