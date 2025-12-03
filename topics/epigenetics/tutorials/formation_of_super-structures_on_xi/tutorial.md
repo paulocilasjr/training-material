@@ -42,10 +42,14 @@ contributions:
         - pavanvidem
     editing:
         - hexylena
+        - tflowers15
     funding:
         - elixir-europe
         - deNBI
         - uni-freiburg
+        - unimelb
+        - melbournebioinformatics
+        - AustralianBioCommons
 ---
 
 
