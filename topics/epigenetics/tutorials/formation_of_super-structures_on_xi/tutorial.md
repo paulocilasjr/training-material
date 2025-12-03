@@ -119,11 +119,9 @@ To save time, we will do it only on the data of one sample `wt_H3K4me3_rep1` whi
 >
 >    {% snippet faqs/galaxy/datasets_import_from_data_library.md %}
 >
->    As default, Galaxy takes the link as name, so rename them.
+> 3. Add a tag called `#wt_H3K4me3_read1` to the read1 file and a tag called `#wt_H3K4me3_read2` to the read2 file.
 >
-> 3. Rename the files `wt_H3K4me3_read1` and `wt_H3K4me3_read2`
->
->    {% snippet faqs/galaxy/datasets_rename.md %}
+>    {% snippet faqs/galaxy/datasets_add_tag.md %}
 >
 > 4. Inspect the first file by clicking on the {% icon galaxy-eye %} (eye) icon (**View data**)
 >
@@ -153,12 +151,12 @@ Sequence quality control is therefore an essential first step in your analysis. 
 >
 >    > <question-title></question-title>
 >    >
->    > 1. How is the quality of the reads in `wt_H3K4me3_forward`?
->    > 2. And in `wt_H3K4me3_reverse`?
+>    > 1. How is the quality of the reads in `wt_H3K4me3_read1`?
+>    > 2. And in `wt_H3K4me3_read2`?
 >    > 3. What should we do if the quality of the reads is not good?
 >    >
 >    > > <solution-title></solution-title>
->    > > 1. The reads in `wt_H3K4me3_forward` are of good quality:
+>    > > 1. The reads in `wt_H3K4me3_read1` are of good quality:
 >    > >     - There is 50,000 sequences, all of 51 bp
 >    > >     - The "Per base sequence quality" is not decreasing too much at the end of the sequences
 >    > >
@@ -224,7 +222,7 @@ It is often necessary to trim sequenced read, for example, to get rid of bases t
 >       - *"Overlap with adapter sequence required to trim a sequence"*: `3`
 >       - *"Generate a report file"*: `Yes`
 >
-> 2. Rename the Trim Galore! output reads collection: `Trim Galore Paired Reads`
+> 2. Rename the Trim Galore! output `reads` collection: `Trimmed Reads`
 >
 > 3. Inspect the generated txt file (`report file`)
 >
@@ -259,7 +257,7 @@ With ChiP sequencing, we obtain sequences corresponding to a portion of DNA link
 >
 > 1. {% tool [Bowtie2](toolshed.g2.bx.psu.edu/repos/devteam/bowtie2/bowtie2/2.5.4+galaxy0) %} with the following parameters:
 >    - *"Is this single or paired library"*: `Paired-end`
->        - {% icon param-collection %} *"FASTQ Paired Dataset"*: `Trim Galore Paired Reads`
+>        - {% icon param-collection %} *"FASTQ Paired Dataset"*: `Trimmed Reads`
 >    - *"Will you select a reference genome from your history or use a built-in index?"*: `Use a built-in genome index`
 >        - *"Select reference genome"*: `Mouse (Mus musculus): mm10`
 >    - *"Save the bowtie2 mapping statistics to the history"*: `Yes`
