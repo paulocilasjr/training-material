@@ -23,14 +23,6 @@ key_points:
     - ChIP-seq data requires multiple methods of quality assessment to ensure that the data is of high quality.
     - Multiple normalization methods exists depending on the availability of input data.
     - Heatmaps containing all genes of an organism can be easily plotted given a BED file and a coverage file.
-contributors:
-    - friedue
-    - erxleben
-    - bebatut
-    - vivekbhr
-    - fidelram
-    - LeilyR
-    - pavanvidem
 contributions:
     authorship:
         - friedue
