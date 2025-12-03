@@ -33,10 +33,17 @@ follow_up_training:
 level: Introductory
 edam_ontology:
 - topic_0102
-contributors:
-- joachimwolff
-- bebatut
-- hexylena
+contributions:
+  authorship:
+    - joachimwolff
+    - bebatut
+    - hexylena
+  editing:
+    - tflowers15
+  funding:
+    - unimelb
+    - melbournebioinformatics
+    - AustralianBioCommons
 recordings:
 - captioners:
   - shiltemann
