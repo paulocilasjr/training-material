@@ -454,7 +454,7 @@ To get information about the coverage of the contigs and genes, we map the reads
 >
 > 3. {% tool [Bowtie2](toolshed.g2.bx.psu.edu/repos/devteam/bowtie2/bowtie2/2.5.4+galaxy0) %} with the following parameters:
 >    - *"Is this single or paired library"*: `Paired-end`
->        - {% icon param-file %} *"FASTQ Paired Dataset"*: `Paired Reads`
+>        - {% icon param-collection %} *"FASTQ Paired Dataset"*: `Paired Reads`
 >    - *"Will you select a reference genome from your history or use a built-in index?"*: `Use a genome from the history and build index`
 >        - {% icon param-file %} *"Select reference genome"*: Contig file
 >    - *"Save the bowtie2 mapping statistics to the history"*: `Yes`
