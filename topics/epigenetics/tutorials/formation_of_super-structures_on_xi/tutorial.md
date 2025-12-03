@@ -141,12 +141,12 @@ Sequence quality control is therefore an essential first step in your analysis. 
 
 > <hands-on-title>Quality control</hands-on-title>
 > 
-> 1. Run {% tool [Flatten collection](toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.73+galaxy0) %} with the following parameters:
+> 1. Run {% tool [Flatten collection](__FLATTEN__) %} with the following parameters:
 >    - *"Input collection"*: `Paired Reads`
 >   
 > 2. Rename the flatten collection: `Flat Collection`
 >   
-> 3. Run {% tool [FastQC](toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.73+galaxy0) %} with the following parameters:
+> 3. Run {% tool [FastQC](toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy1) %} with the following parameters:
 >    - {% icon param-collection %} *"Raw read data from your current history"*: `Flat Collection` (Flattened paired end read dataset collection)
 >
 > 4. Inspect the generated HTML files
@@ -211,7 +211,7 @@ It is often necessary to trim sequenced read, for example, to get rid of bases t
 > <hands-on-title>Trimming low quality bases</hands-on-title>
 >
 > 1. Run {% tool [Trim Galore!](toolshed.g2.bx.psu.edu/repos/bgruening/trim_galore/trim_galore/0.6.7+galaxy0) %} with the following parameters:
->    - *"Is this library paired- or single-end?"*: `Paired-end`
+>    - *"Is this library paired- or single-end?"*: `Paired Collection`
 >       - {% icon param-collection %} *"Select a paired collection"*: `Paired Reads` (Input collection)
 >
 >       > <tip-title>Not selectable files?</tip-title>
