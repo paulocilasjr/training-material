@@ -148,7 +148,7 @@ Currently, there are over 60 different mappers, and their number is growing. In 
 > <hands-on-title>Mapping with Bowtie2</hands-on-title>
 > 1. {% tool [Bowtie2](toolshed.g2.bx.psu.edu/repos/devteam/bowtie2/bowtie2/2.5.4+galaxy0) %} with the following parameters
 >    - *"Is this single or paired library"*: `Paired-end`
->       - {% icon param-file %} *"FASTQ Paired Dataset"*: `Paired Reads`
+>       - {% icon param-collection %} *"FASTQ Paired Dataset"*: `Paired Reads`
 >       - *"Do you want to set paired-end options?"*: `No`
 >
 >           You should have a look at the parameters there, specially the mate orientation if you know it. They can improve the quality of the paired-end mapping.
