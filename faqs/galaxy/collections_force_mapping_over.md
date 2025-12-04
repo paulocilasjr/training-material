@@ -3,7 +3,7 @@ title: Force a tool to process collection jobs one by one instead of using the c
 area: collections
 box_type: tip
 layout: faq
-contributors: [paulzierep]
+contributors: [paulzierep, Smkingsize]
 ---
 
 ## To map over or not to map over
@@ -55,14 +55,13 @@ Adding another nesting level to create `list:list` requires a few changes:
    This creates a new Column B with the same list identifier as Column A.
 2. From **Rules** menu select `Add / Modify Column Definitions`
    - Click `Add Definition` button and select `List Identifier(s)`
-     - *"Paired-end Indicator"*: `A`
-   - Click `Add Definition` button and select `List Identifier(s)`
-     - *"List Identifier(s)"*: `B`
+     - *"Select a column"*: `A`
+     - *"... Assign Another Column"*: `B`
    - Click Apply
 3. Click **Save**
 4. Click **Run Tool**
 
 The rule logic in a workflow editor to follow for paired reads in the Apply rules tool looks like this:
 
-![Screenshot showing logic to create the new collection.]({% link faqs/galaxy/images/nested_collection_for_mapping_over.png %})
+<img width="313" height="145" alt="image" src="https://github.com/user-attachments/assets/8ad14020-ddd8-48ac-930a-f761814d4242" />
 
