@@ -63,5 +63,5 @@ Adding another nesting level to create `list:list` requires a few changes:
 
 The rule logic in a workflow editor to follow for paired reads in the Apply rules tool looks like this:
 
-<img width="313" height="145" alt="image" src="https://github.com/user-attachments/assets/8ad14020-ddd8-48ac-930a-f761814d4242" />
+![Screenshot showing logic to create the new collection.]({% link faqs/galaxy/images/nested_collection_for_mapping_over.png %})
 
