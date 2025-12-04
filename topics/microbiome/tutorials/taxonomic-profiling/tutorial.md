@@ -26,8 +26,12 @@ contributions:
   - paulzierep
   editing:
   - Tarnima-Omara
+  - tflowers15
   funding:
   - gallantries
+  - unimelb
+  - melbournebioinformatics
+  - AustralianBioCommons
 answer_histories:
 - label: GTA2025
   history: https://usegalaxy.eu/u/tarnima/h/taxonomic-profiling-and-visualization-of-metagenomic-data-answer-key-history
@@ -204,7 +208,7 @@ For this tutorial, we will use the PlusPF database which contains the Standard (
 > <hands-on-title>Assign taxonomic labels with Kraken2</hands-on-title>
 >
 > 1. {% tool [Kraken2](toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.3+galaxy1) %} with the following parameters:
->    - *"Single or paired reads"*: `Paired Collection`
+>    - *"Single or paired reads"*: `Paired`
 >      - {% icon param-collection %} *"Collection of paired reads"*: Input paired collection
 >    - *"Confidence"*: `0.1`
 >
