@@ -2,14 +2,13 @@
 layout: tutorial_hands_on
 
 title: 'Remove contamination and host reads'
-zenodo_link: ''
+zenodo_link: https://zenodo.org/records/17829290
 questions:
 - What preprocessing steps are required to obtain cleaned reads for downstream analysis?
 - How can we identify and remove contaminant or host-derived reads from raw sequencing data?
 objectives:
 - Identify reads originating from contaminants or host genomes.
 - Remove those reads to produce high-quality, clean metagenomic data suitable for downstream analyses.
-- Bloom's Taxonomy 
 time_estimation: 1H
 key_points:
 - Identifying and removing contaminant and host reads is a critical preprocessing step in metagenomic workflows.
@@ -21,16 +20,16 @@ contributions:
 ---
 
 
-Metagenomic sequencing generates reads from all DNA present in a sample, including the **microbial community**, **host DNA**, and potential **environmental contaminants** (for example: sometimes human sequences introduced during sampling or processing).  
-Before taxonomic or functional analysis, it is essential to remove reads belonging to the host or other contaminants to avoid misleading results.
+Metagenomic sequencing captures all DNA present in a sample, including the **microbial community**, **host DNA**, and potential **environmental or external contaminants** (such as human DNA introduced during sample handling or sequencing).  
+Before performing taxonomic or functional analysis, it is essential to remove these host-drived or contaminant reads to avoid misleading downstream interpretations.
 
 In this tutorial, we will learn how to identify and remove host or contaminant reads using Galaxy.
 We will:
 - Map raw reads to a **host reference genome** using Bowtie2 and extract unmapped reads.
 - Repeat the process with unmapped reads against a **human reference genome** to remove potential human contamination.
-- Generate a final set of **clean, non-host reads** ready for downstream analyses such as assembly, binning, or profiling.
+- Generate a final set of **clean, non-host reads** suitable for downstream analyses such as assembly, binning, or profiling.
 
-To test and illustriate the process, we will use data from ....
+To test and illustrate the process, we use bee gut metagenome samples and focus on filtering out both host (bee) sequences and potential human contamination from the reads. 
 
 
 > <agenda-title></agenda-title>
@@ -63,15 +62,20 @@ Now, we need to import the data
 > <hands-on-title>Import datasets</hands-on-title>
 >
 > 1. Import the files from [Zenodo]({{ page.zenodo_link }}) or from
->    the shared data library (`GTN - Material` -> `{{ page.topic_name }}`
->     -> `{{ page.title }}`):
+>    the shared data library:
 >
+>    ```text
+>    {{ page.zenodo_link }}/files/SRR24759598_1.fastq.gz
+>    {{ page.zenodo_link }}/files/SRR24759598_2.fastq.gz
+>    {{ page.zenodo_link }}/files/SRR24759616_1.fastq.gz
+>    {{ page.zenodo_link }}/files/SRR24759616_2.fastq.gz
+>    ```
 >    
 >    {% snippet faqs/galaxy/datasets_import_via_link.md %}
 >
 >    {% snippet faqs/galaxy/datasets_import_from_data_library.md %}
 >
-> 2. Create a paired collection.
+> 2. Create a paired collection named 'Raw reads' that includes both pairs.
 >
 >    {% snippet faqs/galaxy/collections_build_list_paired.md %}
 >
@@ -89,7 +93,7 @@ To remove host contamination, we start by mapping the reads to the host genome u
 >        - *"Write unaligned reads (in fastq format) to separate file(s)"*: `Yes`
 >        - *"Do you want to set paired-end options?"*: `Yes`
 >    - *"Will you select a reference genome from your history or use a built-in index?"*: `Use a built-in genome index`
->        - *"Select reference genome"*: `the target host genome`
+>        - *"Select reference genome"*: `A. mellifera genome (apiMel3, Baylor HGSC Amel_3.0)`
 >    - *"Set read groups information?"*: `Do not set`
 >    - *"Select analysis mode"*: `1: Default setting only`
 >    - *"Do you want to tweak SAM/BAM Options?"*: `No`
@@ -100,27 +104,13 @@ To remove host contamination, we start by mapping the reads to the host genome u
 >    - Mapping statistics report (`bowtie2.log`)
 >    - Unaligned (unmapped) forward and reverse reads
 >
-> 3. These unmapped reads represent sequences **not belonging to the host** and will be used in the next step.
+> 3. These unmapped reads represent sequences **not belonging to the host** and will be used in the next step. 
 >
 > > <comment-title>Tip</comment-title>
 > > Host reference genomes vary depending on the study organism. You can upload a FASTA file of your host genome if it is not available as a built-in index.
 > {: .comment}
 >
 {: .hands_on}
-
-> <question-title></question-title>
->
-> 1. What percentage of reads mapped to the host genome?  
-> 2. Why might different datasets show different mapping percentages?
->
-> > <solution-title></solution-title>
-> >
-> > 1. The mapping rate depends on the host content of the sample. 
-> > 2. Host DNA contamination varies depending on tissue type, sampling method, and extraction procedure.
-> >
-> {: .solution}
->
-{: .question}
 
 ## Re-pair unmapped reads
 We now combine the unmapped forward and reverse reads into a new paired-end dataset for further processing.
@@ -131,7 +121,7 @@ We now combine the unmapped forward and reverse reads into a new paired-end data
 >    - {% icon param-file %} *"Input 1"*: `output_unaligned_reads_l` 
 >    - {% icon param-file %} *"Input 2"*: `output_unaligned_reads_r` 
 >
->    2. This step creates a new paired-end collection that represents all reads **not aligned to the host genome**.
+>    2. This step creates a new paired-end collection that represents all reads **not aligned to the host genome**. Rename this output collection to 'Reads without bee reads'
 >
 >    > <comment-title> Note </comment-title>
 >    >
@@ -139,20 +129,6 @@ We now combine the unmapped forward and reverse reads into a new paired-end data
 >    {: .comment}
 >
 {: .hands_on}
-
-> <question-title></question-title>
->
-> 1. How many reads remain after host-read removal?
-> 2. Why is it important to re-pair the unmapped reads before further analysis?
->
-> > <solution-title></solution-title>
-> >
-> > 1. The total depends on the dataset, usually 10–50 % of reads remain after host removal.  
-> > 2. Paired-end structure ensures that downstream tools (e.g. assemblers) correctly interpret forward/reverse relationships.
-> >
-> {: .solution}
->
-{: .question}
 
 ## Summarize mapping statistics
 Once the host mapping is complete, we use MultiQC to summarize and visualize the mapping statistics, helping us assess how many reads were removed and how many remain.
@@ -178,13 +154,13 @@ Once the host mapping is complete, we use MultiQC to summarize and visualize the
 
 > <question-title></question-title>
 >
-> 1. How does the mapping percentage differ between the host and human filtering runs?
-> 2. What does a low mapping percentage in both runs indicate?
+> 1. What percentage of reads mapped to the bee reference genome?  
+> 2. What percentage of reads were removed?
 >
 > > <solution-title></solution-title>
 > >
-> > 1. The human filtering step usually removes only a small additional fraction of reads.
-> > 2. Low mapping in both runs means the dataset is now largely free of host and human sequences and ready for downstream analysis.
+> > 1. 2.8% for SRR24759598 and 1.1% for SRR24759616. 
+> > 2. 2.8% for SRR24759598 and 1.1% for SRR24759616.
 > >
 > {: .solution}
 >
@@ -195,14 +171,14 @@ After removing host reads, we can run the **same workflow again** to eliminate p
 
 > <hands-on-title> Rerun the workflow using the human genome as reference</hands-on-title>
 >
-> 1. Use the **unmapped reads** (output from Step 2) as the input for this second run.
+> 1. Use the unmapped reads **Reads without bee reads** as the input for this second run.
 > 2. In the **Bowtie2** step:
 >    - *"Will you select a reference genome from your history or use a built-in index?"*: `Use a built-in genome index`
 >    - *"Select reference genome"*: `Human (GRCh38)`
 >    - Keep all other parameters the same as in the first run.
 >
 > 3. Continue through the **Zip collections** and **MultiQC** steps as before.
-> 4. The output of this second run represents your **final cleaned reads**, free from both host and human sequences.
+> 4. The output of this second run represents your **final cleaned reads**, free from both host and human sequences. Rename this collection to 'Clean metagenomic reads'
 >
 >    > <comment-title>Note</comment-title>
 >    > Rerunning the same workflow maintains reproducibility. 
@@ -214,12 +190,12 @@ After removing host reads, we can run the **same workflow again** to eliminate p
 > <question-title>Verify your final dataset</question-title>
 >
 > 1. How does the mapping percentage differ between the host and human filtering runs?
-> 2. What does a low mapping percentage in both runs indicate?
+> 2. How many reads have been removed?
 >
 > > <solution-title></solution-title>
 > >
 > > 1. The second run (against the human genome) usually removes only a small number of additional reads.
-> > 2. Low mapping rates in both runs confirm that the dataset is largely free of host and human contamination.
+> > 2. 0.1% in both samples.
 > >
 > {: .solution}
 >
