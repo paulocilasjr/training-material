@@ -78,12 +78,11 @@ for this mock sample are contained in the file `HMP_MOCK.v35.fasta`
 
 > <comment-title>Dataset naming scheme</comment-title>
 > For this tutorial, you are given 20 pairs of files. For example, the following pair of files:<br />
->  `F3D0_S188_L001_R1_001.fastq`<br />
->  `F3D0_S188_L001_R2_001.fastq`
+>  `F3D0_R1.fastq`<br />
+>  `F3D0_R2.fastq`
 >
 > The first part of the file name indicates the sample; `F3D0` here signifies that this sample was obtained from Female 3 on Day 0.
-> The rest of the file name is identical, except for `_R1` and `_R2`, this is used to indicate the forward and reverse reads
-> respectively.
+> The `_R1` and `_R2` are used to indicate the forward and reverse reads respectively.
 {: .comment}
 
 <!-- note: mothur does not include day 4 in their SOP example data, therefore this description and results
