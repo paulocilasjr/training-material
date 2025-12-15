@@ -24,8 +24,8 @@ contributions:
   editing:
     - tflowers15
     - mthang
-    - AnnaSyme
-    - igormakunin2
+    - annasyme
+    - igormakunin
   funding:
     - AustralianBioCommons
     - unimelb
