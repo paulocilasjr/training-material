@@ -234,6 +234,11 @@ andrewsnelgrove:
 
 annasyme:
     name: Anna Syme
+    affiliations:
+      - AustralianBioCommons
+    former_affiliations:
+      - unimelb
+      - melbournebioinformatics
     joined: 2017-09
     orcid: 0000-0002-9906-0673
 
@@ -1272,6 +1277,8 @@ igcbioinformatics:
 
 igormakunin:
     name: Igor Makunin
+    affiliations:
+      - AustralianBioCommons
     joined: 2024-09
 
 ioanagry:
@@ -2053,6 +2060,12 @@ mtekman:
       - spoc
     former_affiliations:
       - elixir-europe
+
+mthang:
+    name: Michael Thang
+    affiliations:
+      - AustralianBioCommons
+    joined: 2025-12
 
 mvdbeek:
     name: Marius van den Beek
