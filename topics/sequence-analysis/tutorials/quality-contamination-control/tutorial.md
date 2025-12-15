@@ -36,8 +36,12 @@ contributions:
   - clsiguret
   editing:
   - VerenaMoo
+  - tflowers15
   funding:
   - abromics
+  - unimelb
+  - melbournebioinformatics
+  - AustralianBioCommons
 recordings:
 - youtube_id: Cx31r5emUJk
   length: 34M
@@ -110,11 +114,15 @@ Now, we need to import the data: 2 FASTQ files containing the reads from the seq
 >
 >    {% snippet faqs/galaxy/datasets_rename.md name="DRR187559_1" %}
 >
-> 3. Tag both datasets `#unfiltered`
+> 3. Create a paired collection named `Paired Reads`
+>
+>    {% snippet faqs/galaxy/collections_build_list_paired.md %}
+>
+> 4. Tag both datasets `#unfiltered`
 >
 >    {% snippet faqs/galaxy/datasets_add_tag.md %}
 >
-> 4. **View** {% icon galaxy-eye %} the renamed file
+> 5. **View** {% icon galaxy-eye %} the renamed file
 >
 {: .hands_on}
 
@@ -160,9 +168,7 @@ We will run all these steps using a single workflow, then discuss each step and 
 >    {% snippet faqs/galaxy/workflows_import.md %}
 >
 > 2. Run **Workflow : Quality and contamination control in bacterial isolate using Illumina MiSeq Data** {% icon workflow %} using the following parameters
->    - *"DRR187559_1"*: `DRR187559_1`, which is the forward read data.
->
->    - *"DRR187559_2"*: `DRR187559_2`, which is the reverse read data.
+>    - *"Input Paired Reads"*: `Paired Reads`, which is the paired end reads collection.
 >
 >    {% snippet faqs/galaxy/workflows_run.md %}
 >
@@ -197,9 +203,7 @@ reads include:
 > <hands-on-title>Quality Control</hands-on-title>
 >
 > 1. {% tool [Falco](toolshed.g2.bx.psu.edu/repos/iuc/falco/falco/1.2.4+galaxy0) %} with the following parameters:
->    - {% icon param-files %} *"Short read data from your current history"*: both `DRR187559_1` and `DRR187559_2`
->
->    {% snippet faqs/galaxy/tools_select_multiple_datasets.md %} 
+>    - {% icon param-collection %} *"Raw read data from your current history"*: `Paired Reads`
 >
 > 2. Inspect the webpage outputs
 >
@@ -257,10 +261,9 @@ is needed. In this case we are going to trim the data using **fastp** ({% cite C
 <div class="Step-by-step" markdown="1">
 > <hands-on-title>Quality improvement</hands-on-title>
 >
-> 1. {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/0.23.4+galaxy0) %} with the following parameters:
->    - *"Single-end or paired reads"*: `Paired`
->        - {% icon param-file %} *"Input 1"*: `DRR187559_1`
->        - {% icon param-file %} *"Input 2"*: `DRR187559_2`
+> 1. {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/1.0.1+galaxy3) %} with the following parameters:
+>    - *"Single-end or paired reads"*: `Paired Collection`
+>        - *"Select paired collection(s)"*: `Paired Reads`
 >    - In *"Filter Options"*:
 >        - In *"Length filtering Options"*:
 >            - *Length required*: `30`
@@ -317,10 +320,9 @@ For this tutorial, we will use the PlusPF database which contains the RefSeq Sta
 <div class="Step-by-step" markdown="1">
 > <hands-on-title> Assign taxonomic labels with Kraken2</hands-on-title>
 >
-> 1. {% tool [Kraken2](toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.3+galaxy1) %} with the following parameters:
+> 1. {% tool [Kraken2](toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.3+galaxy2) %} with the following parameters:
 >    - *"Single or paired reads"*: `Paired`
->        - {% icon param-file %} *"Forward strand"*: **fastp** `Read 1 output`
->        - {% icon param-file %} *"Reverse strand"*: **fastp** `Read 2 output`
+>        - *"Collection of paired reads"*: **fastp** `Paired-end output`
 >    - *"Minimum Base Quality"*: `10`
 >    - In *"Create Report"*:
 >        - *"Print a report with aggregrate counts/clade to file"*: `Yes`
@@ -433,7 +435,7 @@ __Bracken__ (Bayesian Reestimation of Abundance after Classification with Kraken
 <div class="Step-by-step" markdown="1">
 > <hands-on-title>Extract species with Bracken</hands-on-title>
 >
-> 1. {% tool [Bracken](toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.9+galaxy0) %} with the following parameters:
+> 1. {% tool [Bracken](toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/3.1+galaxy0) %} with the following parameters:
 >     - {% icon param-collection %} *"Kraken report file"*: **Report** output of **Kraken**
 >     - *"Select a kmer distribution"*: `PlusPF-16`, same as for Kraken
 >
@@ -539,7 +541,7 @@ To explore **Kraken** report and specially to detect more reliably minority orga
 <div class="Step-by-step" markdown="1">
 > <hands-on-title> Identify contamination </hands-on-title>
 >
-> 1. {% tool [Recentrifuge](toolshed.g2.bx.psu.edu/repos/iuc/recentrifuge/recentrifuge/1.12.1+galaxy0) %} with the following parameters:
+> 1. {% tool [Recentrifuge](toolshed.g2.bx.psu.edu/repos/iuc/recentrifuge/recentrifuge/1.16.1+galaxy0) %} with the following parameters:
 >    - {% icon param-file %} *"Select taxonomy file tabular formated"*: **Classification** output of **Krancken2** {% icon tool %}
 >    - *"Type of input file (Centrifuge, CLARK, Generic, Kraken, LMAT)"*: `Kraken`
 >    - In *"Database type"*:
