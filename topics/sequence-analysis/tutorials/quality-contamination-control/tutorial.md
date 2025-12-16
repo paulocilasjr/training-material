@@ -118,11 +118,11 @@ Now, we need to import the data: 2 FASTQ files containing the reads from the seq
 >
 >    {% snippet faqs/galaxy/collections_build_list_paired.md %}
 >
-> 4. Tag both datasets `#unfiltered`
+> 4. Tag the collection `#unfiltered`
 >
->    {% snippet faqs/galaxy/datasets_add_tag.md %}
+>    {% snippet faqs/galaxy/collections_add_tag.md %}
 >
-> 5. **View** {% icon galaxy-eye %} the renamed file
+> 5. **View** {% icon galaxy-eye %} the renamed files in the collection
 >
 {: .hands_on}
 
@@ -186,8 +186,7 @@ Assessing the quality by hand would be too much work. That's why tools like
 [NanoPlot](https://github.com/wdecoster/NanoPlot) or
 [Falco](https://falco.readthedocs.io/en/latest/) are made, as they  generate a summary and plots of the data statistics. NanoPlot is
 mainly used for long-read data, like ONT and PACBIO and Falco for short read,
-like Illumina and Sanger. Falco is an efficiency-optimized rewrite of [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). You can read more in our dedicated [Quality Control
-Tutorial]({% link topics/sequence-analysis/tutorials/quality-control/tutorial.md %}).
+like Illumina and Sanger. Falco is an efficiency-optimized rewrite of [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). You can read more in our dedicated [Quality Control Tutorial]({% link topics/sequence-analysis/tutorials/quality-control/tutorial.md %}).
 
 Before doing any analysis, the first questions we should ask about the input
 reads include:
@@ -270,7 +269,7 @@ is needed. In this case we are going to trim the data using **fastp** ({% cite C
 >    - In *"Read Modification Options"*:
 >        - In *"Per read cuitting by quality options"*:
 >            - *Cut by quality in front (5')*: `Yes`
->            - *Cut by quality in front (3')*: `Yes`
+>            - *Cut by quality in tail (3')*: `Yes`
 >            - *Cutting window size*: `4`
 >            - *Cutting mean quality*: `20`
 >    - In *"Output Options"*:
@@ -542,7 +541,7 @@ To explore **Kraken** report and specially to detect more reliably minority orga
 > <hands-on-title> Identify contamination </hands-on-title>
 >
 > 1. {% tool [Recentrifuge](toolshed.g2.bx.psu.edu/repos/iuc/recentrifuge/recentrifuge/1.16.1+galaxy0) %} with the following parameters:
->    - {% icon param-file %} *"Select taxonomy file tabular formated"*: **Classification** output of **Krancken2** {% icon tool %}
+>    - {% icon param-collection %} *"Select taxonomy file tabular formated"*: **Classification** output of **Kraken2** {% icon tool %}
 >    - *"Type of input file (Centrifuge, CLARK, Generic, Kraken, LMAT)"*: `Kraken`
 >    - In *"Database type"*:
 >        - *"Cached database whith taxa ID"*: `NCBI-2023-06-27`
