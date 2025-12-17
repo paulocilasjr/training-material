@@ -35,6 +35,8 @@ contributions:
   - delphine-l
   editing:
   - teresa-m
+  reviewing:
+  - Sch-Da
   testing:
   - lisanna
   funding:
