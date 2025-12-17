@@ -97,7 +97,7 @@ We will perform an assembly with the Velvet Optimiser, which automatically runs 
 
 > <hands-on-title>Assemble with the Velvet Optimiser</hands-on-title>
 >
->  1. **Velvet Optimiser** {% icon tool %}: Optimise your assembly with the following parameters:
+>  1. {% tool [Velvet Optimiser](toolshed.g2.bx.psu.edu/repos/simon-gladman/velvetoptimiser/velvetoptimiser/2.2.6) %}: Optimise your assembly with the following parameters:
 >    - *"Start k-mer size"*: `45`
 >    - *"End k-mer size"*: `73`
 >    - *"Input file type"*: `Fastq`
@@ -119,7 +119,7 @@ Have a look at each file.
 
 > <hands-on-title>Get contig statistics for Velvet Optimiser contigs</hands-on-title>
 >
-> 1. **Fasta Statistics** {% icon tool %}: Produce a summary of the velvet optimiser contigs:
+> 1. {% tool [Fasta Statistics](toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1) %}: Produce a summary of the velvet optimiser contigs:
 >    - {% icon param-file %} *"fasta or multifasta file"*: Select your velvet optimiser contigs file
 >
 > 2. View the output
@@ -154,7 +154,7 @@ Currently VelvetOptimiser does not include the LastGraph output, so we will manu
 >
 > 1. Locate the output called "VelvetOptimiser: Contigs" in your history
 >
-> 2. Click the (i) information icon
+> 2. Click the {% icon dataset-info %} information icon
 >
 > 3. Check the tool `stderr` in the information page for the optimised k-mer value
 {: .hands_on}
@@ -170,7 +170,7 @@ With this information in hand, let's run velvet:
 
 > <hands-on-title>Manually running velvetg/h</hands-on-title>
 >
-> 1. **velveth** {% icon tool %}: Prepare a dataset for the Velvet velvetg Assembler
+> 1. {% tool [velveth](velveth) %}: Prepare a dataset for the Velvet `velvetg` Assembler
 >    - *"Hash length"*: `55`
 >    - *"Insert Input Files"*:
 >      - 1: Input Files
@@ -183,7 +183,7 @@ With this information in hand, let's run velvet:
 >        - *"read type"*: `shortPaired reads`
 >        - *"Dataset"*: `mutant_R2.fastq`
 >
-> 2. **velvetg** {% icon tool %}: Velvet sequence assembler for very short reads
+> 2. {% tool [velvetg](velvetg) %}: Velvet sequence assembler for very short reads
 >    - *"Velvet dataset"*: output from **velveth** {% icon tool %}
 >    - *"Generate velvet LastGraph file"*: `Yes`
 >    - *"Coverage cutoff"*: `Specify Cutoff Value`
@@ -196,7 +196,7 @@ The LastGraph contains a detailed representation of the De Bruijn graph, which c
 
 > <hands-on-title>Bandage</hands-on-title>
 >
-> 1. **Bandage Image** {% icon tool %}: visualize de novo assembly graphs
+> 1. {% tool [Bandage Image](toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/2022.09+galaxy4) %}: visualize de novo assembly graphs
 >    - *"Graphical Fragment Assembly"*: The "LastGraph" output of **velvetg** {% icon tool %}
 >    - *"Produce jpg, png or svg file?"*: `.svg`
 >
@@ -279,7 +279,7 @@ Examine each file, especially the stats files.
 
 > <hands-on-title>Visualize assembly with Bandage</hands-on-title>
 >
-> 1. **Bandage** {% icon tool %} with the following parameters:
+> 1. {% tool [Bandage Image](toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/2022.09+galaxy4) %} with the following parameters:
 >    - *"Graphical Fragment Assembly"*: `assembly graph with scaffolds` output from **SPAdes** {% icon tool %}
 >
 > 2. Examine the output image {% icon galaxy-eye %}
@@ -301,7 +301,7 @@ The visualized assembly should look something like this:
 
 > <hands-on-title>Get contig statistics for SPAdes contigs</hands-on-title>
 >
-> 1. **Fasta Statistics** {% icon tool %}: Produce a summary of the SPAdes contigs:
+> 1. {% tool [Fasta Statistics](toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1) %}: Produce a summary of the SPAdes contigs:
 >    - {% icon param-file %} *"fasta or multifasta file"*: Select your velvet optimiser contigs file
 >
 > 2. Look at the output file.
