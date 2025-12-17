@@ -17,10 +17,17 @@ key_points:
   - "We learned about the strategies that assemblers use to make reference genomes"
   - "We performed a number of assemblies with Velvet and SPAdes."
   - "You should use SPAdes or another more modern assembler than Velvet for actual assemblies now."
-contributors:
-  - slugger70
-  - hexylena
-  - shiltemann
+contributions:
+  authorship:
+    - slugger70
+    - hexylena
+    - shiltemann
+  editing:
+    - tflowers15
+  funding:
+    - unimelb
+    - melbournebioinformatics
+    - AustralianBioCommons
 ---
 
 # Optimised de Bruijn Graph assemblies using the Velvet Optimiser and SPAdes
@@ -63,7 +70,7 @@ We will be using the same data that we used in the introductory tutorial, so if 
 >
 > 3. Rename the files {% icon galaxy-pencil %}
 >    - The name of the files are the full URL, let's make the names a little clearer
->    - Change the names to just the last part, `Mutant_R1.fastq`, `Mutant_R2.fastq`  respectively
+>    - Change the names to just the last part, `Mutant_R1.fastq`, `Mutant_R2.fastq`, respectively
 >
 >    {% snippet faqs/galaxy/datasets_rename.md %}
 >
@@ -73,6 +80,14 @@ We will be using the same data that we used in the introductory tutorial, so if 
 >    > 2. What is the main difference between a FASTQ and a FASTA file?
 >    {: .question}
 >
+> 4. Create a paired collection named `Paired Reads`
+>
+>    {% snippet faqs/galaxy/collections_build_list_paired.md %}
+>    
+>    - We will need to use both the individual datasets (`Mutant_R1.fastq` and `Mutant_R2.fastq`) and the paired end collection (`Paired Reads`), so toggle off the `Hide original elements` option when creating the collection.
+>    - Alternatively, you can un-hide the datasets by selecting the {% icon galaxy-show-hidden %} icon on the hidden dataset in your history.
+>      
+>    {% snippet faqs/galaxy/datasets_unhidden.md %}
 >
 {: .hands_on}
 
@@ -208,21 +223,21 @@ The next thing to be aware of is that there can be multiple valid interpretation
 
 > For a simple case, imagine a bacterial genome that contains a single repeated element in two separate places in the chromosome:
 >
-> ![Simple example 1](https://camo.githubusercontent.com/03628b49f50ccf7a9c565d7712bfc70c7764cbeb/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f312e706e67)
+> ![Simple example 1](https://camo.githubusercontent.com/1fc8116ea0532646250cdf702b7e2d68ab0126ad198f51fea5288d039a6875fd/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f332e706e67)
 >
 > A researcher (who does not yet know the structure of the genome) sequences it, and the resulting 100 bp reads are assembled with a de novo assembler:
 >
-> ![Simple example 2](https://camo.githubusercontent.com/a51f384b83fbb97590ce86b8ec14d4ebd1bb60d1/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f322e706e67)
+> ![Simple example 2](https://camo.githubusercontent.com/ff4073c7216906f46a73fd70dab24679dd6cfeff7a4fc79181c18782c837e778/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f322e706e67)
 >
 > Because the repeated element is longer than the sequencing reads, the assembler was not able to reproduce the original genome as a single contig. Rather, three contigs are produced: one for the repeated sequence (even though it occurs twice) and one for each sequence between the repeated elements.
 >
 > Given only the contigs, the relationship between these sequences is not clear. However, the assembly graph contains additional information which is made apparent in Bandage:
 >
-> ![Simple example 3](https://camo.githubusercontent.com/406648509cf478ac0b2ab9f2447aec4e7575b7dd/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f332e706e67)
+> ![Simple example 3](https://camo.githubusercontent.com/1fc8116ea0532646250cdf702b7e2d68ab0126ad198f51fea5288d039a6875fd/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f332e706e67)
 >
 > There are two principal underlying sequences compatible with this graph: two separate circular sequences that share a region in common, or a single larger circular sequence with an element that occurs twice:
 >
-> ![Simple example 4](https://camo.githubusercontent.com/58d0aa7eff4cfd3d36c9210e9f6a2f0265396715/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f342e706e67)
+> ![Simple example 4](https://camo.githubusercontent.com/b4fe90972aa62b74bd39faae0dea09e87ef398c76de878e4710d71164da5c5df/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f342e706e67)
 >
 > Additional knowledge, such as information on the approximate size of the bacterial chromosome, can help the researcher to rule out the first alternative. In this way, Bandage has assisted in turning a fragmented assembly of three contigs into a completed genome of one sequence.
 {: .quote cite="https://github.com/rrwick/Bandage/wiki/Simple-example"}
@@ -233,14 +248,14 @@ We will now perform an assembly with the much more modern SPAdes assembler ({% c
 
 > <hands-on-title>Assemble with SPAdes</hands-on-title>
 >
-> 1. **SPAdes** {% icon tool %}: Assemble the reads:
->
->    - *"Run only assembly"*: `yes`
->    - *"K-mers to use separated by commas"*: `33,55,91` [note: no spaces!]
->    - *"Coverage cutoff"*: `auto`
->    - {% icon param-file %} *"Files -> forward reads"*: `mutant_R1.fastq`
->    - {% icon param-file %} *"Files -> reverse reads"*: `mutant_R2.fastq`
->    - *"Output final assembly graph with scaffolds?"*: `Yes`
+> 1. {% tool [SPAdes](toolshed.g2.bx.psu.edu/repos/nml/spades/spades/4.2.0+galaxy0) %}: Assemble the reads:
+>    - *"Operation mode"*: `Only assembler (--only_assembler)`
+>    - *"Single-end or paired-end short-reads"*: `Paired-end: list of dataset pairs`
+>      - *"FASTA/FASTQ file(s): collection"*: `Paired Reads`
+>    - *"Set coverage cutoff option"*: `auto`
+>    - *"Select k-mer detection option"*: `User specific`
+>      - *"K-mer size values"*: `33,55,91` [note: no spaces!]
+>    - *"Select optional output file(s)"*: `Assembly graph`, `Assembly graph with scaffold`, `Contigs`, `Scaffolds`, `Log`
 >
 {: .hands_on}
 
