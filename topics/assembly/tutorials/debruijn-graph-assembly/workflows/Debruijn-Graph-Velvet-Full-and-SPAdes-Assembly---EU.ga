@@ -16,7 +16,7 @@
     ],
     "format-version": "0.1",
     "license": "CC-BY-4.0",
-    "name": "Debruijn Graph Velvet Optimiser and SPAdes Assembly - EU",
+    "name": "Debruijn Graph Velvet Full and SPAdes Assembly - EU",
     "report": {
         "markdown": "\n# Workflow Execution Report\n\n## Workflow Inputs\n```galaxy\ninvocation_inputs()\n```\n\n## Workflow Outputs\n```galaxy\ninvocation_outputs()\n```\n\n## Workflow\n```galaxy\nworkflow_display()\n```\n"
     },
@@ -38,13 +38,13 @@
             "outputs": [],
             "position": {
                 "left": 0,
-                "top": 133.75636632095012
+                "top": 326.9500803530957
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"tag\": null}",
             "tool_version": null,
             "type": "data_input",
-            "uuid": "6e10c569-eae8-493b-84a4-97208ae57f1a",
+            "uuid": "db784a27-d503-42a3-a133-22a33b2780d9",
             "when": null,
             "workflow_outputs": []
         },
@@ -65,13 +65,13 @@
             "outputs": [],
             "position": {
                 "left": 0,
-                "top": 253.73903233657512
+                "top": 446.9327463687207
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"tag\": null}",
             "tool_version": null,
             "type": "data_input",
-            "uuid": "70f93a79-723d-47f7-adb7-fc1efbb1a073",
+            "uuid": "7e7ed93d-61f9-4529-903e-942c1c7b141c",
             "when": null,
             "workflow_outputs": []
         },
@@ -92,13 +92,13 @@
             "outputs": [],
             "position": {
                 "left": 2.8266605915731695,
-                "top": 466.24421393382437
+                "top": 659.43792796597
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"tag\": null, \"collection_type\": \"list:paired\", \"fields\": null}",
             "tool_version": null,
             "type": "data_collection_input",
-            "uuid": "eeb7a958-1e64-4330-8818-2322a3ec6a7d",
+            "uuid": "a7244b75-d09b-488c-9d77-b7393a89f22d",
             "when": null,
             "workflow_outputs": []
         },
@@ -135,7 +135,7 @@
                 }
             ],
             "position": {
-                "left": 469.19117103304825,
+                "left": 470.0397703735815,
                 "top": 0
             },
             "post_job_actions": {},
@@ -149,31 +149,74 @@
             "tool_state": "{\"advanced\": {\"verbose\": false, \"optFuncKmer\": \"n50\", \"optFuncCov\": \"Lbp\", \"velvetg_opts\": \"\", \"minCutoff\": \"0\", \"maxCutoff\": \"0.8\"}, \"chromInfo\": \"/opt/galaxy/tool-data/shared/ucsc/chrom/?.len\", \"end_kmer\": \"73\", \"files\": [{\"__index__\": 0, \"filetype\": \"fastq\", \"paired_type\": {\"paired_type_selector\": \"paired\", \"__current_case__\": 0, \"input1\": {\"__class__\": \"ConnectedValue\"}, \"input2\": {\"__class__\": \"ConnectedValue\"}}}], \"kmer_step\": \"2\", \"start_kmer\": \"45\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
             "tool_version": "2.2.6",
             "type": "tool",
-            "uuid": "e1ac64c2-a8c5-4f75-98e5-7b7f5a3c670d",
+            "uuid": "4ac4ab83-afbd-4ece-a0ef-1c76966891ab",
             "when": null,
             "workflow_outputs": [
                 {
                     "label": null,
+                    "output_name": "stats",
+                    "uuid": "73139910-483e-479f-b6dc-26687b32093a"
+                },
+                {
+                    "label": null,
                     "output_name": "logfile",
-                    "uuid": "a30134f8-adb1-4e61-b4e4-b86271286e37"
+                    "uuid": "1d9e5d15-2b83-4217-8691-12c3e707c651"
                 },
                 {
                     "label": null,
                     "output_name": "contigs",
-                    "uuid": "f2915801-4ae9-4ac6-8e33-14e0385f05f0"
-                },
-                {
-                    "label": null,
-                    "output_name": "stats",
-                    "uuid": "1d16abbe-886b-4ec0-9e8f-6f5ec941948e"
+                    "uuid": "8bf25e65-7dec-4c0e-9637-6146bcb3f025"
                 }
             ]
         },
         "4": {
             "annotation": "",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/nml/spades/spades/4.2.0+galaxy0",
+            "content_id": "velveth",
             "errors": null,
             "id": 4,
+            "input_connections": {
+                "inputs_0|input": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "inputs_1|input": {
+                    "id": 1,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "velveth",
+            "outputs": [
+                {
+                    "name": "out_file1",
+                    "type": "velvet"
+                }
+            ],
+            "position": {
+                "left": 480.84307267151837,
+                "top": 330.99556038540896
+            },
+            "post_job_actions": {},
+            "tool_id": "velveth",
+            "tool_state": "{\"hash_length\": \"55\", \"inputs\": [{\"__index__\": 0, \"file_format\": \"-fastq\", \"read_type\": \"-shortPaired\", \"input\": {\"__class__\": \"ConnectedValue\"}}, {\"__index__\": 1, \"file_format\": \"-fastq\", \"read_type\": \"-shortPaired\", \"input\": {\"__class__\": \"ConnectedValue\"}}], \"strand_specific\": false, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "1.0.0",
+            "type": "tool",
+            "uuid": "408e7501-1d15-4423-9f88-74556e424d8f",
+            "when": null,
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "out_file1",
+                    "uuid": "5b6dee57-87be-42cc-b0c0-5ace98acb58c"
+                }
+            ]
+        },
+        "5": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/nml/spades/spades/4.2.0+galaxy0",
+            "errors": null,
+            "id": 5,
             "input_connections": {
                 "singlePaired|input": {
                     "id": 2,
@@ -232,7 +275,7 @@
             ],
             "position": {
                 "left": 485.99182566241547,
-                "top": 365.6993612583271
+                "top": 558.8930752904727
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/nml/spades/spades/4.2.0+galaxy0",
@@ -245,21 +288,21 @@
             "tool_state": "{\"additional_reads\": {\"selector\": \"false\", \"__current_case__\": 1}, \"arf\": {\"nanopore\": {\"__class__\": \"RuntimeValue\"}, \"pacbio\": {\"__class__\": \"RuntimeValue\"}, \"sanger\": {\"__class__\": \"RuntimeValue\"}, \"trusted_contigs\": {\"__class__\": \"RuntimeValue\"}, \"untrusted_contigs\": {\"__class__\": \"RuntimeValue\"}}, \"cov_cond\": {\"cov_cutoff\": \"auto\", \"__current_case__\": 1}, \"kmer_cond\": {\"kmer_sel\": \"manual\", \"__current_case__\": 1, \"manual\": \"33,55,91\"}, \"mode_sel\": null, \"operation_mode\": \"--only-assembler\", \"optional_output\": [\"ag\", \"ags\", \"cn\", \"sc\", \"l\"], \"phred_offset\": \"auto\", \"singlePaired\": {\"sPaired\": \"paired_collection\", \"__current_case__\": 2, \"input\": {\"__class__\": \"ConnectedValue\"}, \"type_paired\": \"pe\", \"orientation\": \"fr\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
             "tool_version": "4.2.0+galaxy0",
             "type": "tool",
-            "uuid": "7f1a9bf2-e66f-465f-87dc-f3c0f570e4d1",
+            "uuid": "54f4c4e6-ff08-4883-8d90-8ee032627f38",
             "when": null,
             "workflow_outputs": [
                 {
                     "label": "spades_log",
                     "output_name": "out_l",
-                    "uuid": "a3b09011-16ab-406f-9bea-d78c2695d611"
+                    "uuid": "911b834f-b154-4482-94b2-54a2ed070ff9"
                 }
             ]
         },
-        "5": {
+        "6": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1",
             "errors": null,
-            "id": 5,
+            "id": 6,
             "input_connections": {
                 "dataset": {
                     "id": 3,
@@ -276,8 +319,8 @@
                 }
             ],
             "position": {
-                "left": 842.7117842659184,
-                "top": 20.509351990887183
+                "left": 846.9786411873416,
+                "top": 37.07231996509052
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1",
@@ -290,24 +333,81 @@
             "tool_state": "{\"chromInfo\": \"/opt/galaxy/tool-data/shared/ucsc/chrom/?.len\", \"dataset\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
             "tool_version": "1.0.1",
             "type": "tool",
-            "uuid": "b762b982-6c02-4441-ab05-53073460cb5a",
+            "uuid": "212e4323-449e-4356-a709-9bb4a083dc21",
             "when": null,
             "workflow_outputs": [
                 {
                     "label": "fasta_stats_velvet",
                     "output_name": "stats",
-                    "uuid": "432fc97e-afab-48b8-87dd-621fe11d0739"
+                    "uuid": "7bcf8539-8b03-49b4-9788-52714c8761b7"
                 }
             ]
         },
-        "6": {
+        "7": {
+            "annotation": "",
+            "content_id": "velvetg",
+            "errors": null,
+            "id": 7,
+            "input_connections": {
+                "input": {
+                    "id": 4,
+                    "output_name": "out_file1"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "velvetg",
+            "outputs": [
+                {
+                    "name": "LastGraph",
+                    "type": "txt"
+                },
+                {
+                    "name": "stats",
+                    "type": "tabular"
+                },
+                {
+                    "name": "contigs",
+                    "type": "fasta"
+                }
+            ],
+            "position": {
+                "left": 825.0886247023176,
+                "top": 294.81441173453464
+            },
+            "post_job_actions": {},
+            "tool_id": "velvetg",
+            "tool_state": "{\"contig_lgth\": {\"use_contig_lgth\": \"no\", \"__current_case__\": 0}, \"coverage\": {\"cutoff\": \"value\", \"__current_case__\": 2, \"cov_cutoff\": \"1.44\"}, \"expected\": {\"coverage\": \"none\", \"__current_case__\": 0}, \"generate_amos\": {\"afg\": \"no\", \"__current_case__\": 0}, \"input\": {\"__class__\": \"ConnectedValue\"}, \"last_graph\": {\"generate_graph\": \"yes\", \"__current_case__\": 1}, \"read_trkg\": false, \"reads\": {\"paired\": \"yes\", \"__current_case__\": 1, \"ins_length\": \"-1\", \"options\": {\"advanced\": \"no\", \"__current_case__\": 0}}, \"unused_reads\": {\"generate_unused\": \"no\", \"__current_case__\": 0}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "1.0.0",
+            "type": "tool",
+            "uuid": "683aa2d7-b66d-4680-8cb2-21d50627ba20",
+            "when": null,
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "stats",
+                    "uuid": "c76890a6-ce39-47a0-b2ad-9849182bb9f5"
+                },
+                {
+                    "label": null,
+                    "output_name": "LastGraph",
+                    "uuid": "8d1fc436-6e4f-4247-89ad-acf1103bc003"
+                },
+                {
+                    "label": null,
+                    "output_name": "contigs",
+                    "uuid": "928f2ef5-8ae6-4601-b53a-c0dc1cc41869"
+                }
+            ]
+        },
+        "8": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1",
             "errors": null,
-            "id": 6,
+            "id": 8,
             "input_connections": {
                 "dataset": {
-                    "id": 4,
+                    "id": 5,
                     "output_name": "out_cn"
                 }
             },
@@ -322,7 +422,7 @@
             ],
             "position": {
                 "left": 919.9827270507812,
-                "top": 389.7459903443876
+                "top": 582.9397043765332
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1",
@@ -335,24 +435,24 @@
             "tool_state": "{\"chromInfo\": \"/opt/galaxy/tool-data/shared/ucsc/chrom/?.len\", \"dataset\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
             "tool_version": "1.0.1",
             "type": "tool",
-            "uuid": "abd6be81-76e5-46bc-a1fc-ff42e2dc1a1b",
+            "uuid": "71a13e31-8d1b-47f0-a877-3268510c6827",
             "when": null,
             "workflow_outputs": [
                 {
                     "label": "fasta_stats_spades",
                     "output_name": "stats",
-                    "uuid": "0435b5e5-e189-42ee-97cf-c21dc6cf0b31"
+                    "uuid": "aab9a3f2-0c69-4f57-9570-5cc2b93e6ead"
                 }
             ]
         },
-        "7": {
+        "9": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/0.8.1+galaxy0",
             "errors": null,
-            "id": 7,
+            "id": 9,
             "input_connections": {
                 "input_file": {
-                    "id": 4,
+                    "id": 5,
                     "output_name": "out_ags"
                 }
             },
@@ -367,7 +467,7 @@
             ],
             "position": {
                 "left": 935.4861450195312,
-                "top": 606.2390323365751
+                "top": 799.4327463687207
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/0.8.1+galaxy0",
@@ -380,13 +480,58 @@
             "tool_state": "{\"height\": \"1000\", \"input_file\": {\"__class__\": \"ConnectedValue\"}, \"output_format\": \"svg\", \"width\": null, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
             "tool_version": "0.8.1+galaxy0",
             "type": "tool",
-            "uuid": "a5486b69-493e-48a3-91f6-2f6c9d4c3250",
+            "uuid": "7b6822a0-8bc1-48f2-ae87-2cdc1f300e06",
             "when": null,
             "workflow_outputs": [
                 {
                     "label": null,
                     "output_name": "outfile",
-                    "uuid": "a4f3b311-7578-4407-ad00-079a74d88499"
+                    "uuid": "3ab5cc8e-410f-4b9e-99c4-0b970710adfc"
+                }
+            ]
+        },
+        "10": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/0.8.1+galaxy0",
+            "errors": null,
+            "id": 10,
+            "input_connections": {
+                "input_file": {
+                    "id": 7,
+                    "output_name": "LastGraph"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "Bandage Image",
+            "outputs": [
+                {
+                    "name": "outfile",
+                    "type": "jpg"
+                }
+            ],
+            "position": {
+                "left": 1139.2835587552765,
+                "top": 300.094761846879
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/0.8.1+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "067592b6b312",
+                "name": "bandage",
+                "owner": "iuc",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"height\": \"1000\", \"input_file\": {\"__class__\": \"ConnectedValue\"}, \"output_format\": \"svg\", \"width\": null, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.8.1+galaxy0",
+            "type": "tool",
+            "uuid": "4597dbf3-2a35-445e-ad7d-b797e14e6b13",
+            "when": null,
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "outfile",
+                    "uuid": "325e719d-f9f2-4ed2-b1c7-bfba6c4e8c6f"
                 }
             ]
         }
@@ -394,6 +539,6 @@
     "tags": [
         "assembly"
     ],
-    "uuid": "ce6fdf76-178d-469d-93c4-646618f9d3f6",
-    "version": 4
+    "uuid": "5d1a4058-9add-485d-8682-08a83b7c4e1c",
+    "version": 6
 }
