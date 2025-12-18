@@ -3340,3 +3340,14 @@ sfragkoul:
     elixir_node: gr
     affiliations:
       - elixir-europe
+
+minamehr:
+    name: Mina Hojat Ansari
+    email: mina.ansari82@gmail.com
+    orcid: 0000-0002-3602-7884
+    matrix: 'mina24:matrix.org'
+    joined: 2024-03
+    elixir_node: de
+    affiliations:
+      - uni-freiburg
+      - elixir-europe
