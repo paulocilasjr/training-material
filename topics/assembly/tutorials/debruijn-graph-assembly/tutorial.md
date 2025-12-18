@@ -100,11 +100,12 @@ We will perform an assembly with the Velvet Optimiser, which automatically runs 
 >  1. {% tool [Velvet Optimiser](toolshed.g2.bx.psu.edu/repos/simon-gladman/velvetoptimiser/velvetoptimiser/2.2.6) %}: Optimise your assembly with the following parameters:
 >    - *"Start k-mer size"*: `45`
 >    - *"End k-mer size"*: `73`
->    - *"Input Files"*: `1: Input Files`
->      - *"Input file type"*: `Fastq`
->      - *"Single or paired end reads"*: `Paired`
->      - {% icon param-file %} *"Select first set of reads"*: `mutant_R1.fastq`
->      - {% icon param-file %} *"Select second set of reads"*: `mutant_R2.fastq`
+>    - *"Input Files"*:
+>      - `1: Input Files`
+>        - *"Input file type"*: `Fastq`
+>        - *"Single or paired end reads"*: `Paired`
+>        - {% icon param-file %} *"Select first set of reads"*: `mutant_R1.fastq`
+>        - {% icon param-file %} *"Select second set of reads"*: `mutant_R2.fastq`
 >
 {: .hands_on}
 
@@ -173,7 +174,8 @@ With this information in hand, let's run velvet:
 >
 > 1. {% tool [velveth](toolshed.g2.bx.psu.edu/repos/devteam/velvet/velveth/1.2.10.3) %}: Prepare a dataset for the Velvet `velvetg` Assembler
 >    - *"Hash length"*: `55`
->    - *"Input Files"*: `+ Insert Input Files`
+>    - *"Input Files"*:
+>      - `+ Insert Input Files`
 >      - `1: Input Files`
 >        - *"Choose the input type"*: `separate paired reads`
 >        - *"read type"*: `shortPaired reads`
