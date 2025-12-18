@@ -71,7 +71,7 @@ pathway:
 
         By the end of this module, you'll be able to confidently clean your metagenomic data, setting the stage for high-quality MAG assembly and analysis.
     tutorials:
-      - name: 
+      - name: host-removal/
         topic: microbiome
 
   - section: "Module 3: Assembly – Reconstructing and Assessing Contigs from Metagenomic Reads"
@@ -145,7 +145,7 @@ pathway:
     description: |
         While this learning pathway goes into detail about all steps required for MAGs generation, a full end-to-end training was developed, which executes all workflows for MAGs generation and annotation instead of running individual steps. This tutorial can be used as a guide to execute the workflows on your own data. It explains how you can perform quality control, remove host contamination, and run the main MAGs workflow to obtain quality-controlled, taxonomically and functionally annotated MAGs. 
     tutorials:
-      - name: mags-building/
+      - name: mags-building
         topic: microbiome
 ---
 
