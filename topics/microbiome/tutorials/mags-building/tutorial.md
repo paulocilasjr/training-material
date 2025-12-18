@@ -48,7 +48,7 @@ edam_ontology:
 contributions:
   authorship:
   - bebatut
-    editing:
+  editing:
   - paulzierep
   funding:
   - elixir-europe
