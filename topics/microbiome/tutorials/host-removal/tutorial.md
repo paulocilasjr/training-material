@@ -98,7 +98,6 @@ To remove host contamination, we start by mapping the reads to the host genome u
 >    - *"Select analysis mode"*: `1: Default setting only`
 >    - *"Do you want to tweak SAM/BAM Options?"*: `No`
 >    - *"Save the bowtie2 mapping statistics to the history"*: `Yes`
-
 >
 > 2. Run the tool. The outputs will include:
 >    - Mapping statistics report (`bowtie2.log`)
