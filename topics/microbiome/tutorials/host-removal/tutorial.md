@@ -86,7 +86,6 @@ To remove host contamination, we start by mapping the reads to the host genome u
 
 > <hands-on-title>Remove host reads</hands-on-title>
 >
-
 > 1. {% tool [Bowtie2](toolshed.g2.bx.psu.edu/repos/devteam/bowtie2/bowtie2/2.5.3+galaxy1) %} with the following parameters:
 >    - *"Is this single or paired library"*: `Paired-end Dataset Collection`
 >        - {% icon param-collection %} *"FASTQ Paired Dataset"*: `Input reads`
