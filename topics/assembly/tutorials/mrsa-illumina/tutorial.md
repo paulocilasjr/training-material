@@ -328,6 +328,7 @@ Th assembly graph format takes some getting used to before you can make sense ou
 > <hands-on-title>Assembly inspection</hands-on-title>
 > 1. {% tool [Bandage Info](toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_info/2022.09+galaxy2) %} with the following parameters:
 >    - {% icon param-file %} *"Graphical Fragment Assembly"*: **Shovill** `Contig Graph`
+>    - *"Produce jpg, png or svg file?"*: `.jpg`
 >
 {: .hands_on}
 
