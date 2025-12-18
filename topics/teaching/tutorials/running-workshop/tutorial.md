@@ -168,7 +168,7 @@ Not everyone is always outwardly enthusiastic about the course for any number of
 ## After the workshop
 
 1. Submit receipts for reimbursement
-2. Report any training errors or suggest improvements on GitHub, gitter or by email to the GTN
+2. Report any training errors or suggest improvements on GitHub, Matrix or by email to the GTN
 3. Update this document with anything that you did that wasn't listed.
 
 # Conclusion
