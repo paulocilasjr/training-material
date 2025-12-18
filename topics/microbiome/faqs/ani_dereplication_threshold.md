@@ -9,7 +9,7 @@ Selecting an **appropriate ANI threshold** for de-replication depends on the spe
 - **Minimum secondary ANI:** The lowest ANI value at which genomes are considered identical.
 - **Minimum aligned fraction:** The minimum genome overlap required to trust the ANI calculation.
 
-These parameters are determined by the **secondary clustering algorithm** used in tools like **dRep**
+These parameters are determined by the **secondary clustering algorithm** used in tools like {% tool [dRep](toolshed.g2.bx.psu.edu/repos/iuc/drep_dereplicate/drep_dereplicate/3.6.2+galaxy1) %}
 
 **Common Use Cases and Thresholds**
 

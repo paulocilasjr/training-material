@@ -48,12 +48,15 @@ edam_ontology:
 contributions:
   authorship:
   - bebatut
+    editing:
+  - paulzierep
   funding:
   - elixir-europe
   - ifb
 subtopic: metagenomics
 tags:
   - assembly
+  - binning
   - metagenomics
   - microgalaxy
 ---
@@ -276,7 +279,7 @@ With the host (honey bee) sequences successfully filtered out, we now turn our a
 >
 {: .question}
 
-We have now completed the essential preprocessing steps to ensure our metagenomic dataset is **clean, high-quality, and enriched for microbial sequences**. By performing **rigorous quality control** and systematically **removing host and contaminant reads**, we have minimized potential biases and maximized the reliability of your data. With these preparations complete, our dataset is now optimized for the next phase: **assembling and reconstructing Metagenome-Assembled Genomes (MAGs)**. 
+We have now completed the essential preprocessing steps to ensure our metagenomic dataset is **clean, high-quality, and enriched for microbial sequences**. By performing **rigorous quality control** and systematically **removing host and contaminant reads**, we have minimized potential biases and maximized the reliability of our data. With these preparations complete, our dataset is now optimized for the next phase: **assembling and reconstructing Metagenome-Assembled Genomes (MAGs)**. 
 
 # Build, Refine, and Annotate Metagenome-Assembled Genomes (MAGs)
 
@@ -344,7 +347,7 @@ Let's import the workflow from WorkflowHub:
 >      > This weight is used for the scoring the bins. A low weight favor complete bins over low contaminated bins.
 >      {: .comment}
 >
->    - *"Read length (CONCOCT)"*: `100`
+>    - *"Read length (CONCOCT)"*: `150`
 >
 >      > <comment-title></comment-title>
 >      > CONCOCT requires the read length for coverage. Best use fastQC to estimate the mean value
@@ -409,7 +412,7 @@ To address these challenges, a variety of **metagenomic assemblers** have been d
 > Learn more about metagenomic assembly, algorithms and the tools in our dedicated tutorial: [**Assembly of metagenomic sequencing data**]({% link topics/microbiome/tutorials/metagenomics-assembly/tutorial.md %})
 {: .comment}
 
-In this workflow, we used **MEGAHIT**, but **metaSPAdes** is also proposed as an alternative assembler.
+In this workflow execution, we used **MEGAHIT**, but **metaSPAdes** is also an option as an alternative assembler in the workflow.
 
 > <question-title></question-title>
 >
@@ -542,12 +545,12 @@ Let's now examine the table, from top to bottom, to interpret the assembly resul
 
     > <question-title></question-title>
     >
-    > 1. What is the % of SRR24759598 reads mapped to SRR24759598 contigs? And for SRR24759616?
+    > 1. What is the percentage (%) of SRR24759598 reads mapped to SRR24759598 contigs? And for SRR24759616?
     > 2. What is the percentage of reads used to build the assemblies for SRR24759598? and SRR24759616?
     >
     > > <solution-title></solution-title>
     > >
-    > > 1. % of mapped reads:
+    > > 1. percentage (%) of mapped reads:
     > >   - 97.1% for SRR24759598
     > >   - 98.54% for SRR24759616
     > > 2. 97.1% of reads were used to build the contigs for SRR24759598 and 98.54% for SRR24759616.
@@ -570,7 +573,7 @@ Numerous algorithms have been developed for metagenomic binning, each with uniqu
 > Learn more about metagenomic binning and available tools in our dedicated tutorial: [**Binning of metagenomic sequencing data**]({% link topics/microbiome/tutorials/metagenomics-binning/tutorial.md %})
 {: .comment}
 
-A widely adopted strategy is to **use multiple binning tools** to maximize accuracy, followed by **bin refinement** to consolidate and improve the results. This approach leverages the strengths of different algorithms, producing a more robust and reliable set of bins.
+A widely adopted strategy is to **use multiple binning tools** to profit from their individual advantages and methods, followed by **bin refinement** to consolidate and improve the results. This approach leverages the strengths of different algorithms, producing a more robust and reliable set of bins.
 
 In this analysis, we employed **four complementary binning tools**, each offering distinct advantages for capturing microbial diversity:
 - **MetaBAT2** ({% cite Kang_2019 %}): Known for its efficiency and accuracy in binning metagenomic contigs.
