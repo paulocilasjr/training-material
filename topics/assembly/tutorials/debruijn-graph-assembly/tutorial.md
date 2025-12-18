@@ -101,11 +101,11 @@ We will perform an assembly with the Velvet Optimiser, which automatically runs 
 >    - *"Start k-mer size"*: `45`
 >    - *"End k-mer size"*: `73`
 >    - *"Input Files"*:
->      - `1: Input Files`
->        - *"Input file type"*: `Fastq`
->        - *"Single or paired end reads"*: `Paired`
->        - {% icon param-file %} *"Select first set of reads"*: `mutant_R1.fastq`
->        - {% icon param-file %} *"Select second set of reads"*: `mutant_R2.fastq`
+>        - `1: Input Files`
+>            - *"Input file type"*: `Fastq`
+>            - *"Single or paired end reads"*: `Paired`
+>            - {% icon param-file %} *"Select first set of reads"*: `mutant_R1.fastq`
+>            - {% icon param-file %} *"Select second set of reads"*: `mutant_R2.fastq`
 >
 {: .hands_on}
 
