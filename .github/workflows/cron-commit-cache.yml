@@ -67,7 +67,7 @@ jobs:
 
       - name: Create Pull Request
         # If it's not a Pull Request then commit any changes as a new PR.
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           title: Update Cached Commit Data
           branch-suffix: timestamp

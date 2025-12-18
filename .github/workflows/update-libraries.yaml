@@ -48,7 +48,7 @@ jobs:
         # If it's not a Pull Request then commit any changes as a new PR.
         if: |
           github.event_name != 'pull_request'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           title: Add missing data-library.yaml files
           branch-suffix: timestamp
