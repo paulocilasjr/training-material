@@ -16,7 +16,7 @@
     ],
     "format-version": "0.1",
     "license": "CC-BY-4.0",
-    "name": "Debruijn Graph Velvet Optimiser and SPAdes Assembly - EU",
+    "name": "Debruijn Graph Velvet Optimiser and SPAdes Assembly",
     "report": {
         "markdown": "\n# Workflow Execution Report\n\n## Workflow Inputs\n```galaxy\ninvocation_inputs()\n```\n\n## Workflow Outputs\n```galaxy\ninvocation_outputs()\n```\n\n## Workflow\n```galaxy\nworkflow_display()\n```\n"
     },
@@ -37,8 +37,8 @@
             "name": "Input dataset",
             "outputs": [],
             "position": {
-                "left": 0,
-                "top": 133.75636632095012
+                "left": 0.34257621741250643,
+                "top": 0.0
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"tag\": null}",
@@ -64,8 +64,8 @@
             "name": "Input dataset",
             "outputs": [],
             "position": {
-                "left": 0,
-                "top": 253.73903233657512
+                "left": 3.5032860162828428,
+                "top": 160.08995613564295
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"tag\": null}",
@@ -91,8 +91,8 @@
             "name": "Input dataset collection",
             "outputs": [],
             "position": {
-                "left": 2.8266605915731695,
-                "top": 466.24421393382437
+                "left": 0.0,
+                "top": 466.6297886813089
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"tag\": null, \"collection_type\": \"list:paired\", \"fields\": null}",
@@ -135,8 +135,8 @@
                 }
             ],
             "position": {
-                "left": 469.19117103304825,
-                "top": 0
+                "left": 466.3645104414751,
+                "top": 0.3855747474845267
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/simon-gladman/velvetoptimiser/velvetoptimiser/2.2.6",
@@ -154,11 +154,6 @@
             "workflow_outputs": [
                 {
                     "label": null,
-                    "output_name": "logfile",
-                    "uuid": "a30134f8-adb1-4e61-b4e4-b86271286e37"
-                },
-                {
-                    "label": null,
                     "output_name": "contigs",
                     "uuid": "f2915801-4ae9-4ac6-8e33-14e0385f05f0"
                 },
@@ -166,6 +161,11 @@
                     "label": null,
                     "output_name": "stats",
                     "uuid": "1d16abbe-886b-4ec0-9e8f-6f5ec941948e"
+                },
+                {
+                    "label": null,
+                    "output_name": "logfile",
+                    "uuid": "a30134f8-adb1-4e61-b4e4-b86271286e37"
                 }
             ]
         },
@@ -231,8 +231,8 @@
                 }
             ],
             "position": {
-                "left": 485.99182566241547,
-                "top": 365.6993612583271
+                "left": 483.1651650708423,
+                "top": 366.08493600581164
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/nml/spades/spades/4.2.0+galaxy0",
@@ -276,8 +276,8 @@
                 }
             ],
             "position": {
-                "left": 842.7117842659184,
-                "top": 20.509351990887183
+                "left": 839.8851236743452,
+                "top": 20.89492673837171
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1",
@@ -302,9 +302,59 @@
         },
         "6": {
             "annotation": "",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/0.8.1+galaxy0",
             "errors": null,
             "id": 6,
+            "input_connections": {
+                "input_file": {
+                    "id": 4,
+                    "output_name": "out_ags"
+                }
+            },
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Bandage Image",
+                    "name": "input_file"
+                }
+            ],
+            "label": null,
+            "name": "Bandage Image",
+            "outputs": [
+                {
+                    "name": "outfile",
+                    "type": "jpg"
+                }
+            ],
+            "position": {
+                "left": 887.6065209788859,
+                "top": 426.4456203421767
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/0.8.1+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "067592b6b312",
+                "name": "bandage",
+                "owner": "iuc",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"height\": \"1000\", \"input_file\": {\"__class__\": \"RuntimeValue\"}, \"output_format\": \"png\", \"width\": null, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.8.1+galaxy0",
+            "type": "tool",
+            "uuid": "a5486b69-493e-48a3-91f6-2f6c9d4c3250",
+            "when": null,
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "outfile",
+                    "uuid": "a4f3b311-7578-4407-ad00-079a74d88499"
+                }
+            ]
+        },
+        "7": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1",
+            "errors": null,
+            "id": 7,
             "input_connections": {
                 "dataset": {
                     "id": 4,
@@ -321,8 +371,8 @@
                 }
             ],
             "position": {
-                "left": 919.9827270507812,
-                "top": 389.7459903443876
+                "left": 891.8734020415943,
+                "top": 654.0430586786842
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_stats/fasta-stats/1.0.1",
@@ -344,56 +394,11 @@
                     "uuid": "0435b5e5-e189-42ee-97cf-c21dc6cf0b31"
                 }
             ]
-        },
-        "7": {
-            "annotation": "",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/0.8.1+galaxy0",
-            "errors": null,
-            "id": 7,
-            "input_connections": {
-                "input_file": {
-                    "id": 4,
-                    "output_name": "out_ags"
-                }
-            },
-            "inputs": [],
-            "label": null,
-            "name": "Bandage Image",
-            "outputs": [
-                {
-                    "name": "outfile",
-                    "type": "jpg"
-                }
-            ],
-            "position": {
-                "left": 935.4861450195312,
-                "top": 606.2390323365751
-            },
-            "post_job_actions": {},
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/0.8.1+galaxy0",
-            "tool_shed_repository": {
-                "changeset_revision": "067592b6b312",
-                "name": "bandage",
-                "owner": "iuc",
-                "tool_shed": "toolshed.g2.bx.psu.edu"
-            },
-            "tool_state": "{\"height\": \"1000\", \"input_file\": {\"__class__\": \"ConnectedValue\"}, \"output_format\": \"svg\", \"width\": null, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
-            "tool_version": "0.8.1+galaxy0",
-            "type": "tool",
-            "uuid": "a5486b69-493e-48a3-91f6-2f6c9d4c3250",
-            "when": null,
-            "workflow_outputs": [
-                {
-                    "label": null,
-                    "output_name": "outfile",
-                    "uuid": "a4f3b311-7578-4407-ad00-079a74d88499"
-                }
-            ]
         }
     },
     "tags": [
         "assembly"
     ],
-    "uuid": "ce6fdf76-178d-469d-93c4-646618f9d3f6",
-    "version": 4
+    "uuid": "fd92edd5-9012-4758-bf2d-d91b04ae14fb",
+    "version": 5
 }

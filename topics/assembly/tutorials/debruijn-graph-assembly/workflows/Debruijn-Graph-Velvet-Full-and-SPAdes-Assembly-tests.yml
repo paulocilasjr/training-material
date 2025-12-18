@@ -1,4 +1,4 @@
-- doc: Test outline for Debruijn-Graph-Velvet-Full-and-SPAdes-Assembly---EU
+- doc: Test outline for Debruijn-Graph-Velvet-Full-and-SPAdes-Assembly
   job:
     mutant_R1.fastq:
       class: File
