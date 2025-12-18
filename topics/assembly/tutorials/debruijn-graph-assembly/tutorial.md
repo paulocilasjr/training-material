@@ -100,10 +100,11 @@ We will perform an assembly with the Velvet Optimiser, which automatically runs 
 >  1. {% tool [Velvet Optimiser](toolshed.g2.bx.psu.edu/repos/simon-gladman/velvetoptimiser/velvetoptimiser/2.2.6) %}: Optimise your assembly with the following parameters:
 >    - *"Start k-mer size"*: `45`
 >    - *"End k-mer size"*: `73`
->    - *"Input file type"*: `Fastq`
->    - *"Single or paired end reads"*: `Paired`
->    - {% icon param-file %} *"Select first set of reads"*: `mutant_R1.fastq`
->    - {% icon param-file %} *"Select second set of reads"*: `mutant_R2.fastq`
+>    - *"Input Files"*: `1: Input Files`
+>      - *"Input file type"*: `Fastq`
+>      - *"Single or paired end reads"*: `Paired`
+>      - {% icon param-file %} *"Select first set of reads"*: `mutant_R1.fastq`
+>      - {% icon param-file %} *"Select second set of reads"*: `mutant_R2.fastq`
 >
 {: .hands_on}
 
@@ -170,24 +171,20 @@ With this information in hand, let's run velvet:
 
 > <hands-on-title>Manually running velvetg/h</hands-on-title>
 >
-> 1. {% tool [velveth](velveth) %}: Prepare a dataset for the Velvet `velvetg` Assembler
+> 1. {% tool [velveth](toolshed.g2.bx.psu.edu/repos/devteam/velvet/velveth/1.2.10.3) %}: Prepare a dataset for the Velvet `velvetg` Assembler
 >    - *"Hash length"*: `55`
->    - *"Insert Input Files"*:
->      - 1: Input Files
->        - *"file format"*: `fastq`
+>    - *"Input Files"*: `+ Insert Input Files`
+>      - `1: Input Files`
+>        - *"Choose the input type"*: `separate paired reads`
 >        - *"read type"*: `shortPaired reads`
->        - *"Dataset"*: `mutant_R1.fastq`
->    - *"Insert Input Files"*:
->      - 2: Input Files
->        - *"file format"*: `fastq`
->        - *"read type"*: `shortPaired reads`
->        - *"Dataset"*: `mutant_R2.fastq`
+>        - *"Dataset"*: `mutant_R1.fastq` (forward reads)
+>        - *"Dataset"*: `mutant_R2.fastq` (reverse reads)
 >
-> 2. {% tool [velvetg](velvetg) %}: Velvet sequence assembler for very short reads
+> 2. {% tool [velvetg](toolshed.g2.bx.psu.edu/repos/devteam/velvet/velvetg/1.2.10.2) %}: Velvet sequence assembler for very short reads
 >    - *"Velvet dataset"*: output from **velveth** {% icon tool %}
->    - *"Generate velvet LastGraph file"*: `Yes`
 >    - *"Coverage cutoff"*: `Specify Cutoff Value`
 >      - *"Remove nodes with coverage below"*: `1.44`
+>    - *"Additional outputs"*: `Generate velvet LastGraph file`
 >    - *"Using Paired Reads"*: `Yes`
 >
 {: .hands_on}
@@ -198,7 +195,7 @@ The LastGraph contains a detailed representation of the De Bruijn graph, which c
 >
 > 1. {% tool [Bandage Image](toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/2022.09+galaxy4) %}: visualize de novo assembly graphs
 >    - *"Graphical Fragment Assembly"*: The "LastGraph" output of **velvetg** {% icon tool %}
->    - *"Produce jpg, png or svg file?"*: `.svg`
+>    - *"Produce jpg, png or svg file?"*: `.png`
 >
 > 2. Execute
 > 3. View the output file
@@ -281,6 +278,7 @@ Examine each file, especially the stats files.
 >
 > 1. {% tool [Bandage Image](toolshed.g2.bx.psu.edu/repos/iuc/bandage/bandage_image/2022.09+galaxy4) %} with the following parameters:
 >    - *"Graphical Fragment Assembly"*: `assembly graph with scaffolds` output from **SPAdes** {% icon tool %}
+>    - *"Produce jpg, png or svg file?"*: `.png`
 >
 > 2. Examine the output image {% icon galaxy-eye %}
 >
