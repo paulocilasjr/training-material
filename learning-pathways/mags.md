@@ -71,7 +71,7 @@ pathway:
 
         By the end of this module, you'll be able to confidently clean your metagenomic data, setting the stage for high-quality MAG assembly and analysis.
     tutorials:
-      - name: host-removal/
+      - name: host-removal
         topic: microbiome
 
   - section: "Module 3: Assembly – Reconstructing and Assessing Contigs from Metagenomic Reads"
