@@ -17,10 +17,17 @@ key_points:
   - it is not enough to just call variants, variant calling involves multiple quality control steps
   - the choice of reference genome and some quality control procedures are species-specific, and require knowledge of the organism in question
   - batches of samples can be processed using Galaxy dataset collections and workflows
-contributors:
-  - pvanheus
-  - slugger70
-  - thobalose
+contributions:
+  authorship:
+    - pvanheus
+    - slugger70
+    - thobalose
+  editing:
+    - tflowers15
+  funding:
+    - unimelb
+    - melbournebioinformatics
+    - AustralianBioCommons
 tags:
   - prokaryote
   - one-health
@@ -163,13 +170,15 @@ While one could examine the quality control report for each set of reads (forwar
 As these reads look like they need a bit of trimming, we can turn to the **fastp** tool to clean up our data.
 
 > <hands-on-title>Quality trimming</hands-on-title>
-> 1. Use {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/0.23.4+galaxy0) %} to clean up the reads and remove the poor quality sections.
->       - *"Single-end or paired-end reads?"*: `Paired`
->       - {% icon param-files %} *"Input 1"*: `004-2_1.fastq.gz`
->       - {% icon param-files %} *"Input 2"*: `004-2_2.fastq.gz`
+> 1. Create a paired collection named `Paired Reads` containing the `004-2_1.fastq.gz` and `004-2_2.fastq.gz` datasets
 >
+>    {% snippet faqs/galaxy/collections_build_list_paired.md %}
 >
-> 2. Inspect the output produced by **fastp**
+> 2. Use {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/1.0.1+galaxy3) %} to clean up the reads and remove the poor quality sections.
+>       - *"Single-end or paired-end reads?"*: `Paired Collection`
+>       - *"Select paired collection(s) "*: `Paired Reads`
+>
+> 3. Inspect the output produced by **fastp**
 >
 >    > <question-title></question-title>
 >     >
@@ -199,10 +208,9 @@ We should also look for contamination in our reads. Sometimes, other sources of 
 
 > <hands-on-title>Run Kraken2</hands-on-title>
 >
-> 1. Execute {% tool [Kraken2](toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.1+galaxy1) %} with the following parameters
+> 1. Execute {% tool [Kraken2](toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.17.1+galaxy0) %} with the following parameters
 >   - *"Single or paired reads"*: `Paired`
->       - *"Forward Strand"*: `fastp on X: Read 1 output`
->       - *"Reverse Strand"*: `fastp on X: Read 2 output`
+>       - *"Collection of paired reads"*: `fastp on X: Paired-end output`
 >
 >   - *"Print scientific names instead of just taxids"*: `Yes`
 >   - *"Enable quick operation"*: `Yes`
@@ -242,9 +250,8 @@ gene annotation from the [H37Rv strain](https://www.ncbi.nlm.nih.gov/nuccore/NC_
 > 1. {% tool [Snippy](toolshed.g2.bx.psu.edu/repos/iuc/snippy/snippy/4.6.0+galaxy0) %} with the following parameters
 >   - *"Will you select a reference genome from your history or use a built-in index?"*: `Use a genome from history and build index`
 >   - *"Use the following dataset as the reference sequence"*: `Mycobacterium_tuberculosis_ancestral_reference.gbk`
->   - *"Single or Paired-end reads"*: `Paired`
->       - *"Select first set of reads"*: `fastp on X: Read 1 output`
->       - *"Select second set of reads"*: `fastp on X: Read 2 output`
+>   - *"Input type"*: `Paired end reads in a collection`
+>       - *"Select a paired collection"*: `fastp on X: Paired-end output`
 >
 >   - Under *"Advanced parameters"*
 >       - *"Minimum proportion for variant evidence"*: `0.1` (This is so we can see possible rare variants in our sample)
