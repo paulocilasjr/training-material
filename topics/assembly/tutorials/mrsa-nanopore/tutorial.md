@@ -234,21 +234,21 @@ Here, we are going to trim the Illumina data using **fastp** ({% cite Chen2018 %
 > 2. {% tool [Flatten collection](__FLATTEN__) %} with the following parameters:
 >    - *"Input Collection"*: **fastp** `Paired-end output`
 >      
-> 3. Rename output `Flattened fastp output`
+> 3. **Rename** the output to `Flattened fastp output`
 >      
 > 4. {% tool [Extract dataset](__EXTRACT_DATASET__) %} with the following parameters:
 >    - *"Input List"*: `Flattened fastp output`
 >    - *"How should a dataset be selected?"*: `Select by element identifier`
 >    - *"Element identifier"*: `DRR187559_forward` (filtered forward reads)
 > 
-> 5. **Rename** `DRR187559_forward` to `Filtered DRR187559_forward`
+> 5. **Rename** `DRR187559_forward` to `Trimmed DRR187559_forward`
 >   
 > 6. {% tool [Extract dataset](__EXTRACT_DATASET__) %} with the following parameters:
 >    - *"Input List"*: `Flattened fastp output`
 >    - *"How should a dataset be selected?"*: `Select by element identifier`
 >    - *"Element identifier"*: `DRR187559_reverse` (filtered forward reads)
 >   
-> 7. **Rename** `DRR187559_reverse` to `Filtered DRR187559_reverse`
+> 7. **Rename** `DRR187559_reverse` to `Trimmed DRR187559_reverse`
 > 
 {: .hands_on}
 
@@ -270,8 +270,8 @@ When Illumina reads are available, we can use them **if they are good Illumina r
 >
 >    <div class="With-Illumina-MiSeq-data" markdown="1">
 >    - In *"External references"*:
->        - {% icon param-file %} *"Reference Illumina read"*: `Filtered DRR187559_forward`
->        - {% icon param-file %} *"Reference Illumina read"*: `Filtered DRR187559_reverse`
+>        - {% icon param-file %} *"Reference Illumina read"*: `Trimmed DRR187559_forward`
+>        - {% icon param-file %} *"Reference Illumina read"*: `Trimmed DRR187559_reverse`
 >    </div>
 >
 > 2. Rename the dataset to `DRR187567-filtered`
