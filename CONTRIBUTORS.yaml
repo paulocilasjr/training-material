@@ -192,6 +192,13 @@ andreasrichter:
     github: false
     joined: 2017-09
 
+Andrei-EPFL:
+    name: Andrei Variu
+    joined: 2025-07
+    affiliations:
+      - epfl
+    orcid: 0000-0001-8615-602X
+
 andrewr:
     name: Andrew Rajczewski
     affiliations:
@@ -227,6 +234,11 @@ andrewsnelgrove:
 
 annasyme:
     name: Anna Syme
+    affiliations:
+      - AustralianBioCommons
+      - unimelb
+    former_affiliations:
+      - melbournebioinformatics
     joined: 2017-09
     orcid: 0000-0002-9906-0673
 
@@ -806,6 +818,12 @@ dpryan79:
     name: Devon Ryan
     joined: 2017-09
 
+dsavchenko:
+    name: Denys Savchenko
+    joined: 2025-07
+    affiliations:
+      - upcite
+
 dsobral:
     name: Daniel Sobral
     joined: 2017-10
@@ -1265,6 +1283,8 @@ igcbioinformatics:
 
 igormakunin:
     name: Igor Makunin
+    affiliations:
+      - AustralianBioCommons
     joined: 2024-09
 
 ioanagry:
@@ -2046,6 +2066,12 @@ mtekman:
       - spoc
     former_affiliations:
       - elixir-europe
+
+mthang:
+    name: Michael Thang
+    affiliations:
+      - AustralianBioCommons
+    joined: 2025-12
 
 mvdbeek:
     name: Marius van den Beek
@@ -3089,6 +3115,14 @@ VerenaMoo:
     name: Verena Moosmann
     joined: 2024-12
 
+vinisalazar:
+    name: Vini Salazar
+    joined: 2025-10
+    orcid: 0000-0002-8362-3195
+    affiliations:
+        - unimelb
+        - melbournebioinformatics
+
 vivekbhr:
     name: Vivek Bhardwaj
     joined: 2017-09
@@ -3324,4 +3358,15 @@ sfragkoul:
     joined: 2025-03
     elixir_node: gr
     affiliations:
+      - elixir-europe
+
+minamehr:
+    name: Mina Hojat Ansari
+    email: mina.ansari82@gmail.com
+    orcid: 0000-0002-3602-7884
+    matrix: 'mina24:matrix.org'
+    joined: 2024-03
+    elixir_node: de
+    affiliations:
+      - uni-freiburg
       - elixir-europe
