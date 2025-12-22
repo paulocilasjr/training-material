@@ -216,8 +216,7 @@ We should also look for contamination in our reads. Sometimes, other sources of 
 >
 >   - *"Print scientific names instead of just taxids"*: `Yes`
 >   - *"Enable quick operation"*: `Yes`
->   - Under *"Create report"*:
->       - *"Print a report with aggregrate counts/clade to file"*: `Yes`
+>   - *"Print a report with aggregrate counts/clade to file"*: `Yes`
 >   - *"Select a Kraken2 database"*: `Standard`
 >
 > 2. Inspect the report produced by Kraken
