@@ -91,6 +91,10 @@ The data for today is a sample of _M. tuberculosis_ [collected](https://www.ncbi
 >
 >    {% snippet faqs/galaxy/datasets_import_from_data_library.md %}
 >
+> 2. Create a paired collection named `Paired Reads` containing the `004-2_1.fastq.gz` and `004-2_2.fastq.gz` datasets.
+>
+>    {% snippet faqs/galaxy/collections_build_list_paired.md %}
+> 
 {: .hands_on}
 
 # Quality control
@@ -110,14 +114,16 @@ tutorial on ["Quality control"]({% link topics/sequence-analysis/tutorials/quali
 
 > <hands-on-title>Quality control of the input datasets</hands-on-title>
 >
-> 1. Execute {% tool [FastQC](toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy0) %} on both of your fastq datasets
->
->       - {% icon param-files %} *"Short read data from your current history"*: select both FASTQ datasets.
->
->    {% snippet faqs/galaxy/tools_select_multiple_datasets.md %}
+> 1. Run {% tool [Flatten collection](__FLATTEN__) %} with the following parameters:
+>    - *"Input collection"*: `Paired Reads`
+>   
+> 2. Rename the flatten collection: `Flat Collection`
+>   
+> 3. Run {% tool [FastQC](toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy1) %} with the following parameters:
+>    - {% icon param-collection %} *"Raw read data from your current history"*: `Flat Collection` (Flattened paired end read dataset collection)
 >
 >    The **FastQC** {% icon tool %} input form looks like this. You only need to pay attention to the top part
->    where *Short read data from your current history* is selected. Leave all the other parameters at their default
+>    where *Raw read data from your current history* is selected. Leave all the other parameters at their default
 >    values and click *Execute*.
 >
 >    ![FastQC input and dependencies](../../images/mt_qc.png)
@@ -137,8 +143,7 @@ While one could examine the quality control report for each set of reads (forwar
 >        - *"Which tool was used generate logs?"*: `FastQC`
 >        - In *"FastQC output"*
 >           - *"Type of FastQC output?"*: `Raw data`
->           - {% icon param-files %} *"FastQC output"*: both *RawData*
->             outputs of **FastQC** {% icon tool %}
+>           - {% icon param-collection %} *"FastQC output"*: *RawData* collection output of **FastQC** {% icon tool %}
 >
 > 2. Using the {% icon galaxy-eye %} button, inspect the *Webpage* output produced by the tool
 >
@@ -147,7 +152,7 @@ While one could examine the quality control report for each set of reads (forwar
 >    > 1. Based on the report, do you think preprocessing of the reads
 >    >    (trimming and/or filtering) will be necessary before mapping?
 >    >
->    >  1. What is the average GC content of the data (known as GC%) in the `004-2_1` dataset?
+>    > 2. What is the average GC content of the data (known as GC%) in the `004-2_1` dataset?
 >    >
 >    > > <solution-title></solution-title>
 >    > >
@@ -158,7 +163,7 @@ While one could examine the quality control report for each set of reads (forwar
 >    > >    We will run **fastp** {% icon tool %} on the
 >    > >    fastq datasets in the next step
 >    > >
->    > > 1. The GC% is 66%, which is close to the 65.6% that one expects from a _M. tuberculosis_ sample.
+>    > > 2. The GC% is 66%, which is close to the 65.6% that one expects from a _M. tuberculosis_ sample.
 >    > >    Examining the GC% is a quick way to check that the sample you have sequenced contains reads
 >    > >    from the organism that you expect.
 >    > >
@@ -170,15 +175,12 @@ While one could examine the quality control report for each set of reads (forwar
 As these reads look like they need a bit of trimming, we can turn to the **fastp** tool to clean up our data.
 
 > <hands-on-title>Quality trimming</hands-on-title>
-> 1. Create a paired collection named `Paired Reads` containing the `004-2_1.fastq.gz` and `004-2_2.fastq.gz` datasets
->
->    {% snippet faqs/galaxy/collections_build_list_paired.md %}
->
-> 2. Use {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/1.0.1+galaxy3) %} to clean up the reads and remove the poor quality sections.
+> 
+> 1. Use {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/1.0.1+galaxy3) %} to clean up the reads and remove the poor quality sections.
 >       - *"Single-end or paired-end reads?"*: `Paired Collection`
 >       - *"Select paired collection(s) "*: `Paired Reads`
 >
-> 3. Inspect the output produced by **fastp**
+> 2. Inspect the output produced by **fastp**
 >
 >    > <question-title></question-title>
 >     >
@@ -359,7 +361,7 @@ Finally, TB Variant Report uses the COMBAT-TB [eXplorer](https://explorer.sanbi.
 >   - *"Input SnpEff annotated M.tuberculosis VCF(s)"*: `Text transformation on data XX`
 >   - *"TBProfiler Drug Resistance Report (Optional)"*: `TB-Profiler Profile on data XX: Results.json`
 >
-> 3. Open the drug resistance and variant report html files.
+> 4. Open the drug resistance and variant report html files.
 >
 >    > <question-title></question-title>
 >    >
@@ -425,7 +427,7 @@ We could go through all of the variants in the VCF files and read them out of a 
 >           - "Track Category" to `annotated reference`
 >           - Click on `Insert Annotation Track` and fill it with
 >               - "Track Type" to `GFF/GFF3/BED Features`
->               - "GFF/GFF3/BED Track Data" to `https://zenodo.org/record/3531703/files/Mycobacterium_tuberculosis_h37rv.ASM19595v2.45.chromosome.Chromosome.gff3`
+>               - "GFF/GFF3/BED Track Data" to `Mycobacterium_tuberculosis_h37rv.ASM19595v2.45.chromosome.Chromosome.gff3`
 >               - "JBrowse Track Type [Advanced]" to `Canvas Features`
 >               - Click on "JBrowse Styling Options [Advanced]"
 >               - "JBrowse style.label" to `product`
@@ -515,7 +517,7 @@ The next example is *SRR12416842* from an Indonesia [study](https://www.microbio
 >
 > 2. Perform quality trimming with {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/0.23.4+galaxy0) %} and examine it's *HTML* output to see quality before and after trimming.
 >
-> 4. Map the samples to the _M. tuberculosis_ reference genome with {% tool [Snippy](toolshed.g2.bx.psu.edu/repos/iuc/snippy/snippy/4.6.0+galaxy0) %}. Make sure to select the BAM output as one of the outputs.
+> 3. Map the samples to the _M. tuberculosis_ reference genome with {% tool [Snippy](toolshed.g2.bx.psu.edu/repos/iuc/snippy/snippy/4.6.0+galaxy0) %}. Make sure to select the BAM output as one of the outputs.
 >
 >    > <question-title></question-title>
 >    >
@@ -531,9 +533,9 @@ The next example is *SRR12416842* from an Indonesia [study](https://www.microbio
 >    > {: .solution}
 >    {: .question}
 >
-> 5. Run {% tool [samtools stats](toolshed.g2.bx.psu.edu/repos/devteam/samtools_stats/samtools_stats/2.0.5) %} on the *snippy on data XX, data XX, and data XX mapped reads (bam)* file. In the output, pay attention to the *sequences*, *reads mapped* and *reads unmapped* results.
+> 4. Run {% tool [samtools stats](toolshed.g2.bx.psu.edu/repos/devteam/samtools_stats/samtools_stats/2.0.5) %} on the *snippy on data XX, data XX, and data XX mapped reads (bam)* file. In the output, pay attention to the *sequences*, *reads mapped* and *reads unmapped* results.
 >
-> 6. Run the {% tool [BAM Coverage Plotter](toolshed.g2.bx.psu.edu/repos/iuc/jvarkit_wgscoverageplotter/jvarkit_wgscoverageplotter/20201223+galaxy0) %} on the mapped reads BAM file that you got from **snippy** using the FASTA format reference you made with **seqret** as the reference.
+> 5. Run the {% tool [BAM Coverage Plotter](toolshed.g2.bx.psu.edu/repos/iuc/jvarkit_wgscoverageplotter/jvarkit_wgscoverageplotter/20201223+galaxy0) %} on the mapped reads BAM file that you got from **snippy** using the FASTA format reference you made with **seqret** as the reference.
 >
 >    > <question-title></question-title>
 >    >
