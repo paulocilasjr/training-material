@@ -323,21 +323,21 @@
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"confidence\": \"0.0\", \"kraken2_database\": \"k2_pluspf_20210517\", \"min_base_quality\": \"0\", \"minimum_hit_groups\": \"2\", \"quick\": false, \"report\": {\"create_report\": \"true\", \"__current_case__\": 0, \"use_mpa_style\": false, \"report_zero_counts\": false, \"report_minimizer_data\": false}, \"single_paired\": {\"single_paired_selector\": \"collection\", \"__current_case__\": 0, \"input_pair\": {\"__class__\": \"RuntimeValue\"}}, \"split_reads\": false, \"use_names\": true, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"confidence\": \"0.0\", \"kraken2_database\": \"k2_pluspf_20210517\", \"min_base_quality\": \"0\", \"minimum_hit_groups\": \"2\", \"quick\": false, \"report\": {\"create_report\": \"true\", \"__current_case__\": 0, \"use_mpa_style\": false, \"report_zero_counts\": false, \"report_minimizer_data\": false}, \"single_paired\": {\"single_paired_selector\": \"collection\", \"__current_case__\": 0, \"input_pair\": {\"__class__\": \"ConnectedValue\"}}, \"split_reads\": false, \"use_names\": true, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
             "tool_version": "2.17.1+galaxy0",
             "type": "tool",
             "uuid": "60b17d56-0ef9-4829-829e-923f66de5e2f",
             "when": null,
             "workflow_outputs": [
                 {
-                    "label": "report_output",
-                    "output_name": "report_output",
-                    "uuid": "6f77efc7-d348-40c0-9de9-959ff1843e2d"
-                },
-                {
                     "label": "output",
                     "output_name": "output",
                     "uuid": "083a0e51-7780-4c91-a071-dc0e4641d060"
+                },
+                {
+                    "label": "report_output",
+                    "output_name": "report_output",
+                    "uuid": "6f77efc7-d348-40c0-9de9-959ff1843e2d"
                 }
             ]
         },
@@ -585,7 +585,7 @@
         },
         "12": {
             "annotation": "",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/tbprofiler/tb_profiler_profile/6.2.1+galaxy0",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/tbprofiler/tb_profiler_profile/6.6.4+galaxy0",
             "errors": null,
             "id": 12,
             "input_connections": {
@@ -639,15 +639,15 @@
                     "output_name": "output_txt"
                 }
             },
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/tbprofiler/tb_profiler_profile/6.2.1+galaxy0",
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/tbprofiler/tb_profiler_profile/6.6.4+galaxy0",
             "tool_shed_repository": {
-                "changeset_revision": "4839e590cb26",
+                "changeset_revision": "60a1dad331ec",
                 "name": "tbprofiler",
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"advanced\": {\"options\": \"no\", \"__current_case__\": 0}, \"fastq_or_bam\": {\"input_select\": \"bam\", \"__current_case__\": 3, \"bam_input\": {\"__class__\": \"ConnectedValue\"}}, \"output_format\": \"txt\", \"platform\": \"illumina\", \"spoligotype\": false, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
-            "tool_version": "6.2.1+galaxy0",
+            "tool_state": "{\"advanced\": {\"options\": \"no\", \"__current_case__\": 0}, \"fastq_or_bam\": {\"input_select\": \"bam\", \"__current_case__\": 3, \"bam_input\": {\"__class__\": \"RuntimeValue\"}}, \"output_format\": \"txt\", \"platform\": \"illumina\", \"spoligotype\": false, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "6.6.4+galaxy0",
             "type": "tool",
             "uuid": "22d89589-70a3-4e6e-8b95-68604a287052",
             "when": null,
@@ -661,7 +661,7 @@
         },
         "13": {
             "annotation": "",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/mosdepth/mosdepth/0.3.8+galaxy0",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/mosdepth/mosdepth/0.3.12+galaxy0",
             "errors": null,
             "id": 13,
             "input_connections": {
@@ -674,7 +674,12 @@
                     "output_name": "snpsbam"
                 }
             },
-            "inputs": [],
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool mosdepth",
+                    "name": "input_alignment"
+                }
+            ],
             "label": null,
             "name": "mosdepth",
             "outputs": [
@@ -712,15 +717,15 @@
                     "output_name": "output_summary"
                 }
             },
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/mosdepth/mosdepth/0.3.8+galaxy0",
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/mosdepth/mosdepth/0.3.12+galaxy0",
             "tool_shed_repository": {
-                "changeset_revision": "5854d0da92b4",
+                "changeset_revision": "2fe966f8532e",
                 "name": "mosdepth",
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"advanced\": {\"options\": \"yes\", \"__current_case__\": 1, \"chrom\": null, \"exclude_flag\": \"0\", \"include_flag\": null, \"no_fast\": false, \"mapq\": \"0\", \"thresholds\": \"\", \"use_median\": false, \"read_groups\": \"\", \"min_frag_len\": null, \"max_frag_len\": null, \"quantize\": [{\"__index__\": 0, \"quant_group_mindepth\": \"0\", \"quant_group_name\": \"LOW\"}, {\"__index__\": 1, \"quant_group_mindepth\": {\"__class__\": \"ConnectedValue\"}, \"quant_group_name\": \"PASS\"}]}, \"input_alignment\": {\"__class__\": \"ConnectedValue\"}, \"per_base_coverage\": false, \"window\": {\"window_mode\": \"no\", \"__current_case__\": 0}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
-            "tool_version": "0.3.8+galaxy0",
+            "tool_state": "{\"advanced\": {\"options\": \"yes\", \"__current_case__\": 1, \"chrom\": null, \"exclude_flag\": \"0\", \"include_flag\": null, \"no_fast\": false, \"fragment_mode\": false, \"mapq\": \"0\", \"thresholds\": \"\", \"use_median\": false, \"read_groups\": \"\", \"min_frag_len\": null, \"max_frag_len\": null, \"quantize\": [{\"__index__\": 0, \"quant_group_mindepth\": \"0\", \"quant_group_name\": \"LOW\"}, {\"__index__\": 1, \"quant_group_mindepth\": {\"__class__\": \"ConnectedValue\"}, \"quant_group_name\": \"PASS\"}]}, \"input_alignment\": {\"__class__\": \"RuntimeValue\"}, \"per_base_coverage\": false, \"window\": {\"window_mode\": \"no\", \"__current_case__\": 0}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.3.12+galaxy0",
             "type": "tool",
             "uuid": "caada1a3-9a73-4c62-9904-8d2e2b8e419d",
             "when": null,
@@ -728,7 +733,7 @@
         },
         "14": {
             "annotation": "",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_sed_tool/9.3+galaxy1",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_sed_tool/9.5+galaxy2",
             "errors": null,
             "id": 14,
             "input_connections": {
@@ -737,7 +742,12 @@
                     "output_name": "output1"
                 }
             },
-            "inputs": [],
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Text transformation",
+                    "name": "infile"
+                }
+            ],
             "label": null,
             "name": "Text transformation",
             "outputs": [
@@ -759,15 +769,15 @@
                     "output_name": "output"
                 }
             },
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_sed_tool/9.3+galaxy1",
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_sed_tool/9.5+galaxy2",
             "tool_shed_repository": {
-                "changeset_revision": "86755160afbf",
+                "changeset_revision": "c41d78ae5fee",
                 "name": "text_processing",
                 "owner": "bgruening",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"adv_opts\": {\"adv_opts_selector\": \"basic\", \"__current_case__\": 0}, \"code\": \"s/GENE_//g\", \"infile\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
-            "tool_version": "9.3+galaxy1",
+            "tool_state": "{\"adv_opts\": {\"adv_opts_selector\": \"basic\", \"__current_case__\": 0}, \"code\": \"s/GENE_//g\", \"infile\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "9.5+galaxy2",
             "type": "tool",
             "uuid": "c45f6679-0d38-4663-a783-775b0f522bcc",
             "when": null,
@@ -820,7 +830,7 @@
         },
         "16": {
             "annotation": "bcftools consensus requires a region file of low coverage regions in 1 based coordinates, mosdepth produces one in BED format with LOW and PASS for low coverage and non-low coverage regions. This converts from the one format to the other.",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_awk_tool/9.3+galaxy1",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_awk_tool/9.5+galaxy2",
             "errors": null,
             "id": 16,
             "input_connections": {
@@ -829,7 +839,12 @@
                     "output_name": "output_quantized_bed"
                 }
             },
-            "inputs": [],
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Text reformatting",
+                    "name": "infile"
+                }
+            ],
             "label": null,
             "name": "Text reformatting",
             "outputs": [
@@ -839,8 +854,8 @@
                 }
             ],
             "position": {
-                "left": 1241.5057647399294,
-                "top": 1449.5553100709558
+                "left": 1241.5,
+                "top": 1449.566650390625
             },
             "post_job_actions": {
                 "HideDatasetActionoutfile": {
@@ -849,15 +864,15 @@
                     "output_name": "outfile"
                 }
             },
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_awk_tool/9.3+galaxy1",
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_awk_tool/9.5+galaxy2",
             "tool_shed_repository": {
-                "changeset_revision": "86755160afbf",
+                "changeset_revision": "c41d78ae5fee",
                 "name": "text_processing",
                 "owner": "bgruening",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"code\": \"$4 == \\\"LOW\\\" {start = $2+1; print \\\"$1\\\\t\\\" start \\\"\\\\t$3\\\"}\", \"infile\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
-            "tool_version": "9.3+galaxy1",
+            "tool_state": "{\"code\": \"$4 == \\\"LOW\\\" {start = $2+1; print \\\"$1\\\\t\\\" start \\\"\\\\t$3\\\"}\", \"infile\": {\"__class__\": \"RuntimeValue\"}, \"variables\": [], \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "9.5+galaxy2",
             "type": "tool",
             "uuid": "4778f600-d435-4ca0-a4f2-45fbd3aeceeb",
             "when": null,
@@ -865,7 +880,7 @@
         },
         "17": {
             "annotation": "",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/tbvcfreport/tbvcfreport/1.0.0+galaxy0",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/tbvcfreport/tbvcfreport/1.0.1+galaxy0",
             "errors": null,
             "id": 17,
             "input_connections": {
@@ -878,7 +893,16 @@
                     "output_name": "results_json"
                 }
             },
-            "inputs": [],
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool TB Variant Report",
+                    "name": "input_vcf"
+                },
+                {
+                    "description": "runtime parameter for tool TB Variant Report",
+                    "name": "tbprofiler_json"
+                }
+            ],
             "label": null,
             "name": "TB Variant Report",
             "outputs": [
@@ -929,15 +953,15 @@
                     "output_name": "variants_report_html"
                 }
             },
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/tbvcfreport/tbvcfreport/1.0.0+galaxy0",
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/tbvcfreport/tbvcfreport/1.0.1+galaxy0",
             "tool_shed_repository": {
-                "changeset_revision": "42818629ec4c",
+                "changeset_revision": "9793bc5d741b",
                 "name": "tbvcfreport",
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"adv\": {\"database_uri\": \"neodb.sanbi.ac.za\"}, \"filter_udi\": true, \"input_vcf\": {\"__class__\": \"ConnectedValue\"}, \"tbprofiler_json\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
-            "tool_version": "1.0.0+galaxy0",
+            "tool_state": "{\"adv\": {\"database_uri\": \"neodb.sanbi.ac.za\"}, \"filter_udi\": true, \"input_vcf\": {\"__class__\": \"RuntimeValue\"}, \"tbprofiler_json\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "1.0.1+galaxy0",
             "type": "tool",
             "uuid": "183d84e7-91ea-4e8f-950b-f65629b60b1b",
             "when": null,
@@ -1027,7 +1051,7 @@
         },
         "19": {
             "annotation": "Compute consensus genome with single nucleotide variants inserted, suitable for use in building a phylogeny",
-            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bcftools_consensus/bcftools_consensus/1.15.1+galaxy3",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bcftools_consensus/bcftools_consensus/1.15.1+galaxy4",
             "errors": null,
             "id": 19,
             "input_connections": {
@@ -1045,6 +1069,10 @@
                 }
             },
             "inputs": [
+                {
+                    "description": "runtime parameter for tool bcftools consensus",
+                    "name": "input_file"
+                },
                 {
                     "description": "runtime parameter for tool bcftools consensus",
                     "name": "reference_source"
@@ -1075,15 +1103,15 @@
                     "output_name": "output_file"
                 }
             },
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bcftools_consensus/bcftools_consensus/1.15.1+galaxy3",
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bcftools_consensus/bcftools_consensus/1.15.1+galaxy4",
             "tool_shed_repository": {
-                "changeset_revision": "1171446da5db",
+                "changeset_revision": "8aa352093d73",
                 "name": "bcftools_consensus",
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"absent\": \"\", \"chain\": false, \"input_file\": {\"__class__\": \"ConnectedValue\"}, \"reference_source\": {\"reference_source_selector\": \"history\", \"__current_case__\": 1, \"fasta_ref\": {\"__class__\": \"ConnectedValue\"}}, \"rename\": false, \"sec_default\": {\"mask\": {\"__class__\": \"ConnectedValue\"}, \"iupac_codes\": false, \"sample\": null, \"select_haplotype\": null, \"mark_del\": \"\", \"mark_ins\": null, \"mark_snv\": null, \"conditional_mask\": {\"selector\": \"disabled\", \"__current_case__\": 0}}, \"sec_restrict\": {\"include\": null, \"exclude\": null}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
-            "tool_version": "1.15.1+galaxy3",
+            "tool_state": "{\"absent\": \"\", \"chain\": false, \"input_file\": {\"__class__\": \"RuntimeValue\"}, \"reference_source\": {\"reference_source_selector\": \"history\", \"__current_case__\": 1, \"fasta_ref\": {\"__class__\": \"RuntimeValue\"}}, \"rename\": false, \"sec_default\": {\"mask\": {\"__class__\": \"RuntimeValue\"}, \"iupac_codes\": false, \"sample\": null, \"select_haplotype\": null, \"mark_del\": \"\", \"mark_ins\": null, \"mark_snv\": null, \"conditional_mask\": {\"selector\": \"disabled\", \"__current_case__\": 0}}, \"sec_restrict\": {\"include\": null, \"exclude\": null}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "1.15.1+galaxy4",
             "type": "tool",
             "uuid": "2b226e0c-8e59-472d-8bcd-6d8d84dfddab",
             "when": null,
@@ -1100,6 +1128,6 @@
         "pathogen",
         "tuberculosis"
     ],
-    "uuid": "c2dee7e9-5a09-4685-b5f8-53e16713a8bb",
-    "version": 4
+    "uuid": "b460840d-3b55-4db8-a32a-128609bba922",
+    "version": 5
 }
