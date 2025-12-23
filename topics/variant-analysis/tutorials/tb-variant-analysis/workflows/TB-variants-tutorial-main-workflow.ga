@@ -657,7 +657,7 @@
             "workflow_outputs": []
         }
     },
-    "tags": [],
+    "tags": ["variant-analysis"],
     "uuid": "93587221-5135-4f30-a24e-ea575f0ba93f",
     "version": 1
 }
