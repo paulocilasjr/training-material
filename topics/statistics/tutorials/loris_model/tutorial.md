@@ -172,7 +172,7 @@ Since the purpose of this tutorial is not to replicate the exact model, we will 
 # Using Tabular Learner Tool
 > <hands-on-title> Run 1: train a Tabular Learner model </hands-on-title>
 >
-> 1. {% tool [Tabular Learner](toolshed.g2.bx.psu.edu/repos/goeckslab/tabular_learner/2025.0.1.3+0) %} with the following parameters:
+> 1. {% tool [Tabular Learner](toolshed.g2.bx.psu.edu/repos/goeckslab/tabular_learner/tabular_learner/0.1.3) %} with the following parameters:
 >    - {% icon param-file %} *"Input Dataset (CSV or TSV)"*: `Chowell_train_Response.tsv`
 >    - {% icon param-file %} *"Test Dataset (CSV or TSV)"*: `Chowell_test_Response.tsv`
 >    - {% icon param-file %} *"Select the target column"*: `C22: Response`
@@ -185,7 +185,7 @@ Since the purpose of this tutorial is not to replicate the exact model, we will 
 >
 > Threshold-dependent metrics (accuracy, precision, recall, F1, MCC) change when the probability cutoff changes. For a transparent comparison to LORIS LLR6, do the following: 
 >
-> 1. {% tool [Tabular Learner](toolshed.g2.bx.psu.edu/repos/goeckslab/tabular_learner/2025.0.1.3+0) %} with the following parameters:
+> 1. {% tool [Tabular Learner](toolshed.g2.bx.psu.edu/repos/goeckslab/tabular_learner/tabular_learner/0.1.3) %} with the following parameters:
 >    - {% icon param-file %} *"Input Dataset (CSV or TSV)"*: `Chowell_train_Response.tsv`
 >    - {% icon param-file %} *"Test Dataset (CSV or TSV)"*: `Chowell_test_Response.tsv`
 >    - {% icon param-file %} *"Select the target column"*: `C22: Response`
