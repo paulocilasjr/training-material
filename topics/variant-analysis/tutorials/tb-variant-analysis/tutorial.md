@@ -138,7 +138,7 @@ While one could examine the quality control report for each set of reads (forwar
 
 > <hands-on-title>Combining QC results</hands-on-title>
 >
-> 1. Use {% tool [MultiQC](toolshed.g2.bx.psu.edu/repos/iuc/multiqc/multiqc/1.11+galaxy1) %} to aggregate the raw **FastQC** data of all input datasets into one report
+> 1. Use {% tool [MultiQC](toolshed.g2.bx.psu.edu/repos/iuc/multiqc/multiqc/1.27+galaxy4) %} to aggregate the raw **FastQC** data of all input datasets into one report
 >      - In *"Results"*
 >        - *"Which tool was used generate logs?"*: `FastQC`
 >        - In *"FastQC output"*
@@ -297,7 +297,7 @@ We still cannot entirely trust the proposed variants. In particular, there are r
 
 > <hands-on-title>Run TB Variant Filter</hands-on-title>
 > 1. {% tool [TB Variant Filter](toolshed.g2.bx.psu.edu/repos/iuc/tb_variant_filter/tb_variant_filter/0.4.0+galaxy0) %} with the following parameters
->   - *"VCF file to be filter"*: `snippy on data XX, data XX, and data XX mapped reads vcf file`
+>   - *"VCF file to be filter"*: `snippy on collection XX snps vcf file`
 >   - *"Filters to apply"*: Select `Filter variants by region` and `Filter sites by read alignment depth`.
 >
 > 2. Open the new VCF file.
@@ -344,14 +344,14 @@ Finally, TB Variant Report uses the COMBAT-TB [eXplorer](https://explorer.sanbi.
 > <hands-on-title>Run TB Profiler and TB Variant Report</hands-on-title>
 > 1. {% tool [TB-Profiler profile](toolshed.g2.bx.psu.edu/repos/iuc/tbprofiler/tb_profiler_profile/6.2.1+galaxy0) %} with the following parameters
 >   - *"Input File Type"*: `BAM`
->       - *"Bam"*: `snippy on data XX, data XX, and data X mapped reads (bam)`
+>       - *"Bam"*: `snippy on collection XX mapped reads (bam)`
 >
 >
 >       **TB Profiler** produces 3 output files, it's own VCF file, a report about the sample including it's likely lineages and any AMR found. There is also a `.json` formatted results file.
 >
 > 2. When *snippy* is run with Genbank format input it prepends `GENE_` to gene names in the VCF annotation. This causes a problem for *TB Variant report*, so we need to edit the output with sed.
 >
->     {% tool [Text transformation with sed](toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_sed_tool/1.1.1) %} with the following parameters:
+>     {% tool [Text transformation with sed](toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_sed_tool/9.5+galaxy2) %} with the following parameters:
 >
 >       - *"File to process"*: `TB Variant Filter on data XX`
 >       - *"SED Program"*: `s/GENE_//g`
@@ -413,7 +413,7 @@ We could go through all of the variants in the VCF files and read them out of a 
 >           - "Track Category" to `sequence reads`
 >           - Click on `Insert Annotation Track` and fill it with
 >               - "Track Type" to `BAM Pileups`
->               - "BAM Track Data" to `snippy on data XX, data XX, and data XX mapped reads (bam)`
+>               - "BAM Track Data" to `snippy on collection XX mapped reads (bam)`
 >               - "Autogenerate SNP Track" to `No`
 >               - "Track Visibility" to `On for new users`
 >       - **Track 2 - variants**: Click on `Insert Track Group` and fill it with
@@ -482,9 +482,9 @@ far.
 >https://zenodo.org/record/3960260/files/018-1_2.fastq.gz
 >```
 >
-> 2. Examine the sequence quality with {% tool [FastQC](toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.73+galaxy0) %}.
+> 2. Examine the sequence quality with {% tool [FastQC](toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy1) %}.
 >
-> 3. Examine the sample composition with {% tool [Kraken2](toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.1+galaxy1) %}.
+> 3. Examine the sample composition with {% tool [Kraken2](toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.17.1+galaxy0) %}.
 >
 >    > <question-title></question-title>
 >    >
@@ -514,7 +514,7 @@ The next example is *SRR12416842* from an Indonesia [study](https://www.microbio
 >ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR124/042/SRR12416842/SRR12416842_2.fastq.gz
 >```
 >
-> 2. Perform quality trimming with {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/0.23.4+galaxy0) %} and examine it's *HTML* output to see quality before and after trimming.
+> 2. Perform quality trimming with {% tool [fastp](toolshed.g2.bx.psu.edu/repos/iuc/fastp/fastp/1.0.1+galaxy3) %} and examine it's *HTML* output to see quality before and after trimming.
 >
 > 3. Map the samples to the _M. tuberculosis_ reference genome with {% tool [Snippy](toolshed.g2.bx.psu.edu/repos/iuc/snippy/snippy/4.6.0+galaxy0) %}. Make sure to select the BAM output as one of the outputs.
 >
@@ -532,7 +532,7 @@ The next example is *SRR12416842* from an Indonesia [study](https://www.microbio
 >    > {: .solution}
 >    {: .question}
 >
-> 4. Run {% tool [samtools stats](toolshed.g2.bx.psu.edu/repos/devteam/samtools_stats/samtools_stats/2.0.5) %} on the *snippy on data XX, data XX, and data XX mapped reads (bam)* file. In the output, pay attention to the *sequences*, *reads mapped* and *reads unmapped* results.
+> 4. Run {% tool [samtools stats](toolshed.g2.bx.psu.edu/repos/devteam/samtools_stats/samtools_stats/2.0.8) %} on the *snippy on collection XX mapped reads (bam)* file. In the output, pay attention to the *sequences*, *reads mapped* and *reads unmapped* results.
 >
 > 5. Run the {% tool [BAM Coverage Plotter](toolshed.g2.bx.psu.edu/repos/iuc/jvarkit_wgscoverageplotter/jvarkit_wgscoverageplotter/20201223+galaxy0) %} on the mapped reads BAM file that you got from **snippy** using the FASTA format reference you made with **seqret** as the reference.
 >
