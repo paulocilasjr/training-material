@@ -1,17 +1,17 @@
 ---
 layout: tutorial_hands_on
 level: Intermediate
-title: Galaxy Image Learner - Building a Deep Learning Classifier using the HAM10000 Dataset
+title: Gleam Image Learner - Validating Skin Lesion Classification on HAM10000
 zenodo_link: https://zenodo.org/records/17114688
 questions:
-- How can the HAM10000 dataset be prepared for the Image Learner tool?
-- How can an image classification model be trained, validated, and tested using GLEAM Image Learner?
-- How can the model's performance be evaluated to verify robustness and accuracy?
+  - "How do we validate GLEAM's Image Learner against a published benchmark on HAM10000?"
+  - "How do we set up a balanced train/validation/test split for multi-class image classification?"
+  - "How do we interpret accuracy, weighted precision/recall, and weighted F1 for imbalanced medical imaging datasets?"
 objectives:
-- Use the HAM10000 dataset to build an image classification model.
-- Train a deep learning classifier using the GLEAM Image Learner tool in Galaxy.
-- Evaluate the model's performance using standard machine learning metrics.
-time_estimation: 30m
+  - "Prepare a balanced HAM10000 subset and perform a stratified 70/10/20 train/validation/test split."
+  - "Train an Image Learner model using a pretrained CaFormer S18 384 backbone."
+  - "Evaluate performance using accuracy and weighted precision/recall/F1, and inspect confusion patterns."
+time_estimation: "45m"
 key_points:
 - Use Galaxy tools (Image Learner) to build a deep learning model for skin lesion classification based on the HAM10000 dataset.
 - Understand the dataset composition and the importance of data augmentation to handle class imbalance.
@@ -67,7 +67,7 @@ To achieve this, we will follow three essential steps: (i) upload the HAM10000 i
 > 6. Dermatofibroma (df)
 > 7. Vascular lesion (vasc)
 >
-> To address class imbalance in the original dataset, we applied preprocessing steps including image resizing to 96×96 pixels, selecting 100 images per class, and applying horizontal flip augmentation to generate 200 balanced images per class (1,400 total images).
+> To address class imbalance in the original dataset, we applied preprocessing steps.
 >
 {:  .comment}
 
@@ -75,19 +75,19 @@ To achieve this, we will follow three essential steps: (i) upload the HAM10000 i
 
 The dataset used in this tutorial has been preprocessed following the methodology from {% cite Shetty2022 %} to create a balanced training set suitable for deep learning.
 
-## Preprocessing Steps
+### Preprocessing Steps
 
 Starting from the original HAM10000 dataset (10,015 images with severe class imbalance), we applied the following preprocessing:
 
-### Step 1: Image Selection
+#### Step 1: Image Selection
 - Selected 100 images per class from the original dataset
 - Ensured balanced representation across all 7 lesion types
 
-### Step 2: Image Resizing
+#### Step 2: Image Resizing
 - Resized all images to 96×96 pixels
 - Standardized format as PNG for consistent processing
 
-### Step 3: Data Augmentation
+#### Step 3: Data Augmentation
 - Applied horizontal flip augmentation to each image
 - Generated 200 images per class (100 original + 100 flipped)
 - **Total dataset: 1,400 images** (200 × 7 classes)
@@ -111,60 +111,28 @@ The preprocessed dataset provides balanced representation:
 
 This balanced dataset allows the Image Learner model to learn effectively from all lesion types without bias toward the majority class.
 
-# Data Augmentation Applied
-
-As part of the preprocessing pipeline described by {% cite Shetty2022 %}, **horizontal flip augmentation** was applied during dataset creation. This transformation:
-
-- Creates additional training samples by horizontally flipping each original image
-- Helps the model learn invariant features that are robust to orientation changes
-- Is particularly effective for dermoscopic images where lesion orientation is not clinically significant
-- Doubled our training set from 100 to 200 images per class
-
-![Example of horizontal flip augmentation applied to a skin lesion image.](../../images/skin_tutorial/horizontal_flip_augmentation.png "Example of horizontal flip augmentation. Adapted from {% cite Shetty2022 %}.")
-
 > <tip-title>Why Horizontal Flip Augmentation?</tip-title>
 >
-> Horizontal flip augmentation is a standard technique in medical image analysis that:
-> - Increases model robustness to variations in lesion orientation
-> - Effectively doubles the training set size without additional data collection
-> - Helps create balanced representation across all classes
-> - Preserves diagnostic features while increasing data diversity
+> Following the preprocessing pipeline described by {% cite Shetty2022 %}, **horizontal flip augmentation** is applied during dataset preparation. Horizontal flips:
 >
-> As demonstrated by {% cite Shetty2022 %}, this preprocessing approach with horizontal flip augmentation significantly improves classification accuracy for skin lesion detection, achieving 95.18% accuracy on the HAM10000 dataset.
+> - Improve robustness to lesion orientation and acquisition variability  
+> - Increase effective training diversity without collecting additional images  
+> - Help reduce sensitivity to class- and pose-specific patterns  
+> - Preserve diagnostically relevant structures while introducing harmless variation  
+>
+> In {% cite Shetty2022 %}, this preprocessing strategy (including horizontal flips) is associated with improved HAM10000 skin-lesion classification performance (reported accuracy: 95.18%).
+>
+> ![Example of horizontal flip augmentation applied to a skin lesion image.](../../images/skin_tutorial/horizontal_flip_augmentation.png "Example of horizontal flip augmentation. Adapted from {% cite Shetty2022 %}.")
 >
 {: .tip}
 
-# Model Configuration in GLEAM Image Learner
+# Using Image Learner Tool
 
-After uploading the dataset, configure the Image Learner parameters as follows. These settings are based on best practices for dermoscopic image classification and have been optimized for the HAM10000 dataset:
-
-| Parameter | Value | Rationale |
-|---|---|---|
-| Task Type | Classification | Multi-class image classification task |
-| Model Name | caformer_s18_384 | Efficient transformer-based model |
-| Epochs | 30 | Sufficient for convergence without overfitting |
-| Batch Size | 32 | Balances memory and gradient stability |
-| Fine Tune | True | Leverage pre-trained features for better performance |
-| Use Pretrained | True | Transfer learning from ImageNet-trained weights |
-| Learning Rate | 0.001 | Conservative learning rate for fine-tuning |
-| Random Seed | 42 | Reproducible results across runs |
-| Data Split | 70/10/20 | Standard split for training/validation/test |
-| Data Augmentation | Horizontal Flip | Address class imbalance and improve generalization |
-
-![Model and training summary interface in GLEAM Image Learner.](../../images/skin_tutorial/image_classification_results_summary.png "Model and training summary interface")
-
-# Prepare Environment and Get the Data
+## Prepare environment and get the data 
 
 > <comment-title>Dataset Preprocessing</comment-title>
 >
-> The dataset available on Zenodo has been preprocessed following {% cite Shetty2022 %} methodology:
-> 1. **Selected** 100 images per class from the original HAM10000 dataset (10,015 images)
-> 2. **Resized** all images to 96×96 pixels for computational efficiency
-> 3. **Applied** horizontal flip augmentation to generate 200 images per class
-> 4. **Created** a balanced dataset of 1,400 total images (200 × 7 classes)
-> 5. **Compiled** metadata in CSV format with class labels
->
-> This preprocessing addresses the severe class imbalance in the original dataset and creates a balanced training set suitable for deep learning. The preprocessed dataset is available at: [HAM10000 Preprocessed Dataset](https://zenodo.org/records/17114688)
+> The dataset available on Zenodo has been preprocessed following {% cite Shetty2022 %} methodology. 
 >
 {:  .comment}
 
@@ -183,10 +151,10 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >
 >    {% snippet faqs/galaxy/datasets_import_via_link.md %}
 >
->    <tip-title>Data Type</tip-title>
->    - For the `.zip` file, set the datatype to `zip`
->    - For the `.csv` file, leave as `Auto-Detect` (it will be recognized as tabular)
->
+>> <tip-title>Data Type</tip-title>
+>> - For the `.zip` file, set the datatype to `zip`
+>> - For the `.csv` file, leave as `Auto-Detect` (it will be recognized as tabular)
+>>
 >    {: .tip}
 >
 > 3. Check that the data formats are assigned correctly:
@@ -205,97 +173,113 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >
 {: .hands_on}
 
-# Using Image Learner Tool
+## Tool setup and run
 
-> <hands-on-title> Task description </hands-on-title>
+After uploading the dataset, configure the Image Learner parameters as follows. These settings are based on best practices for dermoscopic image classification and have been optimized for the HAM10000 dataset.
+
+> <hands-on-title>Configure Image Learner for HAM10000</hands-on-title>
 >
-> 1. {% tool [Image Learner](toolshed.g2.bx.psu.edu/repos/goeckslab/image_learner/c5150cceab47) %} with the following parameters:
->    - {% icon param-file %} *"Input image collection (ZIP)"*: `images_96.zip`
->    - {% icon param-file %} *"Image metadata (CSV)"*: `image_metadata_new.csv`
->    - {% icon param-select %} *"Task"*: `Classification`
->    - {% icon param-select %} *"Model"*: `caformer_s18_384`
->    - {% icon param-text %} *"Number of epochs"*: `30`
->    - {% icon param-text %} *"Batch size"*: `32`
->    - {% icon param-select %} *"Fine tune pretrained model"*: `Yes`
->    - {% icon param-text %} *"Learning rate"*: `0.001`
->    - {% icon param-text %} *"Random seed"*: `42`
->    - {% icon param-select %} *"Data split (train/validation/test)"*: `70/10/20`
+> 1. {% tool [Image Learner](toolshed.g2.bx.psu.edu/repos/goeckslab/image_learner/image_learner/0.1.5) %} with the following parameters:
+>    - {% icon param-file %} *The metadata csv containing image_path column, label column*: `image_metadata_new.csv`
+>    - {% icon param-file %} *Image zip*: `images_96.zip`
+>    - {% icon param-select %} *Task Type*: `Multi-class Classification`
+>    - {% icon param-select %} *Select a model for your experiment*: `caformer_s18_384`
+>    - {% icon param-select %} *Customize Default Settings*: `Yes`
+>    - {% icon param-text %} *Epochs*: `30`
+>    - {% icon param-text %} *Define your batch size*: `Yes`
+>    - {% icon param-text %} *Batch Size*: `32`
 >
-> 2. Run the tool
+> 2. Run training and review the generated evaluation report.
 >
 {: .hands_on}
 
-# Tool Output Files
+> <tip-title>Recommended Image Learner configuration (and why)</tip-title>
+>
+> | Parameter | Rationale |
+> |---|---|
+> | Task Type | Multi-class image classification task |
+> | Model Name | Efficient transformer-based model |
+> | Epochs | Sufficient for convergence without overfitting |
+> | Batch Size | Balances memory and gradient stability |
+> | Fine Tune | Leverage pre-trained features for better performance |
+> | Use Pretrained | Transfer learning from ImageNet-trained weights |
+> | Learning Rate | Conservative learning rate for fine-tuning |
+> | Random Seed | Reproducible results across runs |
+> | Data Split | Standard split for training/validation/test |
+> | Data Augmentation | Improve generalization |
+>
+{: .tip}
+
+## Tool Output Files
 
 After training and testing your model, you should see several new files in your history list:
 
-- **Image Learner Best Model**: The trained model file that can be reused for predictions without retraining.
+- **Image Learner Trained Model (`ludwig_model`)**: A reusable model bundle that includes the model configuration JSONs and model weights.
 
-- **Image Learner Model Report**: An interactive HTML report containing all evaluation plots, performance metrics, and model visualizations.
+- **Image Learner Model Report (HTML)**: An interactive report that summarizes configuration, metrics, and plots.
 
-- **Training History**: A file documenting the training progress (accuracy and loss for each epoch).
-
-- **Predictions (Test Set)**: CSV file with predictions and confidence scores for test images.
+- **Image Learner Predictions/Stats/Plots (collection)**: A list collection containing:
+  - `predictions.csv` with model predictions and confidence scores
+  - JSON files (for example `training_statistics.json`, `test_statistics.json`, `description.json`) with experiment metadata and metrics
+  - PNG plots from `visualizations/train` and `visualizations/test`, plus feature importance example images
+  - `feature_importance_examples.zip` bundling the feature importance examples
 
 For this tutorial, we will focus on the Image Learner Model Report and the performance metrics.
 
 # Image Learner Model Report
 
-The Image Learner HTML report provides a comprehensive and interactive overview of the trained model's performance. This report documents key aspects of the model's training and evaluation process, offering insights into how well the model performed on the training, validation, and test datasets.
+The Image Learner HTML report provides a comprehensive and interactive overview of the trained model's performance. It is organized into three tabs that separate configuration, training/validation diagnostics, and test results.
 
-## Report Structure
+## Config and Overall Performance Summary
 
-The report typically contains the following sections:
+This tab combines dataset composition, overall metrics, and configuration details:
 
-### Model Summary
-- Model architecture and configuration
-- Training parameters and hyperparameters
-- Dataset composition and splits
+- **Dataset Overview**: Sample counts per class and split (train/validation/test). For regression tasks, only split counts are shown.
+- **Model Performance Summary**: A sortable table of metrics across train, validation, and test splits.
+- **Training Configuration**: Model architecture, image size, augmentation, split strategy, optimizer, learning rate, epochs, early stopping, and random seed.
+- **Metrics Help**: A "Help" button that opens a glossary explaining each metric.
 
-### Training Performance
-- Training and validation loss curves
-- Training and validation accuracy curves
-- Overall training dynamics
+![Model and training summary interface in GLEAM Image Learner.](../../images/skin_tutorial/image_classification_results_summary.png "Model and training summary interface")
 
-### Test Set Evaluation
-The test set evaluation provides comprehensive metrics for assessing final model performance:
+## Training and Validation Results
+
+This tab focuses on optimization dynamics and validation diagnostics:
+
+- **Train/Validation Performance Summary**: Side-by-side metrics for train vs. validation.
+- **Learning Curves**: Loss/accuracy/F1/ROC-AUC (as applicable) and overfitting gap plots across epochs.
+- **Validation Diagnostics**: Prediction confidence distributions and, for binary tasks, a threshold selection plot.
+
+## Test Results
+
+The test tab provides final evaluation plots and metrics:
+
+- **Test Performance Summary**: Test-only metrics table.
+- **Classification Diagnostics**: Confusion matrix, ROC/PR curves, and per-class metric plots.
+- **Prediction Confidence**: Test-set confidence distributions.
+- **Grad-CAM Heatmaps**: Visual explanations for convolutional backbones when available.
 
 ![Test Performance Summary - Accuracy and Loss Progression](../../images/skin_tutorial/test_performance_summary.png "Test Performance Summary")
 
-### Classification Metrics
+These weighted metrics indicate balanced performance across classes under the explicitly balanced split. The report also includes ROC-AUC and Cohen's Kappa for additional discrimination and agreement context.
 
-After training, the tool generates detailed evaluation metrics:
+#### Per-class Metrics
 
-| Metric | Value | Interpretation |
-|---|---|---|
-| Accuracy | 0.9036 | 90.36% of test samples correctly classified |
-| Precision | 0.9102 | When model predicts positive, it's correct 91.02% of the time |
-| Recall | 0.9036 | Model identifies 90.36% of actual positive cases |
-| F1-Score | 0.9063 | Balanced measure of precision and recall |
-| ROC-AUC | 0.9880 | 98.80% area under the ROC curve - excellent discrimination |
-| Cohen's Kappa | 0.8875 | Very good inter-rater agreement; strong classification performance |
+The report summarizes performance **for each lesion class** using a heatmap of key classification metrics. Rows correspond to classes (e.g., `akiec`, `bcc`, `bkl`, `df`, `mel`, `nv`, `vasc`) and columns correspond to evaluation metrics. Darker cells indicate stronger performance (values closer to 1.0).
 
-### ROC-AUC Curves
+- **Precision**: of the images predicted as a class, how many are correct (higher = fewer false positives).
+- **Recall**: of the true images of a class, how many were found (higher = fewer false negatives).
+- **F1 score**: balance of precision and recall.
+- **Accuracy**: class-wise correctness under the one-vs-rest view reported by the tool.
+- **Matthews correlation coefficient (MCC)**: correlation-style score robust to class imbalance (higher is better).
+- **Specificity**: how well the model avoids labeling other classes as this class (higher = fewer false positives).
 
-The Receiver Operating Characteristic (ROC) curve plots the true positive rate against the false positive rate at different classification thresholds. The Area Under the Curve (AUC) metric summarizes this performance in a single value between 0 and 1, where 1.0 represents perfect classification.
+Use this view to quickly spot classes that are consistently strong across metrics (darker row) versus classes where performance lags in specific dimensions (lighter cells), guiding targeted follow-ups (e.g., more data, label review, or augmentation).
 
-![ROC-AUC curves for all seven lesion classes](../../images/skin_tutorial/roc_auc_curves.png "ROC-AUC Curves for all lesion classes")
+![Per-class metrics heatmap (precision, recall, F1, accuracy, MCC, specificity) by lesion class](../../images/skin_tutorial/per_class_metrics.png "Per-class metrics for each lesion class")
 
-> <tip-title>Interpreting ROC-AUC</tip-title>
->
-> - **AUC > 0.9**: Excellent discrimination between classes
-> - **AUC 0.8-0.9**: Very good discrimination
-> - **AUC 0.7-0.8**: Good discrimination
-> - **AUC 0.6-0.7**: Fair discrimination
-> - **AUC < 0.6**: Poor discrimination
->
-> Our model achieved AUC = 0.9880, indicating excellent ability to distinguish between different skin lesion classes.
->
-{: .tip}
+#### Confusion Matrix
 
-### Confusion Matrix
-
-The confusion matrix provides a detailed breakdown of correct and incorrect predictions for each class, showing where the model makes errors.
+The confusion matrix provides a detailed breakdown of correct and incorrect predictions for each class, highlighting which lesion types are most frequently confused.
 
 ![Confusion matrix showing classification results for all lesion classes](../../images/skin_tutorial/confusion_matrix.png "Confusion matrix of model predictions")
 
@@ -308,66 +292,29 @@ The confusion matrix provides a detailed breakdown of correct and incorrect pred
 >
 {: .tip}
 
-# Model Performance Analysis
-
-## Overall Assessment
-
-The trained model demonstrates strong performance on the HAM10000 skin lesion classification task:
-
-**Accuracy = 0.9036** - The model correctly classifies approximately 90% of test samples, which is a strong result for a 7-class classification problem on dermoscopic images.
-
-**ROC-AUC = 0.9880** - This excellent score indicates that the model has strong discriminative power across all lesion classes.
-
-**Macro F1 = 0.9063** - The macro F1-score shows balanced performance across all classes, which is particularly important given the class imbalance in the original dataset.
-
-**Cohen's Kappa = 0.8875** - This metric indicates very good agreement beyond chance, confirming the model's reliability.
-
-## Class-Specific Performance
-
-The confusion matrix reveals performance patterns for each lesion type:
-
-- **Well-classified lesions**: Some classes show very high accuracy with minimal confusion
-- **Challenge areas**: Certain morphologically similar lesions may show higher misclassification rates
-- **Clinical implications**: Classes with lower performance may require additional expert review in clinical settings
-
 # Comparison with Shetty et al. (2022)
 
 To contextualize our results, we compare against the CNN results reported by Shetty et al. (2022) on HAM10000 {% cite Shetty2022 %}.
 
 | Metric | Shetty et al., 2022 (CNN) | Image Learner (this tutorial) |
 |---|---:|---:|
-| Accuracy | 0.86 (86%) | 0.9036 (90.36%) |
-| Precision | 0.88 (88%) | 0.9102 (91.02%) |
-| Recall | 0.85 (85%) | 0.9036 (90.36%) |
-| F1-Score | 0.86 (86%) | 0.9063 (90.63%) |
-| ROC-AUC | Not reported | 0.9880 (98.80%) |
-| Cohen's Kappa | Not reported | 0.8875 |
+| Accuracy | 0.94 (94%) | 0.90 (90%) |
+| Weighted Precision | 0.88 (88%) | 0.90 (90%) |
+| Weighted Recall | 0.85 (85%) | 0.90 (90%) |
+| Weighted F1-Score | 0.86 (86%) | 0.90 (90%) |
 
 ### Key takeaways
-- **Image Learner outperforms the reference CNN** across all comparable metrics (accuracy, precision, recall, F1-score).
-- Our model achieves 90.36% accuracy vs. 86% in the paper, and 91.02% precision vs. 88%.
-- The ROC-AUC of 0.9880 demonstrates excellent discrimination ability not reported in the original paper.
-- Differences may reflect our use of transfer learning with a modern transformer-based architecture (caformer_s18_384) vs. traditional CNN, as well as evaluation methodology.
+- **Image Learner shows slightly lower accuracy** (0.90 vs. 0.94) but **higher weighted precision/recall/F1** (0.90 vs. 0.88/0.85/0.86).
+- The weighted metrics indicate more balanced class-wise performance under the same balanced-split evaluation protocol.
+- Differences may reflect transfer learning with a modern transformer-based architecture (caformer_s18_384) versus the CNN used by Shetty et al., along with training and evaluation details.
 - Image Learner provides publication-ready metrics and visualizations with full reproducibility through Galaxy.
 
 # Conclusion
 
-In this tutorial, we demonstrated how to use the Galaxy Image Learner tool to build a deep learning model for skin lesion classification using the HAM10000 dataset. We followed a structured approach consisting of:
+In this tutorial, we used the Galaxy Image Learner tool to build and evaluate a dermoscopic lesion classifier on the HAM10000 dataset with a balanced split and a CaFormer backbone:
 
-- Uploading image datasets (ZIP files) and metadata (CSV)
-- Configuring Image Learner with appropriate hyperparameters for transfer learning
-- Training a deep learning classifier using the caformer_s18_384 model architecture
-- Evaluating the model's performance using comprehensive metrics (accuracy, ROC-AUC, F1-score, Cohen's Kappa)
-- Interpreting results through visualizations (ROC curves, confusion matrix, training history)
+- Upload the images and metadata.
+- Configure and train the model.
+- Review test metrics and diagnostic plots, and compare results to the Shetty et al. benchmark.
 
-Throughout the process, we showcased how Image Learner simplifies deep learning workflows, making them accessible to researchers without extensive coding expertise. The model achieved ~90% accuracy and 0.988 ROC-AUC, demonstrating strong performance for dermoscopic image classification.
-
-By the end of this tutorial, you should have a solid understanding of how to:
-- Prepare image datasets for deep learning
-- Configure transfer learning models for image classification
-- Evaluate and interpret deep learning model performance
-- Handle class-imbalanced datasets through augmentation
-- Apply deep learning to biomedical image classification tasks
-
-The approaches and insights from this tutorial can be generalized to other image classification tasks in biomedical research and beyond.
-
+The model achieved ~90% accuracy with balanced weighted precision/recall/F1 of ~0.90, demonstrating strong performance with transparent diagnostics in a reproducible workflow. These steps generalize to other biomedical image-classification tasks.
