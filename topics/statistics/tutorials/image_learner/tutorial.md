@@ -17,7 +17,7 @@ key_points:
 - Understand the dataset composition and the importance of data augmentation to handle class imbalance.
 - Confirm the robustness of the model by evaluating its performance metrics including accuracy, ROC-AUC, and F1-score.
 contributors:
-- dangkhai
+- khaivandangusf2210
 - paulocilasjr
 - qchiujunhao
 - jgoecks
