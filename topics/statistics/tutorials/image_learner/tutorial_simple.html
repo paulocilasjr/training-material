@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAM10000 Image Learner Tutorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        a {
+            color: #0066cc;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .comment {
+            background-color: #e7f3ff;
+            padding: 10px;
+            border-left: 4px solid #0066cc;
+            margin: 15px 0;
+        }
+        .tip {
+            background-color: #f0f9ff;
+            padding: 10px;
+            border-left: 4px solid #00aa00;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Galaxy Image Learner - Building a Deep Learning Classifier using the HAM10000 Dataset</h1>
+
+<div class="comment">
+<strong>Image Learner Tool</strong>
+<p>The Image Learner tool described in this tutorial is currently available on:</p>
+<ul>
+<li><a href="https://usegalaxy.org">Galaxy US Server</a> - Statistics and Visualization > Machine Learning > Image Learner</li>
+<li><a href="https://cancer.usegalaxy.org">Cancer-Galaxy</a> - Galaxy-ML tools > Image Learner</li>
+</ul>
+</div>
+
+<p>In this tutorial, we will use the HAM10000 ("Human Against Machine with 10,000 training images") dataset to develop a deep learning classifier for dermoscopic skin lesion classification. The goal is to accurately classify seven types of pigmented skin lesions using the GLEAM Image Learner tool.</p>
+
+<p>To achieve this, we will follow three essential steps: (i) upload the HAM10000 images and metadata to Galaxy, (ii) set up and run the Image Learner tool to train a deep learning model, and (iii) evaluate the model's predictive performance by analyzing key performance metrics such as accuracy, ROC-AUC, and confusion matrices.</p>
+
+<div class="comment">
+<strong>Background</strong>
+<p>The <a href="https://zenodo.org/records/17114688">HAM10000 dataset</a> is a preprocessed, balanced subset of the original HAM10000 collection, following the methodology described by Shetty et al. (2022). The dataset covers seven types of pigmented skin lesions:</p>
+
+<ol>
+<li>Melanoma (mel)</li>
+<li>Melanocytic nevus (nv)</li>
+<li>Basal cell carcinoma (bcc)</li>
+<li>Actinic keratosis (akiec)</li>
+<li>Benign keratosis (bkl)</li>
+<li>Dermatofibroma (df)</li>
+<li>Vascular lesion (vasc)</li>
+</ol>
+
+<p>To address class imbalance in the original dataset (where melanocytic nevi represented 67% of images), we applied preprocessing steps including image resizing to 96×96 pixels, selecting 100 images per class, and applying horizontal flip augmentation to generate 200 balanced images per class (1,400 total images).</p>
+</div>
+
+<h2>Dataset Preprocessing and Balanced Composition</h2>
+
+<p>The preprocessed dataset comprises:</p>
+<ul>
+<li><strong>Total Images</strong>: 1,400 dermoscopic images (balanced)</li>
+<li><strong>Image Size</strong>: 96×96 pixels</li>
+<li><strong>Image Format</strong>: PNG</li>
+<li><strong>Lesion Types</strong>: 7 categories</li>
+<li><strong>Per Class</strong>: 200 images each</li>
+</ul>
+
+<h3>Preprocessing Steps</h3>
+<p>Starting from the original HAM10000 dataset (10,015 images with severe class imbalance), we applied:</p>
+<ol>
+<li><strong>Image Selection</strong>: Selected 100 images per class</li>
+<li><strong>Image Resizing</strong>: Resized to 96×96 pixels</li>
+<li><strong>Data Augmentation</strong>: Applied horizontal flip to generate 200 images per class</li>
+</ol>
+
+<h3>Balanced Class Distribution</h3>
+
+<table>
+<tr>
+<th>Lesion Type</th>
+<th>Images</th>
+<th>Percentage</th>
+</tr>
+<tr>
+<td>Melanocytic nevus (nv)</td>
+<td>200</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td>Melanoma (mel)</td>
+<td>200</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td>Benign keratosis (bkl)</td>
+<td>200</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td>Basal cell carcinoma (bcc)</td>
+<td>200</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td>Actinic keratosis (akiec)</td>
+<td>200</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td>Vascular lesion (vasc)</td>
+<td>200</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td>Dermatofibroma (df)</td>
+<td>200</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>1,400</strong></td>
+<td><strong>100%</strong></td>
+</tr>
+</table>
+
+<p>This balanced dataset allows the Image Learner model to learn effectively from all lesion types without bias toward any majority class.</p>
+
+<h2>Data Augmentation</h2>
+
+<p>To mitigate class imbalance and improve model generalization, <strong>horizontal flip augmentation</strong> was applied to the training dataset. This transformation:</p>
+<ul>
+<li>Creates additional training samples by horizontally flipping existing images</li>
+<li>Helps the model learn invariant features that are robust to orientation changes</li>
+<li>Is particularly useful for dermoscopic images where lesion orientation is not clinically significant</li>
+<li>Increases effective dataset size without requiring new data collection</li>
+</ul>
+
+<p><em>Reference: Shetty, B., Fernandes, R., Rodrigues, A.P. et al. (2022). Skin lesion classification of dermoscopic images using machine learning and convolutional neural network. Scientific Reports 12, 18134. <a href="https://www.nature.com/articles/s41598-022-22644-9">https://doi.org/10.1038/s41598-022-22644-9</a></em></p>
+
+<h2>Model Configuration in GLEAM Image Learner</h2>
+
+<p>After uploading the dataset, configure the Image Learner parameters as follows:</p>
+
+<table>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Rationale</th>
+</tr>
+<tr>
+<td>Task Type</td>
+<td>Classification</td>
+<td>Multi-class image classification task</td>
+</tr>
+<tr>
+<td>Model Name</td>
+<td>caformer_s18_384</td>
+<td>Efficient transformer-based model</td>
+</tr>
+<tr>
+<td>Epochs</td>
+<td>30</td>
+<td>Sufficient for convergence without overfitting</td>
+</tr>
+<tr>
+<td>Batch Size</td>
+<td>32</td>
+<td>Balances memory and gradient stability</td>
+</tr>
+<tr>
+<td>Fine Tune</td>
+<td>True</td>
+<td>Leverage pre-trained features for better performance</td>
+</tr>
+<tr>
+<td>Use Pretrained</td>
+<td>True</td>
+<td>Transfer learning from ImageNet-trained weights</td>
+</tr>
+<tr>
+<td>Learning Rate</td>
+<td>0.001</td>
+<td>Conservative learning rate for fine-tuning</td>
+</tr>
+<tr>
+<td>Random Seed</td>
+<td>42</td>
+<td>Reproducible results across runs</td>
+</tr>
+<tr>
+<td>Data Split</td>
+<td>70/10/20</td>
+<td>Standard split for training/validation/test</td>
+</tr>
+<tr>
+<td>Data Augmentation</td>
+<td>Horizontal Flip</td>
+<td>Address class imbalance and improve generalization</td>
+</tr>
+</table>
+
+<h2>Prepare Environment and Get the Data</h2>
+
+<div class="comment">
+<strong>Preprocessing the raw data</strong>
+<p>The raw HAM10000 dataset from the source has been preprocessed and made available on Zenodo to facilitate this tutorial:</p>
+<ul>
+<li>Images have been resized to 96x96 pixels for computational efficiency</li>
+<li>Images have been organized into class folders</li>
+<li>Metadata has been compiled into CSV format for easy reference</li>
+</ul>
+<p>A preprocessing workflow including image resizing and metadata compilation can be found at: <a href="https://zenodo.org/records/17114688">HAM10000 Preprocessing</a></p>
+</div>
+
+<h3>Environment and Data Upload</h3>
+
+<ol>
+<li>Create a new history for this tutorial. You can name it <em>HAM10000 Image Classification</em>.</li>
+
+<li>Import the dataset files from Zenodo:
+<pre><code>https://zenodo.org/records/17114688/files/images_96.zip
+https://zenodo.org/records/17114688/files/image_metadata_new.csv</code></pre>
+</li>
+
+<li>Check that the data formats are assigned correctly:
+<ul>
+<li>The <code>.zip</code> file should have type <code>zip</code></li>
+<li>The <code>.csv</code> file should have type <code>tabular</code></li>
+</ul>
+</li>
+
+<li>Add tags to the datasets for better organization:
+<ul>
+<li>Add tag <code>HAM10000 images</code> to the images_96.zip file</li>
+<li>Add tag <code>HAM10000 metadata</code> to the image_metadata_new.csv file</li>
+</ul>
+</li>
+</ol>
+
+<h2>Using Image Learner Tool</h2>
+
+<ol>
+<li>Run the <strong>Image Learner</strong> tool with the following parameters:
+<ul>
+<li><strong>Input image collection (ZIP)</strong>: <code>images_96.zip</code></li>
+<li><strong>Image metadata (CSV)</strong>: <code>image_metadata_new.csv</code></li>
+<li><strong>Task</strong>: <code>Classification</code></li>
+<li><strong>Model</strong>: <code>caformer_s18_384</code></li>
+<li><strong>Number of epochs</strong>: <code>30</code></li>
+<li><strong>Batch size</strong>: <code>32</code></li>
+<li><strong>Fine tune pretrained model</strong>: <code>Yes</code></li>
+<li><strong>Learning rate</strong>: <code>0.001</code></li>
+<li><strong>Random seed</strong>: <code>42</code></li>
+<li><strong>Data augmentation</strong>: <code>horizontal_flip</code></li>
+<li><strong>Data split (train/validation/test)</strong>: <code>70/10/20</code></li>
+</ul>
+</li>
+
+<li>Run the tool</li>
+</ol>
+
+<h2>Tool Output Files</h2>
+
+<p>After training and testing your model, you should see several new files in your history list:</p>
+
+<ul>
+<li><strong>Image Learner Best Model</strong>: The trained model file that can be reused for predictions without retraining.</li>
+<li><strong>Image Learner Model Report</strong>: An interactive HTML report containing all evaluation plots, performance metrics, and model visualizations.</li>
+<li><strong>Training History</strong>: A file documenting the training progress (accuracy and loss for each epoch).</li>
+<li><strong>Predictions (Test Set)</strong>: CSV file with predictions and confidence scores for test images.</li>
+</ul>
+
+<h2>Model Performance</h2>
+
+<p>The model achieves excellent performance on the HAM10000 skin lesion classification task:</p>
+
+<table>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Interpretation</th>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td>0.9036</td>
+<td>90.36% of test samples correctly classified</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>0.9102</td>
+<td>When model predicts positive, it's correct 91.02% of the time</td>
+</tr>
+<tr>
+<td>Recall</td>
+<td>0.9036</td>
+<td>Model identifies 90.36% of actual positive cases</td>
+</tr>
+<tr>
+<td>F1-Score</td>
+<td>0.9063</td>
+<td>Balanced measure of precision and recall</td>
+</tr>
+<tr>
+<td>ROC-AUC</td>
+<td>0.9880</td>
+<td>98.80% area under the ROC curve - excellent discrimination</td>
+</tr>
+<tr>
+<td>Cohen's Kappa</td>
+<td>0.8875</td>
+<td>Very good inter-rater agreement; strong classification performance</td>
+</tr>
+</table>
+
+<div class="tip">
+<strong>Interpreting ROC-AUC</strong>
+<ul>
+<li><strong>AUC > 0.9</strong>: Excellent discrimination between classes</li>
+<li><strong>AUC 0.8-0.9</strong>: Very good discrimination</li>
+<li><strong>AUC 0.7-0.8</strong>: Good discrimination</li>
+<li><strong>AUC 0.6-0.7</strong>: Fair discrimination</li>
+<li><strong>AUC < 0.6</strong>: Poor discrimination</li>
+</ul>
+<p>Our model achieved AUC = 0.9880, indicating excellent ability to distinguish between different skin lesion classes.</p>
+</div>
+
+<h2>Conclusion</h2>
+
+<p>In this tutorial, we demonstrated how to use the Galaxy Image Learner tool to build a deep learning model for skin lesion classification using the HAM10000 dataset. We followed a structured approach consisting of:</p>
+
+<ul>
+<li>Uploading image datasets (ZIP files) and metadata (CSV)</li>
+<li>Configuring Image Learner with appropriate hyperparameters for transfer learning</li>
+<li>Training a deep learning classifier using the caformer_s18_384 model architecture</li>
+<li>Evaluating the model's performance using comprehensive metrics (accuracy, ROC-AUC, F1-score, Cohen's Kappa)</li>
+<li>Interpreting results through visualizations (ROC curves, confusion matrix, training history)</li>
+</ul>
+
+<p>Throughout the process, we showcased how Image Learner simplifies deep learning workflows, making them accessible to researchers without extensive coding expertise. The model achieved ~90% accuracy and 0.988 ROC-AUC, demonstrating strong performance for dermoscopic image classification.</p>
+
+<p>By the end of this tutorial, you should have a solid understanding of how to:</p>
+<ul>
+<li>Prepare image datasets for deep learning</li>
+<li>Configure transfer learning models for image classification</li>
+<li>Evaluate and interpret deep learning model performance</li>
+<li>Handle class-imbalanced datasets through augmentation</li>
+<li>Apply deep learning to biomedical image classification tasks</li>
+</ul>
+
+<p>The approaches and insights from this tutorial can be generalized to other image classification tasks in biomedical research and beyond.</p>
+
+<h2>Additional Resources</h2>
+
+<ul>
+<li><strong>Dataset</strong>: <a href="https://zenodo.org/records/17114688">HAM10000 on Zenodo</a></li>
+<li><strong>Galaxy US Server</strong>: <a href="https://usegalaxy.org">https://usegalaxy.org</a></li>
+<li><strong>Cancer Galaxy</strong>: <a href="https://cancer.usegalaxy.org">https://cancer.usegalaxy.org</a></li>
+<li><strong>Galaxy Training Network</strong>: <a href="https://training.galaxyproject.org">https://training.galaxyproject.org</a></li>
+</ul>
+
+</body>
+</html>
+
