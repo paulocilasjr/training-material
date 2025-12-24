@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HAM10000 Image Learner Tutorial</title>
+    <title>Gleam Image Learner - Validating Skin Lesion Classification on HAM10000</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,20 +64,20 @@
 </head>
 <body>
 
-<h1>Galaxy Image Learner - Building a Deep Learning Classifier using the HAM10000 Dataset</h1>
+<h1>Gleam Image Learner - Validating Skin Lesion Classification on HAM10000</h1>
 
 <div class="comment">
 <strong>Image Learner Tool</strong>
 <p>The Image Learner tool described in this tutorial is currently available on:</p>
 <ul>
 <li><a href="https://usegalaxy.org">Galaxy US Server</a> - Statistics and Visualization > Machine Learning > Image Learner</li>
-<li><a href="https://cancer.usegalaxy.org">Cancer-Galaxy</a> - Galaxy-ML tools > Image Learner</li>
+<li><a href="https://cancer.usegalaxy.org">Cancer-Galaxy</a> - Galaxy Learning and Modeling tools > Image Learner</li>
 </ul>
 </div>
 
 <p>In this tutorial, we will use the HAM10000 ("Human Against Machine with 10,000 training images") dataset to develop a deep learning classifier for dermoscopic skin lesion classification. The goal is to accurately classify seven types of pigmented skin lesions using the GLEAM Image Learner tool.</p>
 
-<p>To achieve this, we will follow three essential steps: (i) upload the HAM10000 images and metadata to Galaxy, (ii) set up and run the Image Learner tool to train a deep learning model, and (iii) evaluate the model's predictive performance by analyzing key performance metrics such as accuracy, ROC-AUC, and confusion matrices.</p>
+<p>To achieve this, we will follow three essential steps: (i) upload the HAM10000 images and metadata to Galaxy, (ii) set up and run the Image Learner tool to train a deep learning model, and (iii) evaluate the model's predictive performance by analyzing key performance metrics such as accuracy, weighted precision/recall/F1, ROC-AUC, and confusion matrices.</p>
 
 <div class="comment">
 <strong>Background</strong>
@@ -134,11 +134,6 @@
 <td>14.3%</td>
 </tr>
 <tr>
-<td>Benign keratosis (bkl)</td>
-<td>200</td>
-<td>14.3%</td>
-</tr>
-<tr>
 <td>Basal cell carcinoma (bcc)</td>
 <td>200</td>
 <td>14.3%</td>
@@ -149,12 +144,17 @@
 <td>14.3%</td>
 </tr>
 <tr>
-<td>Vascular lesion (vasc)</td>
+<td>Benign keratosis (bkl)</td>
 <td>200</td>
 <td>14.3%</td>
 </tr>
 <tr>
 <td>Dermatofibroma (df)</td>
+<td>200</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td>Vascular lesion (vasc)</td>
 <td>200</td>
 <td>14.3%</td>
 </tr>
@@ -169,12 +169,12 @@
 
 <h2>Data Augmentation</h2>
 
-<p>To mitigate class imbalance and improve model generalization, <strong>horizontal flip augmentation</strong> was applied to the training dataset. This transformation:</p>
+<p>Following Shetty et al. (2022), <strong>horizontal flip augmentation</strong> was applied during dataset preparation. This transformation:</p>
 <ul>
-<li>Creates additional training samples by horizontally flipping existing images</li>
-<li>Helps the model learn invariant features that are robust to orientation changes</li>
-<li>Is particularly useful for dermoscopic images where lesion orientation is not clinically significant</li>
-<li>Increases effective dataset size without requiring new data collection</li>
+<li>Improves robustness to lesion orientation and acquisition variability</li>
+<li>Increases effective training diversity without collecting additional images</li>
+<li>Helps reduce sensitivity to class- and pose-specific patterns</li>
+<li>Preserves diagnostically relevant structures while introducing harmless variation</li>
 </ul>
 
 <p><em>Reference: Shetty, B., Fernandes, R., Rodrigues, A.P. et al. (2022). Skin lesion classification of dermoscopic images using machine learning and convolutional neural network. Scientific Reports 12, 18134. <a href="https://www.nature.com/articles/s41598-022-22644-9">https://doi.org/10.1038/s41598-022-22644-9</a></em></p>
@@ -191,8 +191,8 @@
 </tr>
 <tr>
 <td>Task Type</td>
-<td>Classification</td>
-<td>Multi-class image classification task</td>
+<td>Multi-class Classification</td>
+<td>Seven lesion classes</td>
 </tr>
 <tr>
 <td>Model Name</td>
@@ -200,9 +200,19 @@
 <td>Efficient transformer-based model</td>
 </tr>
 <tr>
+<td>Customize Default Settings</td>
+<td>Yes</td>
+<td>Expose epochs and batch size settings</td>
+</tr>
+<tr>
 <td>Epochs</td>
 <td>30</td>
 <td>Sufficient for convergence without overfitting</td>
+</tr>
+<tr>
+<td>Define your batch size</td>
+<td>Yes</td>
+<td>Set a stable batch size for training</td>
 </tr>
 <tr>
 <td>Batch Size</td>
@@ -210,48 +220,17 @@
 <td>Balances memory and gradient stability</td>
 </tr>
 <tr>
-<td>Fine Tune</td>
-<td>True</td>
-<td>Leverage pre-trained features for better performance</td>
-</tr>
-<tr>
-<td>Use Pretrained</td>
-<td>True</td>
-<td>Transfer learning from ImageNet-trained weights</td>
-</tr>
-<tr>
-<td>Learning Rate</td>
-<td>0.001</td>
-<td>Conservative learning rate for fine-tuning</td>
-</tr>
-<tr>
-<td>Random Seed</td>
-<td>42</td>
-<td>Reproducible results across runs</td>
-</tr>
-<tr>
 <td>Data Split</td>
-<td>70/10/20</td>
-<td>Standard split for training/validation/test</td>
-</tr>
-<tr>
-<td>Data Augmentation</td>
-<td>Horizontal Flip</td>
-<td>Address class imbalance and improve generalization</td>
+<td>Stratified 70/10/20</td>
+<td>Train/validation/test split</td>
 </tr>
 </table>
 
 <h2>Prepare Environment and Get the Data</h2>
 
 <div class="comment">
-<strong>Preprocessing the raw data</strong>
-<p>The raw HAM10000 dataset from the source has been preprocessed and made available on Zenodo to facilitate this tutorial:</p>
-<ul>
-<li>Images have been resized to 96x96 pixels for computational efficiency</li>
-<li>Images have been organized into class folders</li>
-<li>Metadata has been compiled into CSV format for easy reference</li>
-</ul>
-<p>A preprocessing workflow including image resizing and metadata compilation can be found at: <a href="https://zenodo.org/records/17114688">HAM10000 Preprocessing</a></p>
+<strong>Dataset Preprocessing</strong>
+<p>The dataset available on Zenodo has been preprocessed following Shetty et al. (2022) methodology.</p>
 </div>
 
 <h3>Environment and Data Upload</h3>
@@ -284,17 +263,14 @@ https://zenodo.org/records/17114688/files/image_metadata_new.csv</code></pre>
 <ol>
 <li>Run the <strong>Image Learner</strong> tool with the following parameters:
 <ul>
-<li><strong>Input image collection (ZIP)</strong>: <code>images_96.zip</code></li>
-<li><strong>Image metadata (CSV)</strong>: <code>image_metadata_new.csv</code></li>
-<li><strong>Task</strong>: <code>Classification</code></li>
-<li><strong>Model</strong>: <code>caformer_s18_384</code></li>
-<li><strong>Number of epochs</strong>: <code>30</code></li>
-<li><strong>Batch size</strong>: <code>32</code></li>
-<li><strong>Fine tune pretrained model</strong>: <code>Yes</code></li>
-<li><strong>Learning rate</strong>: <code>0.001</code></li>
-<li><strong>Random seed</strong>: <code>42</code></li>
-<li><strong>Data augmentation</strong>: <code>horizontal_flip</code></li>
-<li><strong>Data split (train/validation/test)</strong>: <code>70/10/20</code></li>
+<li><strong>The metadata csv containing image_path column, label column</strong>: <code>image_metadata_new.csv</code></li>
+<li><strong>Image zip</strong>: <code>images_96.zip</code></li>
+<li><strong>Task Type</strong>: <code>Multi-class Classification</code></li>
+<li><strong>Select a model for your experiment</strong>: <code>caformer_s18_384</code></li>
+<li><strong>Customize Default Settings</strong>: <code>Yes</code></li>
+<li><strong>Epochs</strong>: <code>30</code></li>
+<li><strong>Define your batch size</strong>: <code>Yes</code></li>
+<li><strong>Batch Size</strong>: <code>32</code></li>
 </ul>
 </li>
 
@@ -306,65 +282,53 @@ https://zenodo.org/records/17114688/files/image_metadata_new.csv</code></pre>
 <p>After training and testing your model, you should see several new files in your history list:</p>
 
 <ul>
-<li><strong>Image Learner Best Model</strong>: The trained model file that can be reused for predictions without retraining.</li>
-<li><strong>Image Learner Model Report</strong>: An interactive HTML report containing all evaluation plots, performance metrics, and model visualizations.</li>
-<li><strong>Training History</strong>: A file documenting the training progress (accuracy and loss for each epoch).</li>
-<li><strong>Predictions (Test Set)</strong>: CSV file with predictions and confidence scores for test images.</li>
+<li><strong>Image Learner Trained Model (ludwig_model)</strong>: A reusable model bundle including configuration JSONs and model weights.</li>
+<li><strong>Image Learner Model Report (HTML)</strong>: An interactive report summarizing configuration, metrics, and plots.</li>
+<li><strong>Image Learner Predictions/Stats/Plots (collection)</strong>:
+<ul>
+<li><code>predictions.csv</code> with model predictions and confidence scores</li>
+<li>JSON files with experiment metadata and metrics (for example <code>training_statistics.json</code>, <code>test_statistics.json</code>)</li>
+<li>PNG plots from training and test visualizations, plus feature-importance examples</li>
+<li><code>feature_importance_examples.zip</code> bundling feature-importance images</li>
+</ul>
+</li>
 </ul>
 
 <h2>Model Performance</h2>
 
-<p>The model achieves excellent performance on the HAM10000 skin lesion classification task:</p>
+<p>The Image Learner report provides a complete overview of configuration, learning curves, and test diagnostics including confusion matrices and per-class metrics. On the balanced split, the model achieves approximately 90% accuracy with weighted precision/recall/F1 around 0.90. The report also includes ROC-AUC and Cohen's Kappa for additional discrimination and agreement context.</p>
+
+<h3>Comparison with Shetty et al. (2022)</h3>
 
 <table>
 <tr>
 <th>Metric</th>
-<th>Value</th>
-<th>Interpretation</th>
+<th>Shetty et al. (CNN)</th>
+<th>Image Learner (this tutorial)</th>
 </tr>
 <tr>
 <td>Accuracy</td>
-<td>0.9036</td>
-<td>90.36% of test samples correctly classified</td>
+<td>0.94 (94%)</td>
+<td>0.90 (90%)</td>
 </tr>
 <tr>
-<td>Precision</td>
-<td>0.9102</td>
-<td>When model predicts positive, it's correct 91.02% of the time</td>
+<td>Weighted Precision</td>
+<td>0.88 (88%)</td>
+<td>0.90 (90%)</td>
 </tr>
 <tr>
-<td>Recall</td>
-<td>0.9036</td>
-<td>Model identifies 90.36% of actual positive cases</td>
+<td>Weighted Recall</td>
+<td>0.85 (85%)</td>
+<td>0.90 (90%)</td>
 </tr>
 <tr>
-<td>F1-Score</td>
-<td>0.9063</td>
-<td>Balanced measure of precision and recall</td>
-</tr>
-<tr>
-<td>ROC-AUC</td>
-<td>0.9880</td>
-<td>98.80% area under the ROC curve - excellent discrimination</td>
-</tr>
-<tr>
-<td>Cohen's Kappa</td>
-<td>0.8875</td>
-<td>Very good inter-rater agreement; strong classification performance</td>
+<td>Weighted F1-Score</td>
+<td>0.86 (86%)</td>
+<td>0.90 (90%)</td>
 </tr>
 </table>
 
-<div class="tip">
-<strong>Interpreting ROC-AUC</strong>
-<ul>
-<li><strong>AUC > 0.9</strong>: Excellent discrimination between classes</li>
-<li><strong>AUC 0.8-0.9</strong>: Very good discrimination</li>
-<li><strong>AUC 0.7-0.8</strong>: Good discrimination</li>
-<li><strong>AUC 0.6-0.7</strong>: Fair discrimination</li>
-<li><strong>AUC < 0.6</strong>: Poor discrimination</li>
-</ul>
-<p>Our model achieved AUC = 0.9880, indicating excellent ability to distinguish between different skin lesion classes.</p>
-</div>
+<p>Image Learner shows slightly lower accuracy but higher weighted precision/recall/F1, reflecting balanced class-wise performance under the same evaluation protocol.</p>
 
 <h2>Conclusion</h2>
 
@@ -374,11 +338,11 @@ https://zenodo.org/records/17114688/files/image_metadata_new.csv</code></pre>
 <li>Uploading image datasets (ZIP files) and metadata (CSV)</li>
 <li>Configuring Image Learner with appropriate hyperparameters for transfer learning</li>
 <li>Training a deep learning classifier using the caformer_s18_384 model architecture</li>
-<li>Evaluating the model's performance using comprehensive metrics (accuracy, ROC-AUC, F1-score, Cohen's Kappa)</li>
-<li>Interpreting results through visualizations (ROC curves, confusion matrix, training history)</li>
+<li>Evaluating the model's performance using accuracy and weighted precision/recall/F1 plus diagnostic plots</li>
+<li>Interpreting results through visualizations (confusion matrix, learning curves, per-class metrics)</li>
 </ul>
 
-<p>Throughout the process, we showcased how Image Learner simplifies deep learning workflows, making them accessible to researchers without extensive coding expertise. The model achieved ~90% accuracy and 0.988 ROC-AUC, demonstrating strong performance for dermoscopic image classification.</p>
+<p>Throughout the process, we showcased how Image Learner simplifies deep learning workflows, making them accessible to researchers without extensive coding expertise. The model achieved ~90% accuracy with balanced weighted precision/recall/F1, demonstrating strong performance for dermoscopic image classification.</p>
 
 <p>By the end of this tutorial, you should have a solid understanding of how to:</p>
 <ul>
@@ -402,4 +366,3 @@ https://zenodo.org/records/17114688/files/image_metadata_new.csv</code></pre>
 
 </body>
 </html>
-

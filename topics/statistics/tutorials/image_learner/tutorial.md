@@ -262,7 +262,7 @@ The test tab provides final evaluation plots and metrics:
 
 These weighted metrics indicate balanced performance across classes under the explicitly balanced split. The report also includes ROC-AUC and Cohen's Kappa for additional discrimination and agreement context.
 
-#### Per-class Metrics
+### Per-class Metrics
 
 The report summarizes performance **for each lesion class** using a heatmap of key classification metrics. Rows correspond to classes (e.g., `akiec`, `bcc`, `bkl`, `df`, `mel`, `nv`, `vasc`) and columns correspond to evaluation metrics. Darker cells indicate stronger performance (values closer to 1.0).
 
@@ -277,7 +277,7 @@ Use this view to quickly spot classes that are consistently strong across metric
 
 ![Per-class metrics heatmap (precision, recall, F1, accuracy, MCC, specificity) by lesion class](../../images/skin_tutorial/per_class_metrics.png "Per-class metrics for each lesion class")
 
-#### Confusion Matrix
+### Confusion Matrix
 
 The confusion matrix provides a detailed breakdown of correct and incorrect predictions for each class, highlighting which lesion types are most frequently confused.
 
@@ -303,7 +303,7 @@ To contextualize our results, we compare against the CNN results reported by She
 | Weighted Recall | 0.85 (85%) | 0.90 (90%) |
 | Weighted F1-Score | 0.86 (86%) | 0.90 (90%) |
 
-### Key takeaways
+## Key takeaways
 - **Image Learner shows slightly lower accuracy** (0.90 vs. 0.94) but **higher weighted precision/recall/F1** (0.90 vs. 0.88/0.85/0.86).
 - The weighted metrics indicate more balanced class-wise performance under the same balanced-split evaluation protocol.
 - Differences may reflect transfer learning with a modern transformer-based architecture (caformer_s18_384) versus the CNN used by Shetty et al., along with training and evaluation details.
