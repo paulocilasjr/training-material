@@ -75,19 +75,19 @@ To achieve this, we will follow three essential steps: (i) upload the HAM10000 i
 
 The dataset used in this tutorial has been preprocessed following the methodology from {% cite Shetty2022 %} to create a balanced training set suitable for deep learning.
 
-### Preprocessing Steps
+## Preprocessing Steps
 
 Starting from the original HAM10000 dataset (10,015 images with severe class imbalance), we applied the following preprocessing:
 
-#### Step 1: Image Selection
+### Step 1: Image Selection
 - Selected 100 images per class from the original dataset
 - Ensured balanced representation across all 7 lesion types
 
-#### Step 2: Image Resizing
+### Step 2: Image Resizing
 - Resized all images to 96×96 pixels
 - Standardized format as PNG for consistent processing
 
-#### Step 3: Data Augmentation
+### Step 3: Data Augmentation
 - Applied horizontal flip augmentation to each image
 - Generated 200 images per class (100 original + 100 flipped)
 - **Total dataset: 1,400 images** (200 × 7 classes)
