@@ -1,0 +1,27 @@
+---
+destination:
+  type: library
+  name: GTN - Material
+  description: Galaxy Training Network Material
+  synopsis: Galaxy Training Network Material. See https://training.galaxyproject.org
+items:
+- name: Statistics and Machine Learning
+  description: Statistics and Machine Learning tutorials
+  items:
+  - name: HANCOCK Multimodal Learner - HNSCC Recurrence
+    items:
+    - name: 'Zenodo: 17933596'
+      description: latest
+      items:
+      - url: https://zenodo.org/records/17933596/files/HANCOCK_train_split.csv
+        src: url
+        ext: ''
+        info: https://zenodo.org/records/17933596
+      - url: https://zenodo.org/records/17933596/files/HANCOCK_test_split.csv
+        src: url
+        ext: ''
+        info: https://zenodo.org/records/17933596
+      - url: https://zenodo.org/records/17727354/files/tma_cores_cd3_cd8_images.zip
+        src: url
+        ext: ''
+        info: https://zenodo.org/records/17727354
