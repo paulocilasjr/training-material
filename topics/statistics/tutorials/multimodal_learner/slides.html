@@ -1,0 +1,336 @@
+---
+layout: tutorial_slides
+logo: GTN
+title: "Building Multimodal Deep Learning Models with GLEAM: A Case Study on Head and Neck Cancer Recurrence Prediction"
+zenodo_link: "https://zenodo.org/records/17727354"
+
+questions:
+  - "How can Multimodal Learner be used in Galaxy to build and evaluate multimodal deep learning models?"
+  - "What are the key features of GLEAM Multimodal Learner that simplify multimodal learning workflows?"
+
+objectives:
+  - "Understand the capabilities of GLEAM Multimodal Learner for automating multimodal deep learning workflows."
+  - "Learn how to use Multimodal Learner in Galaxy to build and evaluate multimodal classification models."
+  - "Apply Multimodal Learner to the HANCOCK dataset to develop a head and neck cancer recurrence predictor."
+
+contributors:
+  - dangkhai
+  - paulocilasjr
+  - qchiujunhao
+  - jgoecks
+---
+
+# Introduction to GLEAM Multimodal Learner and Galaxy
+
+- **Galaxy**: A web-based platform for data-intensive biomedical research, enabling users to run tools and workflows without coding.
+- **GLEAM Multimodal Learner**: A no-code deep learning tool for multimodal classification in Galaxy that automates model training and evaluation.
+- **AutoGluon Multimodal**: The underlying framework that automatically selects and optimizes models for different data types (tabular, image, text).
+- **Integration**: Multimodal Learner is available as a tool in Galaxy, allowing users to perform multimodal deep learning tasks directly from the Galaxy interface.
+
+???
+
+GLEAM Multimodal Learner simplifies multimodal deep learning by automating tasks like data preprocessing, model training with transfer learning, and comprehensive evaluation. In this tutorial, we will explore how Multimodal Learner can be used within Galaxy to build reliable multimodal classifiers, using the HANCOCK head and neck cancer dataset as a case study.
+
+---
+
+# Use Case: Head and Neck Cancer Recurrence Prediction with HANCOCK
+
+- **HANCOCK Dataset**: 763 head and neck cancer patients with multimodal data (clinical, imaging, text).
+- **Challenge**: Predict 3-year recurrence by integrating complementary information from multiple data types.
+- **Objective**: Demonstrate how Multimodal Learner can be used to build a robust multimodal classifier for cancer outcome prediction.
+
+![Workflow overview for HANCOCK multimodal classification](./../../images/hanc_tutorial/Summary.jpg)
+
+---
+
+# Dataset: HANCOCK (Head and Neck Cancer Outcome Cohort)
+
+- **Description**: A comprehensive multimodal dataset for precision oncology in head and neck cancer.
+- **Total Patients**: 763 patients with complete multimodal information
+- **Data Modalities**:
+  - **Tabular**: Clinical features, pathological data, blood biomarkers, TMA cell density
+  - **Image**: CD3 and CD8 immunohistochemistry TMA core images
+  - **Text**: ICD-10 diagnostic codes (comorbidities and medical history)
+- **Outcome**: 3-year recurrence status (binary classification)
+- **Galaxy's Role**: Facilitates easy multimodal data upload and management.
+
+---
+
+# Data Modalities in HANCOCK
+
+## Tabular Data (Clinical and Pathological Features)
+- Patient demographics (age, sex, smoking status)
+- Tumor characteristics (site, grade, stage)
+- Blood biomarkers (CBC, liver function, kidney function)
+- TMA cell density (quantitative immune cell counts)
+
+## Image Data (Tissue Microarray Cores)
+- CD3 and CD8 immunohistochemistry staining
+- High-resolution digital pathology images
+- Tumor microenvironment immune infiltration patterns
+
+## Text Data (ICD Diagnostic Codes)
+- ICD-10 codes representing comorbidities
+- Medical history encoded as free-text descriptions
+
+---
+
+# Why Multimodal Learning?
+
+Each data modality captures complementary information:
+
+- **Tabular data**: Standard clinical risk factors and biomarkers
+- **Image data**: Visual patterns in tumor microenvironment not captured by standard reports
+- **Text data**: Complex comorbidity patterns through ICD codes
+
+**Benefit**: By integrating these modalities, the model can learn richer representations and achieve better predictive performance than single-modality approaches.
+
+---
+
+# Challenge: Integrating Heterogeneous Data
+
+| Challenge | Solution |
+|---|---|
+| Different data types (tabular, image, text) | Modality-specific encoders |
+| Different scales and distributions | Normalization and standardization |
+| Missing data in some modalities | Robust fusion strategies |
+| Complementary vs. redundant information | Late fusion architecture |
+
+**Multimodal Learner** handles these challenges automatically!
+
+---
+
+# Target Variable: 3-Year Recurrence
+
+- **Positive (recurrence = 1)**: 
+  - Recurrence within 3 years (1,095 days) of diagnosis
+  
+- **Negative (recurrence = 0)**: 
+  - No recurrence with adequate follow-up (>3 years), OR
+  - Currently living without recurrence
+
+**Clinical Relevance**: Early recurrence (within 3 years) is associated with poor prognosis and may benefit from more aggressive treatment strategies.
+
+---
+
+# Data Preprocessing Strategy
+
+1. **Feature Table Merging**:
+   - Merge clinical, pathological, blood, TMA tables by patient_id
+   - Outer joins to preserve all available data
+
+2. **Modality Separation**:
+   - Keep core tabular features
+   - Extract image paths (remove derived quantitative features)
+   - Extract ICD text (remove one-hot encoded columns)
+
+3. **Target Definition**:
+   - 3-year recurrence based on clinical follow-up
+   - Exclude patients with insufficient follow-up
+
+4. **Train/Test Split**:
+   - Pre-defined splits from JSON files
+   - Patient-level splits (no data leakage)
+
+---
+
+# Multimodal Learner in Galaxy
+
+- **GLEAM Multimodal Learner Tool**:
+  - Available on Galaxy: https://usegalaxy.org/ and https://cancer.usegalaxy.org
+  - Powered by **AutoGluon Multimodal** framework
+  - Automates training and evaluation of multimodal deep learning models
+  - Outputs trained model and comprehensive performance report
+- **Key Features**:
+  - Automatic preprocessing for each modality (tabular, image, text)
+  - Automated model selection and hyperparameter optimization
+  - Handles multiple image columns (e.g., CD3 and CD8 staining)
+  - Detailed evaluation metrics and visualizations
+
+---
+
+# Model Configuration
+
+| Parameter | Value | Rationale |
+|---|---|---|
+| Framework | AutoGluon Multimodal | Automated multimodal ML |
+| Predictor Type | MultiModalPredictor | Handles multiple data types |
+| Image Columns | CD3_image_path, CD8_image_path | Two TMA image modalities |
+| Tabular Columns | 38 features | Clinical + pathological + blood |
+| Label Column | target | Binary recurrence (0/1) |
+| Presets | AutoGluon default | Balanced performance |
+| Seed | 42 | Reproducible results |
+| Time Limit | 3600 seconds | 1 hour training time |
+
+---
+
+# Running Multimodal Learner
+
+1. **Upload Data**:
+   - recurrence_in_distribution.csv (tabular data) from Zenodo
+   - tma_cores_cd3_cd8_images.zip (TMA images) from Zenodo
+   - [Zenodo link](https://zenodo.org/records/17727354)
+
+2. **Run Multimodal Learner**:
+   - Input tabular: recurrence_in_distribution.csv
+   - Input images: tma_cores_cd3_cd8_images.zip
+   - Framework: AutoGluon Multimodal
+   - Image columns: CD3_image_path, CD8_image_path
+   - Time limit: 3600 seconds (1 hour)
+
+3. **Evaluate Model**:
+   - Use Multimodal Learner's report to assess performance
+   - Analyze ROC-AUC curves and confusion matrix
+
+---
+
+# Multimodal Learner Model Report
+
+- **Interactive HTML Report**:
+  - **Model Summary**: Architecture, parameters, dataset splits
+  - **Training Performance**: Loss and accuracy curves over epochs
+  - **Test Evaluation**: Comprehensive metrics and visualizations
+  - **Confusion Matrix**: Class-by-class performance breakdown
+  - **ROC-AUC Curves**: Discrimination ability
+
+![Model and training summary](./../../images/hanc_tutorial/Summary.jpg)
+
+---
+
+# Training Performance
+
+![Test performance summary showing training progression](./../../images/hanc_tutorial/Test_summary_and_confusion_matrix.png)
+
+- Monitor training and validation metrics
+- Identify potential overfitting
+- Assess convergence
+
+---
+
+# Model Evaluation Metrics
+
+**Achieved Performance**:
+- **Accuracy**: 84.33% - Good overall correctness
+- **ROC-AUC**: 0.7790 - Good discrimination
+- **F1-Score**: 0.6667 - Moderate balanced performance
+- **Specificity**: 0.9109 - Excellent (91% of non-recurrence cases identified)
+- **Sensitivity**: 0.6364 - Moderate (64% of recurrence cases identified)
+
+**Interpretation**: The multimodal model demonstrates good performance with particularly high specificity, making it valuable for identifying low-risk patients.
+
+---
+
+# ROC-AUC Curves
+
+![ROC-AUC curves and threshold analysis](./../../images/hanc_tutorial/Roc_curve_and_threshold_plots.png)
+
+- **AUC = 0.779**: Good discrimination
+- Curve shows trade-off between sensitivity and specificity
+- Threshold selection based on clinical requirements
+- Precision-Recall curve shows performance across different thresholds
+
+---
+
+# Confusion Matrix
+
+![Confusion matrix showing classification results](./../../images/hanc_tutorial/Test_summary_and_confusion_matrix.png)
+
+- **Diagonal**: Correct predictions
+- **Off-diagonal**: Misclassifications
+- **Clinical implications**: False negatives (missed recurrences) may be more concerning than false positives
+
+---
+
+# Key Results
+
+- **Overall Accuracy**: 84.33%
+  - Successfully classifies ~8 out of 10 patients correctly
+
+- **ROC-AUC**: 0.7790
+  - Good discrimination between recurrence and no recurrence
+
+- **High Specificity**: 91.09%
+  - Excellent at identifying patients who will NOT have recurrence
+
+- **Moderate Sensitivity**: 63.64%
+  - Identifies about 2/3 of patients who will have recurrence
+
+- **Clinical Relevance**: 
+  - High specificity helps avoid unnecessary aggressive treatments
+  - Should complement clinical judgment for risk stratification
+
+---
+
+# Model Performance Summary
+
+| Metric | Value | Interpretation |
+|---|---:|---|
+| **Accuracy** | 84.33% | Good overall performance |
+| **ROC-AUC** | 77.90% | Good discrimination |
+| **Specificity** | 91.09% | Excellent - identifies low-risk patients |
+| **Sensitivity** | 63.64% | Moderate - identifies high-risk patients |
+| **F1-Score** | 66.67% | Balanced measure |
+
+**Key Insights**:
+- **High specificity (91%)** is valuable for clinical decision-making
+- Multimodal integration leverages complementary information
+- Class imbalance (78% vs 22%) influences predictions
+- Reproducible Galaxy workflow
+
+---
+
+# Clinical Implications
+
+- **Risk Stratification**:
+  - High-risk patients (predicted recurrence) → More aggressive treatment or closer monitoring
+  - Low-risk patients → Avoid unnecessary aggressive interventions
+
+- **Personalized Medicine**:
+  - Integration of multiple data types enables personalized risk assessment
+  - Can guide treatment decisions and follow-up strategies
+
+- **Research Applications**:
+  - Identify important features across modalities
+  - Understand biological mechanisms of recurrence
+  - Generate hypotheses for further investigation
+
+---
+
+# Conclusion
+
+- **Key Takeaways**:
+  - Multimodal Learner simplifies multimodal deep learning workflows
+  - Successfully built and evaluated a head and neck cancer recurrence predictor
+  - Demonstrated Multimodal Learner's ability to integrate clinical, image, and text data
+  - Achieved 84% accuracy and 0.779 ROC-AUC with high specificity (91%) for identifying low-risk patients
+
+- **Why Multimodal Learner?**
+  - No coding required - accessible to all researchers
+  - Automates preprocessing, training, and evaluation
+  - Produces publication-ready results and visualizations
+  - Enables rapid experimentation with different modalities and models
+
+---
+
+# Applications Beyond Head and Neck Cancer
+
+Multimodal Learner can be applied to:
+- **Other Cancer Types**: Breast, lung, colorectal cancer outcome prediction
+- **Medical Imaging**: Combining radiology, pathology, and clinical data
+- **Electronic Health Records**: Integrating structured and unstructured EHR data
+- **Drug Discovery**: Combining molecular, imaging, and clinical data
+- **Precision Medicine**: Multi-omics integration for personalized treatment
+
+The same workflow applies across domains!
+
+---
+
+# Galaxy Training Resources
+
+- Galaxy Training Materials: [training.galaxyproject.org](https://training.galaxyproject.org)
+- Help Forum: [help.galaxyproject.org](https://help.galaxyproject.org)
+- Gitter Chat: [gitter.im/galaxyproject/Lobby](https://gitter.im/galaxyproject/Lobby)
+- Events: [galaxyproject.org/events](https://galaxyproject.org/events)
+
+![GTN stats]({{site.baseurl}}/topics/introduction/images/gtn_stats.png)
+
