@@ -48,7 +48,7 @@ recordings:
 > Galaxy-ML tools > Tabular Learner
 >
 > and [Galaxy US Server](https://usegalaxy.org)
-> Statistics and Visualization > Machine Lerning > Tabular Learner
+> Statistics and Visualization > Machine Learning > Tabular Learner
 >
 {:  .comment}
 
