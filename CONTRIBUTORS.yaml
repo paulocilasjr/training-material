@@ -182,6 +182,14 @@ andreacabibbe:
     github: false
     joined: 2024-06
 
+afpybus:
+    name: Alyssa Pybus
+    joined: 2025-12
+    email: alyssa.pybus@moffitt.org
+    orcid: 0000-0002-9722-3977
+    affiliations:
+    - moffitt
+
 andrea-spitaleri:
     name: Andrea Spitaleri
     joined: 2024-06
@@ -1514,6 +1522,12 @@ kenza12:
 kellsnow:
     name: Kellie Snow
     joined: 2024-03
+
+khaivandangusf2210:
+    name: Khai Dang
+    email: khaivandang@usf.edu
+    orcid: 0009-0007-1912-8644
+    joined: 2025-12
 
 khanteymoori:
     name: Alireza Khanteymoori

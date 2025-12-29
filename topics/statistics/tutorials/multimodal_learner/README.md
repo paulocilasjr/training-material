@@ -39,6 +39,7 @@ Estimated time: 1 hour
 
 ## Contributors
 
+- Alyssa Pybus (ORCID: https://orcid.org/0000-0002-9722-3977)
 - Paulo Cilas Morais Lyra Junior (ORCID: https://orcid.org/0000-0002-4403-6684)
 - Junhao Qiu (ORCID: https://orcid.org/0009-0005-4322-3401)
 - Khai Dang (ORCID: https://orcid.org/0009-0007-1912-8644)
