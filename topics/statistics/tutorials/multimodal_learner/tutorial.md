@@ -42,7 +42,7 @@ tags:
 {:  .comment}
 
 Multimodal Learning is increasingly central to precison oncology, where clinically meaningful predictions often depend on integrating imagin, structured clinical variables, and text annotations.
-This tutorial uses the HANCOCK dataset ({% cite Dorrich2025 %})-head-and-neck squamous cell carcinoma (HNSCC)-to build a multimodal model that predicts recurrence by combining clinical variables, ICD text, and CD3/CD8 immunohistochemistry images. We will train a late-fusion model with GLEAM Multimodal Learner and evaluate model's performance.
+This tutorial uses the HANCOCK dataset ({% cite Dorrich2025 %}) to build a multimodal model that predicts recurrence by combining clinical variables, ICD text, and CD3/CD8 immunohistochemistry images. We will train a late-fusion model with GLEAM Multimodal Learner and evaluate model's performance.
 
 > <agenda-title></agenda-title>
 >
@@ -55,7 +55,7 @@ This tutorial uses the HANCOCK dataset ({% cite Dorrich2025 %})-head-and-neck sq
 
 # Dataset overview: HANCOCK modalities and target
 
-The HANCOCK cohort includes 763 head and neck squamous cell carcinoma (HNSCC) cases with multimodal data ({% cite Dorrich2025 %}). For this tutorial, the train and test tables include the following key columns:
+The HANCOCK cohort includes 763 head and neck cancer cases with multimodal data ({% cite Dorrich2025 %}). For this tutorial, the train and test tables include the following key columns:
 
 The HANCOCK use case includes three modalities per patient:
 
@@ -72,19 +72,29 @@ Multimodal Learner expects a single sample-level table. For a HANCOCK-like run, 
 - **icd_text**: free-text ICD descriptions
 - **cd3_path** and **cd8_path**: image filenames for CD3 and CD8 TMA images
 
+![Schema of the whole process of training model and test](./../../images/multimodal_learner/workflow.png "Overview of the process steps to obtain the model from the HANCOCK dataset."){: style="width: 60%; display: block; margin-left: auto; margin-right: auto;"}
+
 > <comment-title>Data preparation: shaping HANCOCK for the tool</comment-title>
 >
 > The raw data published by ({% cite Dorrich2025 %}) can be found here: 
 > [HANCOCK raw dataset](https://www.hancock.research.uni-erlangen.org/download)
 > 
 > We preprocessed the raw data using a Python script to:
+>
 > 1) Normalize identifiers consistently (e.g., remove leading zeros; standardize missing values) before merging.
-> 2) Join modality tables using a stable identifier (e.g., `patient_id`).
+>
+> 2) Join modality tables using a stable identifier (e.g., patient_id).
+>
 > 3) Construct recurrence label for each patient.
+>
 > 4) Extract the ICD code text as is.
+>
 > 5) Use filenames in the table that match entries for each patient.
+>
 > 6) Preserve the reference benchmark split and avoids leakage across patients.
+>
 > 7) Save the dataset as a .csv file.
+>
 > 8) Provide the images as one **ZIP** archive.
 >
 > A python script for preprocessing can be found at: [HANCOCK_preprocessing](https://github.com/goeckslab/gleam_use_cases/tree/main/multimodal_learner)
@@ -123,12 +133,6 @@ Multimodal Learner trains **late-fusion prediction models** using **AutoGluon Mu
 >
 >    {% snippet faqs/galaxy/datasets_import_via_link.md %}
 >
->> <tip-title>Data Type</tip-title>
->> - For the `.zip` file, set the datatype to `zip`
->> - For the `.csv` files, set the datatype to `csv`
->>
->    {: .tip}
->
 > 3. Check that the data formats are assigned correctly. If not, follow the Changing the datatype tip:
 >
 >    {% snippet faqs/galaxy/datasets_change_datatype.md datatype="datatypes" %}
@@ -148,16 +152,13 @@ After the train and test tables were upload, configure Multimodal Learner with t
 >    - {% icon param-file %} *Test dataset (CSV/TSV)*: `HANCOCK_test_split.csv`
 >    - {% icon param-select %} *Text backbone*: `google/electra-base-discriminator`
 >    - {% icon param-toggle %} *Use image modality?*: `Yes`
+>    - {% icon param-select %} *+ Insert Image archive*: `click`
 >    - {% icon param-file %} *ZIP file containing images*: `tma_cores_cd3_cd8_images.zip`
 >    - {% icon param-select %} *Image backbone*: `caformer_b36.sail_in22k_ft_in1k`
 >    - {% icon param-toggle %} *Drop rows with missing images?*: `No`
->    - {% icon param-select %} *Quality preset*: `High quality`
 >    - {% icon param-select %} *Primary evaluation metric*: `ROC AUC`
 >    - {% icon param-text %} *Random seed*: `42`
 >    - {% icon param-toggle %} *Advanced: customize training settings?*: `Yes`
->    - {% icon param-text %} *Validation fraction*: `0.2`
->    - {% icon param-toggle %} *Enable k-fold cross-validation*: `Yes`
->    - {% icon param-text %} *Number of CV folds*: `5`
 >    - {% icon param-text %} *Binary classification threshold*: `0.25`
 >
 > 2. Run the tool and review the HTML report.
@@ -188,42 +189,62 @@ After the run finishes, you should see these outputs in your history:
 
 The HTML report is designed to help you answer two questions quickly: **how well does the model discriminate outcomes** and **what kinds of errors it makes at a chosen operating point**.
 
+![Report tabs containing configuration, metrics and plots of the model](./../../images/multimodal_learner/report_tabs.png "Picture of the report tabs generated after running the multimodal learner tool.")
+
 - **Performance summary (by split)**  
   Review ROC–AUC and PR–AUC alongside threshold-dependent metrics (precision, recall, F1). For recurrence prediction, PR–AUC is often especially informative because the positive class can be relatively rare, and false negatives directly reduce recall.
 - **Diagnostics (curves and confusion matrix)**  
   Use ROC/PR curves to understand ranking performance, then move to the confusion matrix and class-wise metrics to see *where* errors occur. In the HANCOCK recurrence use case, a common pattern is **stronger performance for the negative class (no recurrence)** than the positive class, so the main concern is typically **missed recurrence cases (false negatives)**.
 - **Calibration and threshold behavior**  
-  Calibration plots help you decide whether predicted probabilities can be interpreted as risk. Threshold views show how changing the cutoff trades off false negatives versus false positives. The manuscript configuration used a **0.25** decision threshold to make this tradeoff explicit (rather than relying on the default 0.5).
-- **Configuration and provenance**  
-  Confirm that the report and YAML config match your intended setup: which modalities were used, chosen text and image backbones, missing-image handling, split strategy, random seed, and time budget. The manuscript’s Figure 4 highlights the division between **user-controlled settings** (for example, backbones, missing-image strategy, split probabilities, threshold, seed) and **AutoGluon-managed modeling choices** (late-fusion architecture and checkpoint ensembling); both are recorded in the workflow outputs to support reproducibility and auditing.
+  Calibration plots help you decide whether predicted probabilities can be interpreted as risk. Threshold views show how changing the cutoff trades off false negatives versus false positives. The configuration used was **0.25** decision threshold to make this tradeoff explicit (rather than relying on the default 0.5).
+- **Configuration and reproducibility**  
+  Confirm that the report  match your intended setup: which modalities were used, chosen text and image backbones, missing-image handling, split strategy, random seed, and time budget.
 
 # Results and Benchmark Comparison
 
-The original HANCOCK study reported an ROC–AUC of **0.79** for recurrence prediction using engineered multimodal features ({% cite Dorrich2025 %}). In the manuscript use case, Multimodal Learner replaces those engineered summaries with **raw modalities**—ICD as free text and CD3/CD8 as images—combined with clinical tabular variables in a late-fusion model, and achieves a **median ROC–AUC of 0.74** on the held-out test set.
+The original HANCOCK study reported an ROC–AUC of **0.79** for recurrence prediction using **engineered multimodal features** ({% cite Dorrich2025 %}). In this use case, Multimodal Learner replaces engineered summaries with **raw modalities**—ICD as free text and CD3/CD8 as pixel images—combined with structured clinical variables in a **late-fusion** model. On the held-out test set, the model achieves **ROC–AUC = 0.768** (≈ **0.77**), which is close to the published benchmark given the change in representation and training setup.
 
-| Metric | HANCOCK (reference) | Multimodal Learner |
+| Metric | HANCOCK (reference) | Multimodal Learner (test) |
 |---|---:|---:|
-| ROC–AUC | 0.79 | 0.74 |
+| ROC–AUC | 0.79 | 0.77 |
 
-Key observations (consistent with the manuscript discussion):
+![ROC-AUC curve generated by the test set](./../../images/multimodal_learner/test_roc_auc.png "ROC-AUC plot generated on the Test held-out.")
 
-- **Performance remains close to the benchmark while using raw inputs**, indicating the encoders can extract comparable signal directly from text and pixels when trained under standardized conditions.
-- **Class-wise metrics often favor the negative class**, meaning under-detection of recurrence can dominate the error profile. Use the threshold plots (starting from 0.25) to shift the operating point if recall for recurrence is the priority.
-- **The report supports transparent iteration**: you can link changes in backbones, time budget/preset, and thresholds to measurable changes in ROC/PR behavior, calibration, and the confusion matrix, without changing the dataset format.
+## Class imbalance and what it changes in practice
+
+Recurrence is the minority class across splits:
+
+| Label | Train | Validation | Test |
+|---|---:|---:|---:|
+| 0 (no recurrence) | 332 | 84 | 101 |
+| 1 (recurrence) | 94 | 23 | 33 |
+
+This imbalance strongly shapes the metrics you see in the report. In particular, **accuracy and specificity can look high even when recurrence detection is weak**, because most samples are negative.
+
+### Model Performance Summary (reported)
+
+| Metric | Train | Validation | Test |
+|---|---:|---:|---:|
+| Accuracy | 0.8005 | 0.7944 | 0.8134 |
+| ROC–AUC | 0.7812 | 0.7748 | 0.7681 |
+| Precision | 0.9091 | 1.0000 | 0.9000 |
+| Recall | 0.1064 | 0.0435 | 0.2727 |
+| F1-Score | 0.1905 | 0.0833 | 0.4186 |
+| PR-AUC | 0.5770 | 0.5325 | 0.6743 |
+| Specificity | 0.9970 | 1.0000 | 0.9901 |
+
+How to read this:
+
+- **ROC–AUC stays reasonably strong (~0.77 on test)**, suggesting the model ranks recurrence risk meaningfully even if the default operating point is conservative.
+- **Precision is high (0.90) but recall is modest (0.27) on test**: when the model predicts recurrence it is often correct, but it misses many recurrent cases at the current threshold.
+- **PR–AUC (0.67 on test)** is particularly informative under class imbalance; it emphasizes performance on the positive class more than ROC–AUC does.
+- **Very high specificity (~0.99)** indicates few false positives; if clinical priorities favor catching more recurrence cases, you will likely trade some specificity for higher recall.
+
+## Key observations and how to iterate
+
+- **Near-benchmark performance with raw inputs** supports the manuscript’s conclusion that the tool’s encoders can recover comparable signal directly from text and pixels under standardized training.
+- **Error profile is dominated by under-detection of recurrence** at the current decision threshold. Use the report’s threshold plots to **move the operating point** (often lowering the threshold increases recall, typically reducing precision).
 
 ## Conclusion
 
-Using the HANCOCK HNSCC recurrence task as an example, this tutorial demonstrates how Multimodal Learner integrates **tabular clinical variables**, **free-text ICD descriptions**, and **CD3/CD8 images** in a single late-fusion workflow. The example shows that a standardized, no-code configuration can approach a published benchmark while reducing reliance on modality-specific feature engineering, and that the generated report provides the diagnostics needed to interpret errors, tune thresholds, and select an operating point aligned to your clinical priorities.
-
-
-# Practical tips for best results
-
-- **Start with a clean split**: ensure splits are patient-based to prevent leakage.
-- **Confirm image paths**: most failures come from mismatched paths between the CSV and ZIP contents.
-- **Budget enough time**: multimodal backbones benefit from higher time limits and `high_quality`/`best_quality` presets.
-- **Choose metrics intentionally**: `roc_auc` for discrimination; `average_precision` when the positive class is rare.
-- **Tune the threshold**: use the threshold plots to pick a cutoff aligned to clinical priorities.
-
-# Summary
-
-Multimodal Learner provides an end-to-end, late-fusion modeling workflow that combines tabular clinical variables with free-text and raw images under a single standardized run. The HANCOCK dataset illustrates how to structure multimodal inputs, respect a published split, and configure backbones, cross-validation, and thresholds to obtain clinically interpretable performance.
+Using the HANCOCK recurrence task as an example, this tutorial demonstrates how Multimodal Learner integrates **tabular clinical variables**, **free-text ICD descriptions**, and **CD3/CD8 images** in a single late-fusion workflow. The results show that a standardized, no-code configuration can approach a published benchmark while reducing reliance on modality-specific feature engineering, and that the generated report provides the diagnostics needed to understand errors, assess calibration, and select an operating point aligned to clinical priorities—especially in the presence of class imbalance.
