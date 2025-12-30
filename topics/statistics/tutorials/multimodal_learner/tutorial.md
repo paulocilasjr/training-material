@@ -23,7 +23,6 @@ contributors:
 - qchiujunhao
 - jgoecks
 tags:
-- HNSCC
 - Multimodal Learning
 - GLEAM
 - HANCOCK Dataset
@@ -36,13 +35,14 @@ tags:
 > [Galaxy US Server](https://usegalaxy.org)
 > Statistics and Visualization > Machine Learning > Multimodal Learner
 >
-> and [Cancer-Galaxy](https://cancer.usegalaxy.org)
-> Galaxy Learning and Modeling tools > Multimodal Learner
->
 {:  .comment}
 
-Multimodal Learning is increasingly central to precison oncology, where clinically meaningful predictions often depend on integrating imagin, structured clinical variables, and text annotations.
-This tutorial uses the HANCOCK dataset ({% cite Dorrich2025 %}) to build a multimodal model that predicts recurrence by combining clinical variables, ICD text, and CD3/CD8 immunohistochemistry images. We will train a late-fusion model with GLEAM Multimodal Learner and evaluate model's performance.
+
+In this tutorial, we use the **HANCOCK** head-and-neck cancer cohort ({% cite Dorrich2025 %}) to build a **recurrence prediction** model with **GLEAM Multimodal Learner**.
+
+Multimodal Learner wraps AutoGluon Multimodal to train a **late-fusion** model. It automatically builds modality-specific encoders—tabular features with a tabular transformer, text fields with a pretrained language model, and images with a pretrained vision backbone—and learns a fusion network that combines the modality embeddings into a single prediction.
+
+You provide a single CSV/TSV with one row per patient containing the target label and modality references (text columns and image-path columns). Image files are uploaded as one or more ZIP archives; the paths in the table must match filenames inside the ZIP. We use the **published train/test split** and interpret results with ROC/PR curves, confusion matrices, and threshold-dependent metrics.
 
 > <agenda-title></agenda-title>
 >
@@ -53,26 +53,67 @@ This tutorial uses the HANCOCK dataset ({% cite Dorrich2025 %}) to build a multi
 >
 {: .agenda}
 
-# Dataset overview: HANCOCK modalities and target
+# Dataset Overview and Composition
 
-The HANCOCK cohort includes 763 head and neck cancer cases with multimodal data ({% cite Dorrich2025 %}). For this tutorial, the train and test tables include the following key columns:
+The HANCOCK dataset used in this tutorial is a multimodal precision oncology resource that integrates multiple data types to enable comprehensive cancer outcome prediction.
 
-The HANCOCK use case includes three modalities per patient:
+## Dataset Description
 
-- **Tabular:** clinical/pathological variables (numeric and categorical)
-- **Text:** free-text ICD descriptions
-- **Images:** tissue microarray (TMA) cores stained for **CD3** and **CD8**
+The HANCOCK (Head and Neck Cancer Outcome Cohort) dataset was published by {% cite Dorrich2025 %} and represents one of the first large-scale multimodal datasets specifically designed for head and neck cancer outcome prediction. The dataset includes:
 
-## Expected table structure
+### Patient Cohort
+- **Total patients**: 763 head and neck cancer patients
+- **Cancer sites**: Oral cavity, oropharynx, hypopharynx, larynx
+- **Follow-up**: Comprehensive outcome tracking with recurrence and survival data
+- **Data collection**: Multi-institutional cohort with standardized data collection protocols
 
-Multimodal Learner expects a single sample-level table. For a HANCOCK-like run, train and test columns typically include:
+### Data Modalities
 
-- **target**: recurrence label (0 = no recurrence, 1 = recurrence/progression)
-- **clinical covariates**: columns kept as numeric/categorical information
-- **icd_text**: free-text ICD descriptions
-- **cd3_path** and **cd8_path**: image filenames for CD3 and CD8 TMA images
+#### 1. Tabular Data (Clinical and Pathological Features)
+- **Clinical features**: Age, sex, smoking status, primary tumor site
+- **Pathological features**: Tumor grade, stage, histological type
+- **Blood biomarkers**: Complete blood count, liver function, kidney function
+- **TMA cell density**: Quantitative cell counts from tissue microarray analysis
 
-![Schema of the whole process of training model and test](./../../images/multimodal_learner/workflow.png "Overview of the process steps to obtain the model from the HANCOCK dataset."){: style="width: 60%; display: block; margin-left: auto; margin-right: auto;"}
+#### 2. Image Data (Tissue Microarray Cores)
+- **Modality**: CD3 and CD8 immunohistochemistry staining
+- **Resolution**: High-resolution digital pathology images
+- **Content**: Tumor microenvironment immune cell infiltration
+- **Format**: PNG images of individual TMA cores
+
+#### 3. Text Data (ICD Diagnostic Codes)
+- **Source**: International Classification of Diseases (ICD-10) codes
+- **Content**: Diagnostic codes representing comorbidities and medical history
+- **Format**: Free-text ICD code descriptions
+
+## Target Variable: 3-Year Recurrence
+
+The primary prediction task is **3-year recurrence**, defined as:
+- **Positive (recurrence = 1)**: Recurrence within 3 years (1,095 days) of diagnosis
+- **Negative (recurrence = 0)**: No recurrence with adequate follow-up (>3 years) or currently living without recurrence
+
+This binary classification task is clinically relevant as early recurrence (within 3 years) is associated with poor prognosis and may benefit from more aggressive treatment strategies.
+
+## Data Splits
+
+The dataset provides three pre-defined splits:
+1. **In-distribution split**: Random split for general model development
+2. **Out-of-distribution split**: Temporal split to test model generalization
+3. **Oropharynx split**: Site-specific split for oropharyngeal cancer
+
+For this tutorial, we use the **in-distribution split** which provides:
+- **Training set**: ~70% of patients for model training
+- **Test set**: ~30% of patients for final evaluation## Expected table structure
+
+Because Multimodal Learner requires a specific input structure—a single sample-level table that contains the label and all modality references, plus, when using images, a ZIP archive containing the referenced image files—you must preprocess the dataset to match this format before running the tool. For a HANCOCK-like setup, the training and test tables typically include:
+
+target: recurrence label (0 = no recurrence, 1 = recurrence/progression)
+
+clinical covariates: numeric and categorical clinical/pathological variables
+
+icd_text: free-text ICD descriptions
+
+cd3_path and cd8_path: image filenames (or relative paths) for CD3 and CD8 TMA images, which must match files inside the ZIP archive
 
 > <comment-title>Data preparation: shaping HANCOCK for the tool</comment-title>
 >
@@ -100,6 +141,8 @@ Multimodal Learner expects a single sample-level table. For a HANCOCK-like run, 
 > A python script for preprocessing can be found at: [HANCOCK_preprocessing](https://github.com/goeckslab/gleam_use_cases/tree/main/multimodal_learner)
 >
 {:  .comment}
+
+![Schema of the whole process of training model and test](./../../images/multimodal_learner/workflow.png "Overview of the process steps to obtain the model from the HANCOCK dataset."){: style="width: 60%; display: block; margin-left: auto; margin-right: auto;"}
 
 # Using Multimodal Learner Tool
 
