@@ -234,21 +234,21 @@ Here, we are going to trim the Illumina data using **fastp** ({% cite Chen2018 %
 > 2. {% tool [Flatten collection](__FLATTEN__) %} with the following parameters:
 >    - *"Input Collection"*: **fastp** `Paired-end output`
 >      
-> 3. **Rename** the output to `Flattened fastp output`
+> 3. **Rename** {% icon galaxy-pencil %} the output to `Flattened fastp output`
 >      
 > 4. {% tool [Extract dataset](__EXTRACT_DATASET__) %} with the following parameters:
 >    - *"Input List"*: `Flattened fastp output`
 >    - *"How should a dataset be selected?"*: `Select by element identifier`
 >    - *"Element identifier"*: `DRR187559_forward` (filtered forward reads)
 > 
-> 5. **Rename** `DRR187559_forward` to `Trimmed DRR187559_forward`
+> 5. **Rename** {% icon galaxy-pencil %} `DRR187559_forward` to `Trimmed DRR187559_forward`
 >   
 > 6. {% tool [Extract dataset](__EXTRACT_DATASET__) %} with the following parameters:
 >    - *"Input List"*: `Flattened fastp output`
 >    - *"How should a dataset be selected?"*: `Select by element identifier`
 >    - *"Element identifier"*: `DRR187559_reverse` (filtered forward reads)
 >   
-> 7. **Rename** `DRR187559_reverse` to `Trimmed DRR187559_reverse`
+> 7. **Rename** {% icon galaxy-pencil %} `DRR187559_reverse` to `Trimmed DRR187559_reverse`
 > 
 {: .hands_on}
 
