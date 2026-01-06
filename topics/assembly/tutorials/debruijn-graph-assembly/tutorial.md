@@ -83,10 +83,10 @@ We will be using the same data that we used in the introductory tutorial, so if 
 > 4. Create a paired collection named `Paired Reads`
 >
 >    {% snippet faqs/galaxy/collections_build_list_paired.md %}
->    
+>
 >    - We will need to use both the individual datasets (`Mutant_R1.fastq` and `Mutant_R2.fastq`) and the paired end collection (`Paired Reads`), so toggle off the `Hide original elements` option when creating the collection.
 >    - Alternatively, you can un-hide the datasets by selecting the {% icon galaxy-show-hidden %} icon on the hidden dataset in your history.
->      
+>
 >    {% snippet faqs/galaxy/datasets_unhidden.md %}
 >
 {: .hands_on}
@@ -100,7 +100,7 @@ We will perform an assembly with the Velvet Optimiser, which automatically runs 
 >  1. {% tool [Velvet Optimiser](toolshed.g2.bx.psu.edu/repos/simon-gladman/velvetoptimiser/velvetoptimiser/2.2.6) %}: Optimise your assembly with the following parameters:
 >    - *"Start k-mer size"*: `45`
 >    - *"End k-mer size"*: `73`
->    - *"Input Files"*: 
+>    - *"Input Files"*:
 >        - `1: Input Files`
 >            - *"Input file type"*: `Fastq`
 >            - *"Single or paired end reads"*: `Paired`
@@ -222,21 +222,21 @@ The next thing to be aware of is that there can be multiple valid interpretation
 
 > For a simple case, imagine a bacterial genome that contains a single repeated element in two separate places in the chromosome:
 >
-> ![Simple example 1](https://camo.githubusercontent.com/1fc8116ea0532646250cdf702b7e2d68ab0126ad198f51fea5288d039a6875fd/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f332e706e67)
+> ![Simple example 1]({% link topics/assembly/images/debruijn_assembly/bandage1.png %})
 >
 > A researcher (who does not yet know the structure of the genome) sequences it, and the resulting 100 bp reads are assembled with a de novo assembler:
 >
-> ![Simple example 2](https://camo.githubusercontent.com/ff4073c7216906f46a73fd70dab24679dd6cfeff7a4fc79181c18782c837e778/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f322e706e67)
+> ![Simple example 2]({% link topics/assembly/images/debruijn_assembly/bandage2.png %})
 >
 > Because the repeated element is longer than the sequencing reads, the assembler was not able to reproduce the original genome as a single contig. Rather, three contigs are produced: one for the repeated sequence (even though it occurs twice) and one for each sequence between the repeated elements.
 >
 > Given only the contigs, the relationship between these sequences is not clear. However, the assembly graph contains additional information which is made apparent in Bandage:
 >
-> ![Simple example 3](https://camo.githubusercontent.com/1fc8116ea0532646250cdf702b7e2d68ab0126ad198f51fea5288d039a6875fd/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f332e706e67)
+> ![Simple example 3]({% link topics/assembly/images/debruijn_assembly/bandage3.png %})
 >
 > There are two principal underlying sequences compatible with this graph: two separate circular sequences that share a region in common, or a single larger circular sequence with an element that occurs twice:
 >
-> ![Simple example 4](https://camo.githubusercontent.com/b4fe90972aa62b74bd39faae0dea09e87ef398c76de878e4710d71164da5c5df/687474703a2f2f72727769636b2e6769746875622e696f2f42616e646167652f696d616765732f77696b692f73696d706c655f6578616d706c655f342e706e67)
+> ![Simple example 4]({% link topics/assembly/images/debruijn_assembly/bandage4.png %})
 >
 > Additional knowledge, such as information on the approximate size of the bacterial chromosome, can help the researcher to rule out the first alternative. In this way, Bandage has assisted in turning a fragmented assembly of three contigs into a completed genome of one sequence.
 {: .quote cite="https://github.com/rrwick/Bandage/wiki/Simple-example"}
