@@ -235,9 +235,11 @@ We are going to perform exactly the same analysis on all four samples. So it doe
 
 > <hands-on-title>Creating a paired-collection</hands-on-title>
 >
-> To create a paired collection follow the steps shown in the video below (the video is 52 seconds long 😁):
+> To create a paired collection follow the steps shown in the video below (the video is 2 minutes long 😁):
 >
-> <iframe width="560" height="315" src="https://www.youtube.com/embed/An4e7wr-FbU?si=iFN9BoNYy2p34LD9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+> <div style="text-align: center;">
+> <iframe width="560" height="315" src="https://www.youtube.com/embed/OW4n61BIHAc?si=namdcFYfUITktKRz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+> </div>
 >
 > Explore the collections by first **clicking** on the collection name in the history panel. This takes you inside the collection and shows you the datasets in it.  You can then navigate back to the outer level and, finally, full history.
 >
