@@ -151,10 +151,10 @@ This balanced dataset allows the Image Learner model to learn effectively from a
 >
 >    {% snippet faqs/galaxy/datasets_import_via_link.md %}
 >
->> <tip-title>Data Type</tip-title>
->> - For the `.zip` file, set the datatype to `zip`
->> - For the `.csv` file, leave as `Auto-Detect` (it will be recognized as tabular)
->>
+>    > <tip-title>Data Type</tip-title>
+>    > - For the `.zip` file, set the datatype to `zip`
+>    > - For the `.csv` file, leave as `Auto-Detect` (it will be recognized as tabular)
+>    >
 >    {: .tip}
 >
 > 3. Check that the data formats are assigned correctly:
