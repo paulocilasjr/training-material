@@ -20,6 +20,7 @@ contributors:
 - khaivandangusf2210
 - paulocilasjr
 - qchiujunhao
+- afpybus
 - jgoecks
 tags:
 - HAM10000 Dataset
@@ -28,18 +29,6 @@ tags:
 - Image Learner
 - Skin Lesion Classification
 ---
-
-
-> <comment-title>Image Learner Tool</comment-title>
->
-> The Image Learner tool described in this tutorial is currently available on: 
-> [Galaxy US Server](https://usegalaxy.org)
-> Statistics and Visualization > Machine Learning > Image Learner
->
-> and [Cancer-Galaxy](https://cancer.usegalaxy.org)
-> Galaxy Learning and Modeling tools > Image Learner
->
-{:  .comment}
 
 In this tutorial, we will use the HAM10000 ("Human Against Machine with 10,000 training images") dataset to develop a deep learning classifier for dermoscopic skin lesion classification. The goal is to accurately classify seven types of pigmented skin lesions using the GLEAM Image Learner tool.
 
