@@ -38,18 +38,6 @@ recordings:
   bot-timestamp: 1746588908
 ---
 
-
-> <comment-title>Tabular Learner Tool</comment-title>
->
-> The Tabular Learner tool described in this tutorial is currently available only on: 
-> [Cancer-Galaxy](https://cancer.usegalaxy.org) >
-> Galaxy-ML tools > Tabular Learner
->
-> and [Galaxy US Server](https://usegalaxy.org)
-> Statistics and Visualization > Machine Lerning > Tabular Learner
->
-{:  .comment}
-
 In this tutorial, we will build a new immunotherapy-response classifier with Galaxy Tabular Learner using a comprehensive dataset of patients treated with immune checkpoint blockade (ICB) and non-ICB-treated patients across 18 solid tumor types. The goal is to accurately predict patient responses to the treatment.
 
 Rather than re-implementing the original LORIS pipeline, we treat the published LORIS LLR6 logistic regression model as a benchmark and use the Tabular Learner report to confirm model quality and to understand where and why results differ ({% cite Chang2024 %}).
@@ -296,7 +284,7 @@ When comparing Tabular Learner models to LORIS LLR6, separate metrics into two g
    - **ROC-AUC** and **PR-AUC** summarize discrimination across all thresholds. In this use case, both Tabular Learner runs show stronger discrimination than LLR6 (AUC 0.76 vs 0.72; AUPRC 0.55 vs 0.53), and the two runs are identical on these metrics because the underlying model and data did not change.
 
 2. **Threshold-dependent (report with the chosen cutoff)**  
-   - **Accuracy and F1** shift when the probability cutoff changes. Moving from 0.50 (Run 1) to 0.29 (Run 2) lowers accuracy (0.79 → 0.67) but improves F1 (0.42 → 0.52).
+   - **Accuracy and F1** shift when the probability cutoff changes. Moving from 0.50 (Run 1) to 0.25 (Run 2) lowers accuracy (0.79 → 0.67) but improves F1 (0.42 → 0.52).
 
 The table below summarizes the key numbers:
 
