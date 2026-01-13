@@ -295,7 +295,7 @@ To contextualize our results, we compare against the CNN results reported by She
 ## Key takeaways
 - **Image Learner shows slightly lower accuracy** (0.90 vs. 0.94) but **higher weighted precision/recall/F1** (0.90 vs. 0.88/0.85/0.86).
 - The weighted metrics indicate more balanced class-wise performance under the same balanced-split evaluation protocol.
-- Differences may reflect transfer learning with a modern transformer-based architecture (caformer_s18_384) versus the CNN used by Shetty et al., along with training and evaluation details.
+- Differences may reflect transfer learning with a modern transformer-based architecture (CAFormer S18 384) versus the CNN used by Shetty et al., along with training and evaluation details.
 - Image Learner provides publication-ready metrics and visualizations with full reproducibility through Galaxy.
 
 # Conclusion
