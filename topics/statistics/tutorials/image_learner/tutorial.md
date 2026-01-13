@@ -172,7 +172,7 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >    - {% icon param-file %} *The metadata csv containing image_path column, label column*: `image_metadata_new.csv`
 >    - {% icon param-file %} *Image zip*: `images_96.zip`
 >    - {% icon param-select %} *Task Type*: `Multi-class Classification`
->    - {% icon param-select %} *Select a model for your experiment*: `caformer_s18_384`
+>    - {% icon param-select %} *Select a model for your experiment*: `CAFormer S18 384`
 >    - {% icon param-select %} *Customize Default Settings*: `Yes`
 >    - {% icon param-text %} *Epochs*: `30`
 >    - {% icon param-text %} *Define your batch size*: `Yes`
