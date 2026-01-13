@@ -156,7 +156,7 @@ This balanced dataset allows the Image Learner model to learn effectively from a
 >
 > 4. Add tags to the datasets for better organization:
 >    - Add tag `HAM10000 images` to the images_96.zip file
->    - Add tag `HAM10000 metadata` to the image_metadata_new.csv file
+>    - Add tag `HAM10000_metadata` to the image_metadata_new.csv file
 >
 >    {% snippet faqs/galaxy/datasets_add_tag.md %}
 >
