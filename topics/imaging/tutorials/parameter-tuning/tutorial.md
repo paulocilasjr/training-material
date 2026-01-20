@@ -29,6 +29,7 @@ contributions:
     - nfdi4bioimage
     - dfg
 tags:
+  - Bioimaging
   - Parameter optimisation
   - Validation
 ---

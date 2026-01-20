@@ -26,6 +26,7 @@ contributions:
     - deNBI
     - uni-freiburg
 tags:
+  - Bioimaging
   - Data management
   - Data handling
   - Data sharing
