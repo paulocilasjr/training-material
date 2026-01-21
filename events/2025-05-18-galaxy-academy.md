@@ -3,8 +3,8 @@ layout: event
 
 title: Galaxy Training Academy 2026
 description: |
-  The Galaxy Training Academy is a self-paced online training event for beginners and advanced learners who want to improve their Galaxy data analysis skills.
-  Over the course of one week, we offer a diverse selection of learning track for you.
+  The Galaxy Training Academy is a self-paced online training event for beginners and advanced learners who want to improve their data analysis skills in Galaxy and/or in popular fields in bioinformatics.
+  Over the course of one week, we offer a diverse selection of learning tracks for you.
 
 # <button id="program-button" class="btn btn-info" onclick="$('#program-tab').tab('show');">Start the Course!</button>
 
@@ -141,7 +141,7 @@ infrastructure:
       name: Galaxy AU
     - server: https://usegalaxy.fr
       name: Galaxy FR
-      tiaas_link: https://usegalaxy.fr/join-training/gta2025
+#      tiaas_link: https://usegalaxy.fr/join-training/gta2025
   support:
     platform: Slack
 
@@ -153,12 +153,12 @@ Do you want to learn how to use Galaxy, an open source data analysis platform? T
 
 We provide you with training materials which you can study at your own pace and on your own time throughout the week. A program will be posted here closer to the event start.
 
-On the first day, you can make yourself familiar with the Galaxy platform. In the next days, you can learn about Proteomics, Assembly, Transcriptomics, Single Cell, Microbiome or Machine Learning data analysis in Galaxy. On the last day, the Friday we additionally offer a ***FAIR training*** program to you.
+On the first day, you can make yourself familiar with the Galaxy platform. In the next days, you can learn about Proteomics, Assembly, Machine learning,  and other tracks that will be defined as we get closer to the event. 
 
 **Course format**
 
 The event is asynchronous which means you can set your own pace on your learning journey using our provided self-learning materials. You will start the event by yourself at your preferred time.
-Don't worry, asynchronous does not mean that you are alone! If you ever need help, you can contact one of our many trainers worldwide via **Slack chat**.
+Don't worry, asynchronous does not mean that you are alone! If you ever need help, you can contact one of our many trainers worldwide via **Slack chat**. We will be available at anytime during the event across all time zones.
 
 **How to participate**
 
@@ -173,7 +173,7 @@ You will not be alone! If you ever need help, you can contact one of our many tr
 
 **Certificates**
 
-You will be able to obtain a certificate by the end of the event. More information is coming soon.
+You will be able to obtain a certificate by the end of the event. To ensure you have all the time you need to learn at your own pace, you will be able to claim a certificate for a few weeks after the end of the official event. More information is coming soon.
 
 
 
