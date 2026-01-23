@@ -527,6 +527,8 @@ cat-bro:
     elixir_node: au
     affiliations:
       - elixir-europe
+      - unimelb
+      - AustralianBioCommons
 
 cecilecanlet:
     name: Cécile Canlet
