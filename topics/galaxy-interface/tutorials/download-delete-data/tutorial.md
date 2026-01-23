@@ -201,13 +201,8 @@ You can delete an entire history and purge it from disk.
 
 # Conclusion
 
-
 This tutorial should have explained to you how to manage your data on Galaxy. Different Galaxy servers will have different policies regarding storage quotas and storage times. You should check with the Galaxy server you are using.
 
-##
-###
-####
-
-##### Footnotes:
+## Footnotes:
 
 [^1]: On some Galaxy servers, data and histories marked for deletion are periodically purged by the administrators. This period of time can vary between servers and you should check with the documentation or administrators of your server to know the exact amount of time.
