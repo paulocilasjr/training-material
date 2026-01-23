@@ -16,9 +16,14 @@ time_estimation: 20M
 key_points:
 - There are three ways to download data - by individual files, collections of files or entire histories
 - Data deletion in Galaxy is a two step process, deletion followed by purging from disk
-contributors:
-- slugger70
-- hexylena
+contributions:
+  authorship:
+    - slugger70
+    - hexylena
+  funding:
+    - unimelb
+    - melbournebioinformatics
+    - AustralianBioCommons
 
 subtopic: cleanup
 ---
