@@ -115,6 +115,31 @@ This balanced dataset allows the Image Learner model to learn effectively from a
 >
 {: .tip}
 
+# Model Configuration in GLEAM Image Learner
+
+After uploading the dataset, configure the Image Learner parameters as follows. These settings are based on best practices for dermoscopic image classification and have been optimized for the HAM10000 dataset:
+
+> <tip-title>Data Split Configuration</tip-title>
+>
+> The Image Learner tool automatically applies a **stratified 70/10/20 train/validation/test split** by default when no split column is present in the metadata CSV file. This ensures balanced representation of all classes across the three datasets. The stratified split maintains the same class distribution in each split, which is particularly important for imbalanced datasets. If you want to use a custom split, you can add a `split` column to your metadata CSV with values 0 (train), 1 (validation), or 2 (test).
+>
+{: .tip}
+
+| Parameter | Value | Rationale |
+|---|---|---|
+| Task Type | Classification | Multi-class image classification task |
+| Model Name | caformer_s18_384 | Efficient transformer-based model ([CAFormer S18 384](https://github.com/sail-sg/metaformer/blob/main/metaformer_baselines.py)) |
+| Epochs | 30 | Sufficient for convergence without overfitting |
+| Batch Size | 32 | Balances memory and gradient stability |
+| Fine Tune | True | Leverage pre-trained features for better performance |
+| Use Pretrained | True | Transfer learning from ImageNet-trained weights |
+| Learning Rate | 0.001 | Conservative learning rate for fine-tuning |
+| Random Seed | 42 | Reproducible results across runs |
+| Data Split | 70/10/20 | Standard split for training/validation/test (automatically applied when no split column exists in metadata CSV) |
+| Data Augmentation | Horizontal Flip | Address class imbalance and improve generalization |
+
+![Model and training summary interface in GLEAM Image Learner.](../../images/skin_tutorial/image_classification_results_summary.png "Model and training summary interface")
+
 # Using Image Learner Tool
 
 ## Prepare environment and get the data 
