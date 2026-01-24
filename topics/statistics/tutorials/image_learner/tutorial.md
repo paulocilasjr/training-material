@@ -20,6 +20,7 @@ contributors:
 - dangkhai
 - paulocilasjr
 - qchiujunhao
+- afpybus
 - jgoecks
 tags:
 - HAM10000 Dataset
