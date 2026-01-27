@@ -318,10 +318,10 @@ To contextualize our results, we compare against the CNN results reported by She
 
 | Metric | Shetty et al., 2022 (CNN) | Image Learner (this tutorial) |
 |---|---:|---:|
-| Accuracy | 0.94 (94%) | 0.88 (88%) |
-| Weighted Precision | 0.88 (88%) | 0.88 (90%) |
-| Weighted Recall | 0.85 (85%) | 0.88 (90%) |
-| Weighted F1-Score | 0.86 (86%) | 0.88 (90%) |
+| Accuracy | 0.94 (94%) | 0.87 (87%) |
+| Weighted Precision | 0.88 (88%) | 0.87 (87%) |
+| Weighted Recall | 0.85 (85%) | 0.87 (87%) |
+| Weighted F1-Score | 0.86 (86%) | 0.87 (87%) |
 
 # Data Leakage-Aware Experiment (Sample ID)
 
@@ -337,10 +337,10 @@ When we keep original and flipped images from the same lesion in the same split,
 
 | Metric | Image Learner (leakage-aware split) |
 |---|---:|
-| Accuracy | 0.66 |
-| Weighted Precision | 0.66 |
-| Weighted Recall | 0.66 |
-| Weighted F1-Score | 0.66 |
+| Accuracy | 0.63 |
+| Weighted Precision | 0.63 |
+| Weighted Recall | 0.63 |
+| Weighted F1-Score | 0.63 |
 
 This reduction reflects a more realistic evaluation because the model no longer sees near-duplicate images across training and test splits.
 
