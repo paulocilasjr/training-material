@@ -149,8 +149,8 @@ The metadata CSV now includes additional fields while keeping the same number of
 > 2. Import the dataset files from Zenodo
 >
 >    ```
->    https://zenodo.org/records/18284218/files/selected_HAM10000_img_96_size.zip
->    https://zenodo.org/records/18392041/files/selected_HAM10000_img_metadata_aug.csv
+>    https://zenodo.org/records/18394055/files/selected_HAM10000_img_metadata_aug.csv
+>    https://zenodo.org/records/18394055/files/skin_image.zip
 >    ```
 >
 >    {% snippet faqs/galaxy/datasets_import_via_link.md %}
