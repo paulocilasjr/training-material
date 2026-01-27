@@ -1,6 +1,78 @@
 {
     "a_galaxy_workflow": "true",
-    "annotation": "Generates HAM10000 Image Classification Model using GLEAM Image Learner",
+    "annotation": "",
+    "comments": [
+        {
+            "color": "none",
+            "data": {
+                "line": [
+                    [
+                        0.2,
+                        0
+                    ],
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                "thickness": 5
+            },
+            "id": 0,
+            "position": [
+                166.07943306143818,
+                413.307447988009
+            ],
+            "size": [
+                0.2,
+                0
+            ],
+            "type": "freehand"
+        },
+        {
+            "color": "none",
+            "data": {
+                "line": [
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                "thickness": 5
+            },
+            "id": 1,
+            "position": [
+                275.0794330614382,
+                413.707447988009
+            ],
+            "size": [
+                0,
+                0
+            ],
+            "type": "freehand"
+        },
+        {
+            "color": "none",
+            "data": {
+                "line": [
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                "thickness": 5
+            },
+            "id": 2,
+            "position": [
+                269.4794330614382,
+                413.00744798800906
+            ],
+            "size": [
+                0,
+                0
+            ],
+            "type": "freehand"
+        }
+    ],
     "creator":[
       {
          "class":"Person",
@@ -22,161 +94,127 @@
          "identifier":"https://orcid.org/0000-0002-4583-5226",
          "name":"Jeremy Goecks"
       }
-   ],
-   "format-version":"0.1",
-   "license": "AGPL-3.0-or-later",
-   "name":"HAM10000 - Image Classification Model",
-   "steps": {
+   ],    "format-version": "0.1",
+    "license": "AGPL-3.0-or-later",
+    "name": "Image Learner - HAM10000",
+    "report": {
+        "markdown": "\n# Workflow Execution Report\n\n## Workflow Inputs\n```galaxy\ninvocation_inputs()\n```\n\n## Workflow Outputs\n```galaxy\ninvocation_outputs()\n```\n\n## Workflow\n```galaxy\nworkflow_display()\n```\n"
+    },
+    "steps": {
         "0": {
-            "annotation": "HAM10000 dermoscopic images - 96x96 pixels - 1,400 images (200 per class)",
+            "annotation": "| Column | Description |\n| `lesion_id` | Lesion identifier used to group original and augmented images from the same lesion. |\n| `image_id` | Image identifier from the source dataset (shared by original and flipped versions). |\n| `dx` | Diagnosis label (target class). |\n| `dx_type` | Diagnosis confirmation method (for example, `histo`). |\n| `age` | Patient age in years. |\n| `sex` | Patient sex (`male`/`female`/`unknown`). |\n| `localization` | Anatomical site of the lesion. |\n| `image_path` | Image filename within the image ZIP. |",
             "content_id": null,
             "errors": null,
             "id": 0,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "",
-                    "name": "images_96.zip"
+                    "description": "| Column | Description |\n| `lesion_id` | Lesion identifier used to group original and augmented images from the same lesion. |\n| `image_id` | Image identifier from the source dataset (shared by original and flipped versions). |\n| `dx` | Diagnosis label (target class). |\n| `dx_type` | Diagnosis confirmation method (for example, `histo`). |\n| `age` | Patient age in years. |\n| `sex` | Patient sex (`male`/`female`/`unknown`). |\n| `localization` | Anatomical site of the lesion. |\n| `image_path` | Image filename within the image ZIP. |",
+                    "name": "selected_HAM10000_img_metadata_aug.csv"
                 }
             ],
-            "label": "HAM10000 Images (96x96)",
+            "label": "selected_HAM10000_img_metadata_aug.csv",
             "name": "Input dataset",
             "outputs": [],
             "position": {
-                "bottom": 292.9513931274414,
-                "height": 82.46527862548828,
-                "left": 356.9618225097656,
-                "right": 556.9618377685547,
-                "top": 210.48611450195312,
-                "width": 200.00001525878906,
-                "x": 356.9618225097656,
-                "y": 210.48611450195312
+                "left": 0,
+                "top": 0
             },
             "tool_id": null,
-            "tool_state": "{\"optional\": false, \"tag\": \"\"}",
+            "tool_state": "{\"optional\": false, \"format\": [\"csv\"], \"tag\": null}",
             "tool_version": null,
             "type": "data_input",
-            "uuid": "53bffd14-f503-4c81-8eb2-e70c0cec0559",
-            "workflow_outputs": [
-                {
-                    "label": null,
-                    "output_name": "output",
-                    "uuid": "66a19810-a401-47b6-8983-98e3f5e8757e"
-                }
-            ]
+            "uuid": "6c2bd197-c7fa-4b55-b1ca-57be7ffae4ae",
+            "when": null,
+            "workflow_outputs": []
         },
         "1": {
-            "annotation": "HAM10000 image metadata - 1,400 samples with class labels (preprocessed and balanced)",
+            "annotation": "- Total dataset: 1,400 images\n- Generated 200 images per class\n- Resized all images to 96\u00d796 pixels\n- Standardized format as PNG for consistent processing\n\n\n",
             "content_id": null,
             "errors": null,
             "id": 1,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "",
-                    "name": "image_metadata_new.csv"
+                    "description": "- Total dataset: 1,400 images\n- Generated 200 images per class\n- Resized all images to 96\u00d796 pixels\n- Standardized format as PNG for consistent processing\n\n\n",
+                    "name": "selected_HAM10000_img_96_size.zip"
                 }
             ],
-            "label": "HAM10000 Image Metadata",
+            "label": "selected_HAM10000_img_96_size.zip",
             "name": "Input dataset",
             "outputs": [],
             "position": {
-                "bottom": 402.9513931274414,
-                "height": 82.46527862548828,
-                "left": 355.97222900390625,
-                "right": 555.9722442626953,
-                "top": 320.4861145019531,
-                "width": 200.00001525878906,
-                "x": 355.97222900390625,
-                "y": 320.4861145019531
+                "left": 1.510345458984375,
+                "top": 133.0425567626953
             },
             "tool_id": null,
-            "tool_state": "{\"optional\": false, \"tag\": \"\"}",
+            "tool_state": "{\"optional\": false, \"format\": [\"zip\"], \"tag\": null}",
             "tool_version": null,
             "type": "data_input",
-            "uuid": "176d36e8-a459-4f51-9cff-932952f07f2f",
-            "workflow_outputs": [
-                {
-                    "label": null,
-                    "output_name": "output",
-                    "uuid": "2b5382f7-f9b6-4715-aaf7-87e27fbdf8c6"
-                }
-            ]
+            "uuid": "7f9a41fd-c1d0-4f30-be9a-f9cdc865fda0",
+            "when": null,
+            "workflow_outputs": []
         },
         "2": {
-            "annotation": "Train Image Learner model for skin lesion classification",
-            "content_id": "image_learner",
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/goeckslab/image_learner/image_learner/0.1.5",
             "errors": null,
             "id": 2,
             "input_connections": {
-                "input_images": {
-                    "id": 0,
+                "image_zip": {
+                    "id": 1,
                     "output_name": "output"
                 },
-                "input_metadata": {
-                    "id": 1,
+                "input_csv": {
+                    "id": 0,
                     "output_name": "output"
                 }
             },
             "inputs": [
                 {
                     "description": "runtime parameter for tool Image Learner",
-                    "name": "input_images"
+                    "name": "image_zip"
                 },
                 {
                     "description": "runtime parameter for tool Image Learner",
-                    "name": "input_metadata"
+                    "name": "input_csv"
                 }
             ],
             "label": null,
             "name": "Image Learner",
             "outputs": [
                 {
-                    "name": "model",
-                    "type": "data"
+                    "name": "output_pred_csv",
+                    "type": "input"
                 },
                 {
-                    "name": "report",
+                    "name": "output_model",
+                    "type": "ludwig_model"
+                },
+                {
+                    "name": "output_report",
                     "type": "html"
-                },
-                {
-                    "name": "predictions",
-                    "type": "tabular"
                 }
             ],
             "position": {
-                "bottom": 507.48268127441406,
-                "height": 297.013916015625,
-                "left": 684.96533203125,
-                "right": 884.9653472900391,
-                "top": 210.46876525878906,
-                "width": 200.00001525878906,
-                "x": 684.96533203125,
-                "y": 210.46876525878906
+                "left": 429.8177795410156,
+                "top": 70.70747375488281
             },
             "post_job_actions": {},
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/galaxyp/galaxyp_image_learner/imagelearner/0.1.0",
-            "tool_state": "{\"advanced_settings\": {\"customize_defaults\": \"false\", \"__current_case__\": 1}, \"input_images\": {\"__class__\": \"RuntimeValue\"}, \"input_metadata\": {\"__class__\": \"RuntimeValue\"}, \"model_architecture\": \"caformer_s18_384\", \"task_type\": \"classification\", \"__current_case__\": 0, \"epochs\": \"30\", \"batch_size\": \"32\", \"fine_tune\": \"true\", \"learning_rate\": \"0.001\", \"random_seed\": \"42\", \"data_augmentation\": \"horizontal_flip\", \"data_split\": \"70/10/20\", \"target_column\": \"\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
-            "tool_version": "0.1.0",
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/goeckslab/image_learner/image_learner/0.1.5",
+            "tool_shed_repository": {
+                "changeset_revision": "d5c582cf74bc",
+                "name": "image_learner",
+                "owner": "goeckslab",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"advanced_settings\": {\"customize_defaults\": \"true\", \"__current_case__\": 0, \"epochs\": \"30\", \"early_stop\": \"30\", \"learning_rate_condition\": {\"learning_rate_define\": \"false\", \"__current_case__\": 1}, \"batch_size_condition\": {\"batch_size_define\": \"false\", \"__current_case__\": 1}, \"train_split\": \"0.7\", \"val_split\": \"0.1\", \"test_split\": \"0.2\", \"threshold\": \"0.5\"}, \"augmentation\": [\"random_horizontal_flip\", \"random_vertical_flip\", \"random_rotate\", \"random_blur\", \"random_brightness\", \"random_contrast\"], \"column_override\": {\"override_columns\": \"true\", \"__current_case__\": 0, \"target_column\": \"3\", \"image_column\": \"8\"}, \"image_resize\": \"original\", \"image_zip\": {\"__class__\": \"RuntimeValue\"}, \"input_csv\": {\"__class__\": \"RuntimeValue\"}, \"model_name\": \"caformer_s36_384\", \"random_seed\": \"42\", \"sample_id_column\": null, \"scratch_fine_tune\": {\"use_pretrained\": \"true\", \"__current_case__\": 0, \"fine_tune\": \"true\"}, \"task_selection\": {\"task\": \"classification\", \"__current_case__\": 1, \"validation_metric_multiclass\": \"\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_uuid": null,
+            "tool_version": "0.1.5",
             "type": "tool",
-            "uuid": "2a5e0015-457e-475f-97aa-72183a56af18",
-            "workflow_outputs": [
-                {
-                    "label": "Image Learner trained model",
-                    "output_name": "model",
-                    "uuid": "5925cd98-b856-4dc2-87ae-0b07f2844386"
-                },
-                {
-                    "label": "Image Learner evaluation report",
-                    "output_name": "report",
-                    "uuid": "a292d802-b28f-4707-862c-5454e4ebb886"
-                },
-                {
-                    "label": "Image Learner test predictions",
-                    "output_name": "predictions",
-                    "uuid": "3c4f8b1c-5678-9abc-def0-123456789abc"
-                }
-            ]
+            "uuid": "f928b66a-95c6-4fb2-8b3b-f41abc3e9c4e",
+            "when": null,
+            "workflow_outputs": []
         }
     },
     "tags":[
@@ -187,7 +225,6 @@
 	"Image_Learner",
 	"GLEAM"
     ],
-    "uuid":"b59d72a3-a167-4f94-87ea-0e3e18df1d4c",
-    "version": 1
+    "uuid": "33c0f1fc-d6b7-4248-beca-2b63ad471977",
+    "version": 2
 }
-

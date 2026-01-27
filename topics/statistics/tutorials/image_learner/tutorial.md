@@ -11,7 +11,7 @@ objectives:
   - "Prepare a balanced HAM10000 subset and perform a stratified 70/10/20 train/validation/test split."
   - "Train an Image Learner model using a pretrained CaFormer S18 384 backbone."
   - "Evaluate performance using accuracy and weighted precision/recall/F1, and inspect confusion patterns."
-time_estimation: "45m"
+time_estimation: "1h"
 key_points:
 - Use Galaxy tools (Image Learner) to build a deep learning model for skin lesion classification based on the HAM10000 dataset.
 - Understand the dataset composition and the importance of data augmentation to handle class imbalance.
@@ -100,6 +100,21 @@ The preprocessed dataset provides balanced representation:
 
 This balanced dataset allows the Image Learner model to learn effectively from all lesion types without bias toward the majority class.
 
+## Metadata Columns (HAM10000 CSV)
+
+The metadata CSV now includes additional fields while keeping the same number of samples and the same flip augmentation strategy. Each row corresponds to one image file.
+
+| Column | Description |
+|---|---|
+| `lesion_id` | Lesion identifier used to group original and augmented images from the same lesion. |
+| `image_id` | Image identifier from the source dataset (shared by original and flipped versions). |
+| `dx` | Diagnosis label (target class). |
+| `dx_type` | Diagnosis confirmation method (for example, `histo`). |
+| `age` | Patient age in years. |
+| `sex` | Patient sex (`male`/`female`/`unknown`). |
+| `localization` | Anatomical site of the lesion. |
+| `image_path` | Image filename within the image ZIP. |
+
 > <tip-title>Why Horizontal Flip Augmentation?</tip-title>
 >
 > Following the preprocessing pipeline described by {% cite Shetty2022 %}, **horizontal flip augmentation** is applied during dataset preparation. Horizontal flips:
@@ -114,31 +129,6 @@ This balanced dataset allows the Image Learner model to learn effectively from a
 > ![Example of horizontal flip augmentation applied to a skin lesion image.](../../images/skin_tutorial/horizontal_flip_augmentation.png "Example of horizontal flip augmentation. Adapted from {% cite Shetty2022 %}.")
 >
 {: .tip}
-
-# Model Configuration in GLEAM Image Learner
-
-After uploading the dataset, configure the Image Learner parameters as follows. These settings are based on best practices for dermoscopic image classification and have been optimized for the HAM10000 dataset:
-
-> <tip-title>Data Split Configuration</tip-title>
->
-> The Image Learner tool automatically applies a **stratified 70/10/20 train/validation/test split** by default when no split column is present in the metadata CSV file. This ensures balanced representation of all classes across the three datasets. The stratified split maintains the same class distribution in each split, which is particularly important for imbalanced datasets. If you want to use a custom split, you can add a `split` column to your metadata CSV with values 0 (train), 1 (validation), or 2 (test).
->
-{: .tip}
-
-| Parameter | Value | Rationale |
-|---|---|---|
-| Task Type | Classification | Multi-class image classification task |
-| Model Name | caformer_s18_384 | Efficient transformer-based model ([CAFormer S18 384](https://github.com/sail-sg/metaformer/blob/main/metaformer_baselines.py)) |
-| Epochs | 30 | Sufficient for convergence without overfitting |
-| Batch Size | 32 | Balances memory and gradient stability |
-| Fine Tune | True | Leverage pre-trained features for better performance |
-| Use Pretrained | True | Transfer learning from ImageNet-trained weights |
-| Learning Rate | 0.001 | Conservative learning rate for fine-tuning |
-| Random Seed | 42 | Reproducible results across runs |
-| Data Split | 70/10/20 | Standard split for training/validation/test (automatically applied when no split column exists in metadata CSV) |
-| Data Augmentation | Horizontal Flip | Address class imbalance and improve generalization |
-
-![Model and training summary interface in GLEAM Image Learner.](../../images/skin_tutorial/image_classification_results_summary.png "Model and training summary interface")
 
 # Using Image Learner Tool
 
@@ -159,8 +149,8 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 > 2. Import the dataset files from Zenodo
 >
 >    ```
->    https://zenodo.org/records/17114688/files/images_96.zip
->    https://zenodo.org/records/17114688/files/image_metadata_new.csv
+>    https://zenodo.org/records/18284218/files/selected_HAM10000_img_96_size.zip
+>    https://zenodo.org/records/18392041/files/selected_HAM10000_img_metadata_aug.csv
 >    ```
 >
 >    {% snippet faqs/galaxy/datasets_import_via_link.md %}
@@ -187,6 +177,8 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >
 {: .hands_on}
 
+# Model Configuration in GLEAM Image Learner
+
 ## Tool setup and run
 
 After uploading the dataset, configure the Image Learner parameters as follows. These settings are based on best practices for dermoscopic image classification and have been optimized for the HAM10000 dataset.
@@ -197,32 +189,46 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >    - {% icon param-file %} *The metadata csv containing image_path column, label column*: `image_metadata_new.csv`
 >    - {% icon param-file %} *Image zip*: `images_96.zip`
 >    - {% icon param-select %} *Task Type*: `Multi-class Classification`
+>    - {% icon param-select %} *Overwrite label and/or image column names?*: `Yes`
+>    - {% icon param-text %} *Target/label column name*: `c3: dx`
+>    - {% icon param-text %} *Image column name*: `c8: image_path`
 >    - {% icon param-select %} *Select a model for your experiment*: `CAFormer S18 384`
+>    - {% icon param-select %} *Image Augmentation*: `Select all`
 >    - {% icon param-select %} *Customize Default Settings*: `Yes`
 >    - {% icon param-text %} *Epochs*: `30`
->    - {% icon param-text %} *Define your batch size*: `Yes`
->    - {% icon param-text %} *Batch Size*: `32`
+>    - {% icon param-text %} *Early Stop*: `30`
 >
 > 2. Run training and review the generated evaluation report.
 >
 {: .hands_on}
 
+These settings are based on best practices for image classification and have been optimized for the HAM10000 dataset.
+
 > <tip-title>Recommended Image Learner configuration (and why)</tip-title>
 >
-> | Parameter | Rationale |
-> |---|---|
-> | Task Type | Multi-class image classification task |
-> | Model Name | Efficient transformer-based model |
-> | Epochs | Sufficient for convergence without overfitting |
-> | Batch Size | Balances memory and gradient stability |
-> | Fine Tune | Leverage pre-trained features for better performance |
-> | Use Pretrained | Transfer learning from ImageNet-trained weights |
-> | Learning Rate | Conservative learning rate for fine-tuning |
-> | Random Seed | Reproducible results across runs |
-> | Data Split | Standard split for training/validation/test |
-> | Data Augmentation | Improve generalization |
+> | Parameter | Value | Rationale |
+> |---|---|---|
+> | Task Type | Classification | Multi-class image classification task |
+> | Label column | `dx` | Target diagnosis label |
+> | Image column | `image_path` | Image filename in the ZIP archive |
+> | Model Name | caformer_s18_384 | Efficient transformer-based model ([CAFormer S18 384](https://github.com/sail-sg/metaformer/blob/main/metaformer_baselines.py)) |
+> | Epochs | 30 | Sufficient for convergence without overfitting |
+> | Early Stop | 30 | Stop when validation metrics stall to avoid overfitting |
+> | Fine Tune | True | Leverage pre-trained features for better performance |
+> | Use Pretrained | True | Transfer learning from ImageNet-trained weights |
+> | Learning Rate | 0.001 | Conservative learning rate for fine-tuning |
+> | Random Seed | 42 | Reproducible results across runs |
+> | Data Split | 70/10/20 | Standard split for training/validation/test (automatically applied when no split column exists in metadata CSV) |
+> | Data Augmentation | Horizontal and Vertical Flip; Rotate; Blur; Brightness; Contrast | Improve generalization |
+{: .tip}
+
+> <tip-title>Data Split Configuration</tip-title>
+>
+> The Image Learner tool automatically applies a **stratified 70/10/20 train/validation/test split** by default when no split column is present in the metadata CSV file. Per-class counts can differ by a few samples due to rounding. This ensures balanced representation of all classes across the three datasets. The stratified split maintains the same class distribution in each split, which is particularly important for imbalanced datasets. If you want to use a custom split, you can add a `split` column to your metadata CSV with values 0 (train), 1 (validation), or 2 (test).
 >
 {: .tip}
+
+![GLEAM Image Learner tool interface.](../../images/skin_tutorial/tool_configuration_interface.png "GLEAM Image Learner tool interface")
 
 ## Tool Output Files
 
@@ -253,7 +259,7 @@ This tab combines dataset composition, overall metrics, and configuration detail
 - **Training Configuration**: Model architecture, image size, augmentation, split strategy, optimizer, learning rate, epochs, early stopping, and random seed.
 - **Metrics Help**: A "Help" button that opens a glossary explaining each metric.
 
-![Model and training summary interface in GLEAM Image Learner.](../../images/skin_tutorial/image_classification_results_summary.png "Model and training summary interface")
+![Model and training summary interface in GLEAM Image Learner.](../../images/skin_tutorial/training_config.png "Model and training summary interface")
 
 ## Training and Validation Results
 
@@ -272,7 +278,7 @@ The test tab provides final evaluation plots and metrics:
 - **Prediction Confidence**: Test-set confidence distributions.
 - **Grad-CAM Heatmaps**: Visual explanations for convolutional backbones when available.
 
-![Test Performance Summary - Accuracy and Loss Progression](../../images/skin_tutorial/test_performance_summary.png "Test Performance Summary")
+![Test Performance Summary - Accuracy and Loss Progression](../../images/skin_tutorial/test_metrics.png "Test Performance Summary")
 
 These weighted metrics indicate balanced performance across classes under the explicitly balanced split. The report also includes ROC-AUC and Cohen's Kappa for additional discrimination and agreement context.
 
@@ -308,31 +314,48 @@ The confusion matrix provides a detailed breakdown of correct and incorrect pred
 
 # Comparison with Shetty et al. (2022)
 
-To contextualize our results, we compare against the CNN results reported by Shetty et al. (2022) on a balanced HAM10000 dataset {% cite Shetty2022 %}. We also include results from training CaFormer S18 384 on the original imbalanced HAM10000 dataset to demonstrate the impact of dataset preprocessing strategies.
+To contextualize our results, we compare against the CNN results reported by Shetty et al. (2022) on HAM10000 {% cite Shetty2022 %}.
 
-| Metric | Shetty et al., 2022 (CNN, balanced dataset) | Image Learner (original imbalanced dataset) | Image Learner (balanced dataset, this tutorial) |
+| Metric | Shetty et al., 2022 (CNN) | Image Learner (this tutorial) |
 |---|---:|---:|
- Accuracy | 0.86 (86%) | 0.8180 (81.80%) | 0.9036 (90.36%) |
-| Precision | 0.88 (88%) | 0.8249 (82.49%) | 0.9102 (91.02%) |
-| Recall | 0.85 (85%) | 0.8180 (81.80%) | 0.9036 (90.36%) |
-| F1-Score | 0.86 (86%) | 0.8206 (82.06%) | 0.9063 (90.63%) |
-| ROC-AUC | Not reported | 0.9787 (97.87%) | 0.9880 (98.80%) |
-| Cohen's Kappa | Not reported | 0.7945 | 0.8875 |
+| Accuracy | 0.94 (94%) | 0.88 (88%) |
+| Weighted Precision | 0.88 (88%) | 0.88 (90%) |
+| Weighted Recall | 0.85 (85%) | 0.88 (90%) |
+| Weighted F1-Score | 0.86 (86%) | 0.88 (90%) |
 
-> <comment-title>Dataset Comparison Note</comment-title>
->
-> > This table compares three approaches: (1) Shetty et al. (2022) used a balanced dataset with CNN architecture, (2) Image Learner trained on the original imbalanced HAM10000 dataset (10,015 images with severe class imbalance) without preprocessing or augmentation using CaFormer S18 384, and (3) Image Learner trained on a balanced dataset (1,400 images, 200 per class) with preprocessing and augmentation using CaFormer S18 384. The original imbalanced dataset results demonstrate the baseline performance, while both balanced dataset approaches show improved performance, with our preprocessing strategy achieving the highest accuracy (90.36% vs. 86%).
->
-{: .comment}
+# Data Leakage-Aware Experiment (Sample ID)
 
-## Key takeaways
-- **Image Learner with balanced dataset outperforms both the reference CNN and the same model on original imbalanced data** across all comparable metrics.
-- On the original imbalanced dataset (10,015 images), CaFormer S18 384 achieves 81.80% accuracy and 97.87% ROC-AUC, demonstrating baseline performance without preprocessing.
-- Shetty et al. (2022) achieved 86% accuracy using a balanced dataset with CNN architecture.
-- With our balanced dataset preprocessing and augmentation strategy, Image Learner achieves 90.36% accuracy (vs. 86% in Shetty et al.) and 98.80% ROC-AUC, showing the significant impact of data preprocessing strategies.
-- The balanced dataset approach improves accuracy by 8.56 percentage points compared to training on the original imbalanced dataset, highlighting the importance of addressing class imbalance in medical imaging datasets.
-- Differences from Shetty et al. (2022) may reflect our use of transfer learning with a modern transformer-based architecture (caformer_s18_384) vs. traditional CNN, as well as evaluation methodology.
+We repeat the same experiment but add a feature selection to prevent leakage across splits:
+
+- {% icon param-select %} *Sample ID column (optional)*: `c1: lesion_id`
+
+![Data leakage-aware configuration](../../images/skin_tutorial/training_config_2.png "Data leakage-aware configuration")
+
+## Data Leakage-Aware Results
+
+When we keep original and flipped images from the same lesion in the same split, the metrics drop:
+
+| Metric | Image Learner (leakage-aware split) |
+|---|---:|
+| Accuracy | 0.66 |
+| Weighted Precision | 0.66 |
+| Weighted Recall | 0.66 |
+| Weighted F1-Score | 0.66 |
+
+This reduction reflects a more realistic evaluation because the model no longer sees near-duplicate images across training and test splits.
+
+![Data leakage-aware metric results](../../images/skin_tutorial/test_metrics_2.png "Data leakage-aware metric results")
+
+# Key takeaways
+- **Image Learner shows slightly lower accuracy** (0.88 vs. 0.94) but **higher weighted precision/recall/F1** (0.90 vs. 0.88/0.85/0.86).
+- The balanced split comparison aligns with the published benchmark and shows strong weighted metrics under the same evaluation style.
+- The leakage-aware split provides a more conservative, realistic estimate by keeping original and flipped images from the same lesion together.
 - Image Learner provides publication-ready metrics and visualizations with full reproducibility through Galaxy.
+
+# Tutorial takeaways
+- The Image Learner comparison is competitive with the published CNN benchmark on the balanced HAM10000 subset.
+- Leakage-aware splitting prevents inflated performance and is essential when augmentations create near-duplicate images.
+- The tool makes it easy to enforce leakage-aware splits while keeping diagnostics transparent and reproducible.
 
 # Conclusion
 
@@ -342,4 +365,4 @@ In this tutorial, we used the Galaxy Image Learner tool to build and evaluate a 
 - Configure and train the model.
 - Review test metrics and diagnostic plots, and compare results to the Shetty et al. benchmark.
 
-The model achieved ~90% accuracy with balanced weighted precision/recall/F1 of ~0.90, demonstrating strong performance with transparent diagnostics in a reproducible workflow. These steps generalize to other biomedical image-classification tasks.
+The model achieved ~88% accuracy with balanced weighted precision/recall/F1 of ~0.90 under the balanced split, and ~0.66 across metrics under the leakage-aware split. These steps generalize to other biomedical image-classification tasks while highlighting the importance of leakage-aware evaluation.
