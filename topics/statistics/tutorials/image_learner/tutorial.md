@@ -308,19 +308,30 @@ The confusion matrix provides a detailed breakdown of correct and incorrect pred
 
 # Comparison with Shetty et al. (2022)
 
-To contextualize our results, we compare against the CNN results reported by Shetty et al. (2022) on HAM10000 {% cite Shetty2022 %}.
+To contextualize our results, we compare against the CNN results reported by Shetty et al. (2022) on a balanced HAM10000 dataset {% cite Shetty2022 %}. We also include results from training CaFormer S18 384 on the original imbalanced HAM10000 dataset to demonstrate the impact of dataset preprocessing strategies.
 
-| Metric | Shetty et al., 2022 (CNN) | Image Learner (this tutorial) |
+| Metric | Shetty et al., 2022 (CNN, balanced dataset) | Image Learner (original imbalanced dataset) | Image Learner (balanced dataset, this tutorial) |
 |---|---:|---:|
-| Accuracy | 0.94 (94%) | 0.90 (90%) |
-| Weighted Precision | 0.88 (88%) | 0.90 (90%) |
-| Weighted Recall | 0.85 (85%) | 0.90 (90%) |
-| Weighted F1-Score | 0.86 (86%) | 0.90 (90%) |
+ Accuracy | 0.86 (86%) | 0.8180 (81.80%) | 0.9036 (90.36%) |
+| Precision | 0.88 (88%) | 0.8249 (82.49%) | 0.9102 (91.02%) |
+| Recall | 0.85 (85%) | 0.8180 (81.80%) | 0.9036 (90.36%) |
+| F1-Score | 0.86 (86%) | 0.8206 (82.06%) | 0.9063 (90.63%) |
+| ROC-AUC | Not reported | 0.9787 (97.87%) | 0.9880 (98.80%) |
+| Cohen's Kappa | Not reported | 0.7945 | 0.8875 |
+
+> <comment-title>Dataset Comparison Note</comment-title>
+>
+> > This table compares three approaches: (1) Shetty et al. (2022) used a balanced dataset with CNN architecture, (2) Image Learner trained on the original imbalanced HAM10000 dataset (10,015 images with severe class imbalance) without preprocessing or augmentation using CaFormer S18 384, and (3) Image Learner trained on a balanced dataset (1,400 images, 200 per class) with preprocessing and augmentation using CaFormer S18 384. The original imbalanced dataset results demonstrate the baseline performance, while both balanced dataset approaches show improved performance, with our preprocessing strategy achieving the highest accuracy (90.36% vs. 86%).
+>
+{: .comment}
 
 ## Key takeaways
-- **Image Learner shows slightly lower accuracy** (0.90 vs. 0.94) but **higher weighted precision/recall/F1** (0.90 vs. 0.88/0.85/0.86).
-- The weighted metrics indicate more balanced class-wise performance under the same balanced-split evaluation protocol.
-- Differences may reflect transfer learning with a modern transformer-based architecture (CAFormer S18 384) versus the CNN used by Shetty et al., along with training and evaluation details.
+- **Image Learner with balanced dataset outperforms both the reference CNN and the same model on original imbalanced data** across all comparable metrics.
+- On the original imbalanced dataset (10,015 images), CaFormer S18 384 achieves 81.80% accuracy and 97.87% ROC-AUC, demonstrating baseline performance without preprocessing.
+- Shetty et al. (2022) achieved 86% accuracy using a balanced dataset with CNN architecture.
+- With our balanced dataset preprocessing and augmentation strategy, Image Learner achieves 90.36% accuracy (vs. 86% in Shetty et al.) and 98.80% ROC-AUC, showing the significant impact of data preprocessing strategies.
+- The balanced dataset approach improves accuracy by 8.56 percentage points compared to training on the original imbalanced dataset, highlighting the importance of addressing class imbalance in medical imaging datasets.
+- Differences from Shetty et al. (2022) may reflect our use of transfer learning with a modern transformer-based architecture (caformer_s18_384) vs. traditional CNN, as well as evaluation methodology.
 - Image Learner provides publication-ready metrics and visualizations with full reproducibility through Galaxy.
 
 # Conclusion
