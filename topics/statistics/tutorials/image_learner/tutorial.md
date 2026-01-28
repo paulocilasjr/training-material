@@ -187,7 +187,7 @@ After uploading the dataset, configure the Image Learner parameters as follows. 
 >
 > 1. {% tool [Image Learner](toolshed.g2.bx.psu.edu/repos/goeckslab/image_learner/image_learner/0.1.5) %} with the following parameters:
 >    - {% icon param-file %} *The metadata csv containing image_path column, label column*: `image_metadata_new.csv`
->    - {% icon param-file %} *Image zip*: `images_96.zip`
+>    - {% icon param-file %} *Image zip*: `skin_image.zip`
 >    - {% icon param-select %} *Task Type*: `Multi-class Classification`
 >    - {% icon param-select %} *Overwrite label and/or image column names?*: `Yes`
 >    - {% icon param-text %} *Target/label column name*: `c3: dx`
