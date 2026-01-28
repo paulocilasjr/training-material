@@ -1,3 +1,10 @@
+GTN_GTN:1769015691
+
+A	events/2025-05-18-galaxy-academy.md
+GTN_GTN:1768812790
+
+R099	metadata/git-mod-7de53b0be6486f1d1391f818bcff5585f16392c6.txt	metadata/git-mod-45e7346898e2ead87f4cd301996b1fc561ba5872.txt
+R099	metadata/git-pub-7de53b0be6486f1d1391f818bcff5585f16392c6.txt	metadata/git-pub-45e7346898e2ead87f4cd301996b1fc561ba5872.txt
 GTN_GTN:1768226047
 
 R099	metadata/git-mod-fa24015454867f9e58b39b6fd2fe6c1a7966b4b3.txt	metadata/git-mod-7de53b0be6486f1d1391f818bcff5585f16392c6.txt
