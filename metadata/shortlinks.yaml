@@ -2468,6 +2468,7 @@ id:
   W00369: "/topics/assembly/tutorials/debruijn-graph-assembly/workflows/Debruijn-Graph-Velvet-Full-and-SPAdes-Assembly.html"
   W00370: "/topics/assembly/tutorials/debruijn-graph-assembly/workflows/Debruijn-Graph-Velvet-Optimiser-and-SPAdes-Assembly.html"
   W00371: "/topics/variant-analysis/tutorials/tb-variant-analysis/workflows/TB-variants-tutorial-main-workflow.html"
+  E00044: "/events/2025-05-18-galaxy-academy.html"
 misc:
   ansible-galaxy: "/topics/admin/tutorials/ansible-galaxy/tutorial.html"
   feeds: "/feeds/index.html"
